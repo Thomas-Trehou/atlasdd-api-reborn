@@ -2,6 +2,7 @@ package fr.ttl.atlasdd.apidto;
 
 import fr.ttl.atlasdd.utils.Alignment;
 import fr.ttl.atlasdd.utils.CharacterStatus;
+import fr.ttl.atlasdd.utils.ShieldType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
@@ -24,10 +25,14 @@ public class CharacterSheetApiDto extends BaseApiDto {
     private int initiative;
     private int inspiration;
     private int hitPoints;
+    private int maxHitPoints;
     private int bonusHitPoints;
     private int speed;
     private int passivePerception;
-    private boolean shield;
+
+    @Enumerated(EnumType.STRING)
+    private ShieldType shield;
+
     private boolean twoWeaponsFighting;
 
     @Enumerated(EnumType.STRING)
@@ -49,4 +54,6 @@ public class CharacterSheetApiDto extends BaseApiDto {
     private ClassApiDto classDto;
     private List<SkillApiDto> skillList;
     private List<SpellApiDto> spellList;
+    private List<WeaponApiDto> weaponList;
+    private ArmorApiDto armor;
 }

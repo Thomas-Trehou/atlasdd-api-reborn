@@ -2,6 +2,7 @@ package fr.ttl.atlasdd.sqldto;
 
 import fr.ttl.atlasdd.utils.Alignment;
 import fr.ttl.atlasdd.utils.CharacterStatus;
+import fr.ttl.atlasdd.utils.ShieldType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,10 +26,14 @@ public class CharacterSheetSqlDto extends BaseSqlDto {
     private int initiative;
     private int inspiration;
     private int hitPoints;
+    private int maxHitPoints;
     private int bonusHitPoints;
     private int speed;
     private int passivePerception;
-    private boolean shield;
+
+    @Enumerated(EnumType.STRING)
+    private ShieldType shield;
+
     private boolean twoWeaponsFighting;
 
     @Enumerated(EnumType.STRING)
@@ -77,5 +82,16 @@ public class CharacterSheetSqlDto extends BaseSqlDto {
     )
     private List<SpellSqlDto> preparedSpells;
 
+    @ManyToMany
+    @JoinTable(
+            name = "character_sheets_has_weapons",
+            joinColumns = @JoinColumn(name = "character_id"),
+            inverseJoinColumns = @JoinColumn(name = "weapon_id")
+    )
+    private List<WeaponSqlDto> weapons;
+
+    @OneToOne
+    @JoinColumn(name = "armor_id")
+    private ArmorSqlDto armor;
 
 }
