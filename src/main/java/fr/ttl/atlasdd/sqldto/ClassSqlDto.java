@@ -21,7 +21,7 @@ public class ClassSqlDto extends BaseSqlDto {
     private int startingHitPoints;
     private String startingEquipment;
 
-    @OneToMany(mappedBy = "class")
+    @OneToMany(mappedBy = "classe")
     private List<CharacterSheetSqlDto> characterSheets;
 
     @ManyToMany

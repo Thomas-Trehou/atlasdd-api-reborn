@@ -59,7 +59,7 @@ public class CharacterSheetSqlDto extends BaseSqlDto {
 
     @ManyToOne
     @JoinColumn(name = "class_id")
-    private ClassSqlDto classDto;
+    private ClassSqlDto classe;
 
     @ManyToMany
     @JoinTable(
