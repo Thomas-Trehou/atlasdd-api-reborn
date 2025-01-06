@@ -1,10 +1,7 @@
 package fr.ttl.atlasdd.sqldto;
 
 import fr.ttl.atlasdd.listeners.SpellEntityListener;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,7 +19,11 @@ import java.util.List;
 public class SpellSqlDto extends BaseSqlDto{
 
     private String name;
+
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String description;
+
     private String range;
     private String components;
     private String material;
@@ -33,7 +34,11 @@ public class SpellSqlDto extends BaseSqlDto{
     private String level;
     private String school;
     private String classes;
+
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String higherLevel;
+
     private String archetype;
     private String domains;
     private String oaths;

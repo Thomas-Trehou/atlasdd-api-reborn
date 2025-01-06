@@ -19,6 +19,9 @@ public class ClassSqlDto extends BaseSqlDto {
     private String name;
     private String hitDice;
     private int startingHitPoints;
+
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String startingEquipment;
 
     @OneToMany(mappedBy = "classe")

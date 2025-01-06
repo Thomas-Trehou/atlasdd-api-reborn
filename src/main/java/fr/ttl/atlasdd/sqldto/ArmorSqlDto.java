@@ -31,6 +31,9 @@ public class ArmorSqlDto extends BaseSqlDto {
     private BigDecimal weight;
 
     private String cost;
+
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String properties;
 
     @OneToOne(mappedBy = "armor")

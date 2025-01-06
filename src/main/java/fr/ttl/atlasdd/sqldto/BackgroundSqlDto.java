@@ -1,8 +1,6 @@
 package fr.ttl.atlasdd.sqldto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,7 +18,11 @@ public class BackgroundSqlDto extends BaseSqlDto{
 
     private String name;
     private String masteredTools;
+
+    @Lob
+    @Column(columnDefinition = "TEXT")
     private String startingEquipment;
+
     private String backgroundFeature;
 
     @OneToMany(mappedBy = "background")
