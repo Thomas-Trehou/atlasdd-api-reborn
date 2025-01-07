@@ -20,13 +20,15 @@ public class SpellSqlDto extends BaseSqlDto{
 
     private String name;
 
-    @Lob
     @Column(columnDefinition = "TEXT")
     private String description;
 
     private String range;
     private String components;
+
+    @Column(columnDefinition = "TEXT")
     private String material;
+
     private String ritual;
     private String duration;
     private String concentration;
@@ -35,7 +37,6 @@ public class SpellSqlDto extends BaseSqlDto{
     private String school;
     private String classes;
 
-    @Lob
     @Column(columnDefinition = "TEXT")
     private String higherLevel;
 

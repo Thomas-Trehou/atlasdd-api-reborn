@@ -19,7 +19,6 @@ public class BackgroundSqlDto extends BaseSqlDto{
     private String name;
     private String masteredTools;
 
-    @Lob
     @Column(columnDefinition = "TEXT")
     private String startingEquipment;
 

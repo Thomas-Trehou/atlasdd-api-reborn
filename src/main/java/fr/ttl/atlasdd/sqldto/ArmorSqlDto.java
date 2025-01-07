@@ -8,6 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Data
@@ -32,10 +33,9 @@ public class ArmorSqlDto extends BaseSqlDto {
 
     private String cost;
 
-    @Lob
     @Column(columnDefinition = "TEXT")
     private String properties;
 
-    @OneToOne(mappedBy = "armor")
-    private CharacterSheetSqlDto characterSheet;
+    @OneToMany(mappedBy = "armor")
+    private List<CharacterSheetSqlDto> characterSheet;
 }

@@ -20,7 +20,6 @@ public class ClassSqlDto extends BaseSqlDto {
     private String hitDice;
     private int startingHitPoints;
 
-    @Lob
     @Column(columnDefinition = "TEXT")
     private String startingEquipment;
 

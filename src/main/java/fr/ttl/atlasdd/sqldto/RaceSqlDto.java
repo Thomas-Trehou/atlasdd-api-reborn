@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "races")
-public class RaceSqlDto extends BaseSqlDto{
+public class RaceSqlDto extends BaseSqlDto {
 
     private String name;
     private String speed;
@@ -25,6 +25,8 @@ public class RaceSqlDto extends BaseSqlDto{
     private int wisdomBonus;
     private int charismaBonus;
     private String languages;
+
+    @Column(columnDefinition = "TEXT")
     private String traits;
 
     @OneToMany(mappedBy = "race")
