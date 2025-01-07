@@ -1,0 +1,20 @@
+INSERT INTO "skills" ("name")
+VALUES
+    ('Acrobaties'),
+    ('Arcanes'),
+    ('Athlétisme'),
+    ('Discrétion'),
+    ('Dressage'),
+    ('Escamotage'),
+    ('Histoire'),
+    ('Intimidation'),
+    ('Investigation'),
+    ('Médecine'),
+    ('Nature'),
+    ('Perception'),
+    ('Perspicacité'),
+    ('Persuasion'),
+    ('Religion'),
+    ('Représentation'),
+    ('Survie'),
+    ('Tromperie');
