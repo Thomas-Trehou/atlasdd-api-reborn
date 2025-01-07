@@ -90,7 +90,7 @@ public class CharacterSheetSqlDto extends BaseSqlDto {
     )
     private List<WeaponSqlDto> weapons;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "armor_id")
     private ArmorSqlDto armor;
 

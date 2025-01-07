@@ -1,5 +1,6 @@
 package fr.ttl.atlasdd.apidto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.ttl.atlasdd.utils.Alignment;
 import fr.ttl.atlasdd.utils.CharacterStatus;
 import fr.ttl.atlasdd.utils.ShieldType;
@@ -51,9 +52,9 @@ public class CharacterSheetApiDto extends BaseApiDto {
     private UserApiDto owner;
     private RaceApiDto race;
     private BackgroundApiDto background;
-    private ClassApiDto classDto;
-    private List<SkillApiDto> skillList;
-    private List<SpellApiDto> spellList;
-    private List<WeaponApiDto> weaponList;
+    private ClassApiDto classe;
+    private List<SkillApiDto> skills;
+    private List<SpellApiDto> preparedSpells;
+    private List<WeaponApiDto> weapons;
     private ArmorApiDto armor;
 }
