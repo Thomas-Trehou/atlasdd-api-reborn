@@ -12,6 +12,7 @@ import fr.ttl.atlasdd.utils.ShieldType;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CharacterSheetServiceImpl implements CharacterSheetService {
@@ -96,5 +97,19 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         CharacterSheetSqlDto savedCharacterSheet = characterSheetRepository.save(characterSheet);
 
         return characterSheetMapper.toApiDto(savedCharacterSheet);
+    }
+
+    @Override
+    public CharacterSheetApiDto getCharacterSheetById(Long id) {
+        CharacterSheetSqlDto characterSheet = characterSheetRepository.findById(id).orElseThrow();
+
+        return characterSheetMapper.toApiDto(characterSheet);
+    }
+
+    @Override
+    public List<CharacterSheetApiDto> getCharacterSheetsByUserId(Long userId) {
+        List<CharacterSheetSqlDto> characterSheets = characterSheetRepository.findAllByOwner_Id(userId);
+
+        return characterSheets.stream().map(characterSheetMapper::toApiDto).collect(Collectors.toList());
     }
 }
