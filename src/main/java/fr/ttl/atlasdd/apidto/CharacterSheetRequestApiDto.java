@@ -43,4 +43,7 @@ public class CharacterSheetRequestApiDto {
     private List<Long> weaponIds;
 
     private Long armorId;
+
+    @JsonProperty("characterNotesIds")
+    private List<Long> notesIds;
 }
