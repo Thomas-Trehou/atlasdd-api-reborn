@@ -1,7 +1,10 @@
-package fr.ttl.atlasdd.sqldto.ogl5;
+package fr.ttl.atlasdd.sqldto.custom;
 
 import fr.ttl.atlasdd.sqldto.BaseSqlDto;
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -14,8 +17,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "ogl5_backgrounds")
-public class BackgroundSqlDto extends BaseSqlDto {
+@Table(name = "custom_backgrounds")
+public class CustomBackgroundSqlDto extends BaseSqlDto {
 
     private String name;
     private String masteredTools;
@@ -26,5 +29,5 @@ public class BackgroundSqlDto extends BaseSqlDto {
     private String backgroundFeature;
 
     @OneToMany(mappedBy = "background")
-    private List<CharacterSheetSqlDto> characterSheets;
+    private List<CustomCharacterSheetSqlDto> characterSheets;
 }

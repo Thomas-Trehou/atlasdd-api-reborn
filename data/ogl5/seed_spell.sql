@@ -1,4 +1,4 @@
-INSERT INTO "spells" (
+INSERT INTO "ogl5_spells" (
     "name",
     "description",
     "range",

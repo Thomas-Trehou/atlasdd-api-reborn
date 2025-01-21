@@ -1,4 +1,4 @@
-INSERT INTO "weapons" ("index", "name", "weapon_range", "cost", "damage_dice", "damage_type", "weight", "properties", "created_at", "updated_at")
+INSERT INTO "ogl5_weapons" ("index", "name", "weapon_range", "cost", "damage_dice", "damage_type", "weight", "properties", "created_at", "updated_at")
 VALUES
     ('quarterstaff','Bâton','Corps-à-corps','2 pa','1d6','Contondant',2,'Polyvalente (1d8)', now(), now()),
     ('dagger','Dague','Corps-à-corps','2 po','1d4','Perforant',0.5,'Finesse, légère, lancer (portée 6 m/18 m)', now(), now()),

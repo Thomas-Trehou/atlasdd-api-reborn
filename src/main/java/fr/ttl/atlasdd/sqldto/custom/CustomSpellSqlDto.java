@@ -1,4 +1,4 @@
-package fr.ttl.atlasdd.sqldto.ogl5;
+package fr.ttl.atlasdd.sqldto.custom;
 
 import fr.ttl.atlasdd.listeners.SpellEntityListener;
 import fr.ttl.atlasdd.sqldto.BaseSqlDto;
@@ -15,9 +15,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "ogl5_spells")
+@Table(name = "custom_spells")
 @EntityListeners(SpellEntityListener.class)
-public class SpellSqlDto extends BaseSqlDto {
+public class CustomSpellSqlDto extends BaseSqlDto {
 
     private String name;
 
@@ -48,11 +48,11 @@ public class SpellSqlDto extends BaseSqlDto {
     private String patrons;
 
     @ManyToMany(mappedBy = "raceSpells")
-    private List<RaceSqlDto> spellRaces;
+    private List<CustomRaceSqlDto> spellRaces;
 
     @ManyToMany(mappedBy = "classSpells")
-    private List<ClassSqlDto> spellClasses;
+    private List<CustomClassSqlDto> spellClasses;
 
     @ManyToMany(mappedBy = "preparedSpells")
-    private List<CharacterSheetSqlDto> characterSheets;
+    private List<CustomCharacterSheetSqlDto> characterSheets;
 }

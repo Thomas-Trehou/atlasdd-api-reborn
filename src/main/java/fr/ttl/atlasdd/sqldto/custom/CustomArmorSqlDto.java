@@ -1,4 +1,4 @@
-package fr.ttl.atlasdd.sqldto.ogl5;
+package fr.ttl.atlasdd.sqldto.custom;
 
 import fr.ttl.atlasdd.sqldto.BaseSqlDto;
 import fr.ttl.atlasdd.utils.ArmorCategory;
@@ -16,8 +16,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "ogl5_armors")
-public class ArmorSqlDto extends BaseSqlDto {
+@Table(name = "custom_armors")
+public class CustomArmorSqlDto extends BaseSqlDto {
 
     private String index;
     private String name;
@@ -38,5 +38,5 @@ public class ArmorSqlDto extends BaseSqlDto {
     private String properties;
 
     @OneToMany(mappedBy = "armor")
-    private List<CharacterSheetSqlDto> characterSheet;
+    private List<CustomCharacterSheetSqlDto> characterSheet;
 }

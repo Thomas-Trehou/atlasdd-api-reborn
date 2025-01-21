@@ -19,7 +19,7 @@ public class SpellEntityListener {
     @PostPersist
     @PostUpdate
     public void updateClassSpells(SpellSqlDto spell) {
-        List<ClassSqlDto> classes = entityManager.createQuery("SELECT c FROM ClassSqlDto c", ClassSqlDto.class).getResultList();
+        List<ClassSqlDto> classes = entityManager.createQuery("SELECT c FROM CustomClassSqlDto c", ClassSqlDto.class).getResultList();
         for (ClassSqlDto classDto : classes) {
             if (spell.getClasses().toLowerCase().contains(classDto.getName().toLowerCase())) {
                 classDto.getClassSpells().add(spell);

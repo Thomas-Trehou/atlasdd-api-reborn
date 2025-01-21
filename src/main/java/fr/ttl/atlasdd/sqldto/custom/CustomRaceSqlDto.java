@@ -1,4 +1,4 @@
-package fr.ttl.atlasdd.sqldto.ogl5;
+package fr.ttl.atlasdd.sqldto.custom;
 
 import fr.ttl.atlasdd.sqldto.BaseSqlDto;
 import jakarta.persistence.*;
@@ -14,8 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "ogl5_races")
-public class RaceSqlDto extends BaseSqlDto {
+@Table(name = "custom_races")
+public class CustomRaceSqlDto extends BaseSqlDto {
 
     private String name;
     private String speed;
@@ -31,13 +31,13 @@ public class RaceSqlDto extends BaseSqlDto {
     private String traits;
 
     @OneToMany(mappedBy = "race")
-    private List<CharacterSheetSqlDto> characterSheets;
+    private List<CustomCharacterSheetSqlDto> characterSheets;
 
     @ManyToMany
     @JoinTable(
-            name = "ogl5_race_has_spells",
+            name = "custom_race_has_spells",
             joinColumns = @JoinColumn(name = "race_id"),
             inverseJoinColumns = @JoinColumn(name = "spell_id")
     )
-    private List<SpellSqlDto> raceSpells;
+    private List<CustomSpellSqlDto> raceSpells;
 }

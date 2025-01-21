@@ -1,4 +1,4 @@
-package fr.ttl.atlasdd.sqldto.ogl5;
+package fr.ttl.atlasdd.sqldto.custom;
 
 import fr.ttl.atlasdd.sqldto.BaseSqlDto;
 import fr.ttl.atlasdd.sqldto.NoteCharacterSqlDto;
@@ -19,8 +19,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "ogl5_character_sheets")
-public class CharacterSheetSqlDto extends BaseSqlDto {
+@Table(name = "custom_character_sheets")
+public class CustomCharacterSheetSqlDto extends BaseSqlDto {
 
     private String name;
     private int level;
@@ -59,47 +59,47 @@ public class CharacterSheetSqlDto extends BaseSqlDto {
 
     @ManyToOne
     @JoinColumn(name = "race_id")
-    private RaceSqlDto race;
+    private CustomRaceSqlDto race;
 
     @ManyToOne
     @JoinColumn(name = "background_id")
-    private BackgroundSqlDto background;
+    private CustomBackgroundSqlDto background;
 
     @ManyToOne
     @JoinColumn(name = "class_id")
-    private ClassSqlDto classe;
+    private CustomClassSqlDto classe;
 
     @ManyToMany
     @JoinTable(
-            name = "ogl5_character_sheets_has_skills",
+            name = "custom_character_sheets_has_skills",
             joinColumns = @JoinColumn(name = "character_id"),
             inverseJoinColumns = @JoinColumn(name = "skill_id")
     )
-    private List<SkillSqlDto> skills;
+    private List<CustomSkillSqlDto> skills;
 
     @ManyToMany
     @JoinTable(
-            name = "ogl5_character_prepared_spells",
+            name = "custom_character_prepared_spells",
             joinColumns = @JoinColumn(name = "character_id"),
             inverseJoinColumns = @JoinColumn(name = "spell_id")
     )
-    private List<SpellSqlDto> preparedSpells;
+    private List<CustomSpellSqlDto> preparedSpells;
 
     @ManyToMany
     @JoinTable(
-            name = "ogl5_character_sheets_has_weapons",
+            name = "custom_character_sheets_has_weapons",
             joinColumns = @JoinColumn(name = "character_id"),
             inverseJoinColumns = @JoinColumn(name = "weapon_id")
     )
-    private List<WeaponSqlDto> weapons;
+    private List<CustomWeaponSqlDto> weapons;
 
     @ManyToOne
     @JoinColumn(name = "armor_id")
-    private ArmorSqlDto armor;
+    private CustomArmorSqlDto armor;
 
     @ManyToMany
     @JoinTable(
-            name = "ogl5_character_sheets_has_notes",
+            name = "custom_character_sheets_has_notes",
             joinColumns = @JoinColumn(name = "character_id"),
             inverseJoinColumns = @JoinColumn(name = "characterNote_id")
     )
