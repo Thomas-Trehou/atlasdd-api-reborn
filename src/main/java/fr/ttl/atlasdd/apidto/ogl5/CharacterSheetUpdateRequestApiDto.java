@@ -6,7 +6,9 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class CharacterSheetRequestApiDto {
+public class CharacterSheetUpdateRequestApiDto {
+
+    private Long id;
     private String name;
     private int level;
     private int experience;

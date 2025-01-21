@@ -1,7 +1,8 @@
 package fr.ttl.atlasdd.controller.ogl5;
 
 import fr.ttl.atlasdd.apidto.ogl5.CharacterSheetApiDto;
-import fr.ttl.atlasdd.apidto.ogl5.CharacterSheetRequestApiDto;
+import fr.ttl.atlasdd.apidto.ogl5.CharacterSheetCreateRequestApiDto;
+import fr.ttl.atlasdd.apidto.ogl5.CharacterSheetUpdateRequestApiDto;
 import fr.ttl.atlasdd.service.ogl5.CharacterSheetService;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,8 +19,8 @@ public class CharacterSheetController {
     }
 
     @PostMapping
-    public CharacterSheetApiDto createCharacterSheet(@RequestBody CharacterSheetRequestApiDto characterSheetRequestApiDto) {
-        return characterSheetService.createCharacterSheet(characterSheetRequestApiDto);
+    public CharacterSheetApiDto createCharacterSheet(@RequestBody CharacterSheetCreateRequestApiDto characterSheetCreateRequestApiDto) {
+        return characterSheetService.createCharacterSheet(characterSheetCreateRequestApiDto);
     }
 
     @GetMapping("/{id}")
@@ -33,8 +34,8 @@ public class CharacterSheetController {
     }
 
     @PatchMapping("/{id}")
-    public CharacterSheetApiDto updateCharacterSheet(@PathVariable Long id, @RequestBody CharacterSheetRequestApiDto characterSheetRequestApiDto) {
-        return characterSheetService.updateCharacterSheet(id, characterSheetRequestApiDto);
+    public CharacterSheetApiDto updateCharacterSheet(@PathVariable Long id, @RequestBody CharacterSheetUpdateRequestApiDto characterSheetUpdateRequestApiDto) {
+        return characterSheetService.updateCharacterSheet(id, characterSheetUpdateRequestApiDto);
     }
 
 }
