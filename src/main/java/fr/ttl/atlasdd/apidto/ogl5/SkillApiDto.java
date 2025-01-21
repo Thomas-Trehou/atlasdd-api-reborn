@@ -1,5 +1,6 @@
-package fr.ttl.atlasdd.apidto;
+package fr.ttl.atlasdd.apidto.ogl5;
 
+import fr.ttl.atlasdd.apidto.BaseApiDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -9,8 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class NoteCharacterApiDto extends BaseApiDto {
+public class SkillApiDto extends BaseApiDto {
 
-    private String title;
-    private String content;
+    private String name;
 }

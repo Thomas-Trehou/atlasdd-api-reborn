@@ -1,7 +1,6 @@
-package fr.ttl.atlasdd.sqldto;
+package fr.ttl.atlasdd.sqldto.ogl5;
 
-import fr.ttl.atlasdd.sqldto.ogl5.CharacterSheetSqlDto;
-import jakarta.persistence.Column;
+import fr.ttl.atlasdd.sqldto.BaseSqlDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
@@ -17,14 +16,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "CharacterNotes")
-public class NoteCharacterSqlDto extends BaseSqlDto {
+@Table(name = "skills")
+public class SkillSqlDto extends BaseSqlDto {
 
-    private String title;
+    private String name;
 
-    @Column(columnDefinition = "TEXT")
-    private String content;
-
-    @ManyToMany(mappedBy = "characterNotes")
+    @ManyToMany(mappedBy = "skills")
     private List<CharacterSheetSqlDto> characterSheets;
 }

@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.listeners;
 
-import fr.ttl.atlasdd.sqldto.ClassSqlDto;
-import fr.ttl.atlasdd.sqldto.SpellSqlDto;
+import fr.ttl.atlasdd.sqldto.ogl5.ClassSqlDto;
+import fr.ttl.atlasdd.sqldto.ogl5.SpellSqlDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PostPersist;
