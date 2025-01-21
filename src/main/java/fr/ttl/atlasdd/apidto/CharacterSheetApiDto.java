@@ -57,4 +57,5 @@ public class CharacterSheetApiDto extends BaseApiDto {
     private List<SpellApiDto> preparedSpells;
     private List<WeaponApiDto> weapons;
     private ArmorApiDto armor;
+    private List<NoteCharacterApiDto> notes;
 }

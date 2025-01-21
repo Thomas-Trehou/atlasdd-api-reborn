@@ -11,6 +11,7 @@ import fr.ttl.atlasdd.utils.CharacterStatus;
 import fr.ttl.atlasdd.utils.ShieldType;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,6 +63,7 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         List<SpellSqlDto> spells = spellRepository.findAllById(request.getPreparedSpellIds());
         List<WeaponSqlDto> weapons = weaponRepository.findAllById(request.getWeaponIds());
         ArmorSqlDto armor = armorRepository.findById(request.getArmorId()).orElseThrow();
+        List<NoteCharacterSqlDto> notes = new ArrayList<>();
 
         CharacterSheetSqlDto characterSheet = new CharacterSheetSqlDto();
         characterSheet.setName(request.getName());
@@ -93,6 +95,7 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         characterSheet.setPreparedSpells(spells);
         characterSheet.setWeapons(weapons);
         characterSheet.setArmor(armor);
+        characterSheet.setCharacterNotes(notes);
 
         CharacterSheetSqlDto savedCharacterSheet = characterSheetRepository.save(characterSheet);
 
