@@ -1,9 +1,9 @@
-package fr.ttl.atlasdd.service.impl;
+package fr.ttl.atlasdd.service.global.impl;
 
 import fr.ttl.atlasdd.apidto.UserLightApiDto;
 import fr.ttl.atlasdd.mapper.UserLightMapper;
 import fr.ttl.atlasdd.repository.UserRepo;
-import fr.ttl.atlasdd.service.UserService;
+import fr.ttl.atlasdd.service.global.UserService;
 import org.springframework.stereotype.Service;
 
 @Service

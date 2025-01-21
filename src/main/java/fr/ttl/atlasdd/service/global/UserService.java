@@ -1,4 +1,4 @@
-package fr.ttl.atlasdd.service;
+package fr.ttl.atlasdd.service.global;
 
 import fr.ttl.atlasdd.apidto.UserLightApiDto;
 import org.springframework.stereotype.Service;
