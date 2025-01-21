@@ -19,12 +19,6 @@ public class CustomRaceSqlDto extends BaseSqlDto {
 
     private String name;
     private String speed;
-    private int strengthBonus;
-    private int dexterityBonus;
-    private int constitutionBonus;
-    private int intelligenceBonus;
-    private int wisdomBonus;
-    private int charismaBonus;
     private String languages;
 
     @Column(columnDefinition = "TEXT")
