@@ -47,12 +47,6 @@ public class CustomSpellSqlDto extends BaseSqlDto {
     private String circles;
     private String patrons;
 
-    @ManyToMany(mappedBy = "raceSpells")
-    private List<CustomRaceSqlDto> spellRaces;
-
-    @ManyToMany(mappedBy = "classSpells")
-    private List<CustomClassSqlDto> spellClasses;
-
     @ManyToMany(mappedBy = "preparedSpells")
     private List<CustomCharacterSheetSqlDto> characterSheets;
 }

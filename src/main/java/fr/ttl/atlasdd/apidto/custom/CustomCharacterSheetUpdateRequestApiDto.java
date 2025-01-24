@@ -1,6 +1,13 @@
 package fr.ttl.atlasdd.apidto.custom;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import fr.ttl.atlasdd.apidto.NoteCharacterApiDto;
+import fr.ttl.atlasdd.apidto.UserApiDto;
+import fr.ttl.atlasdd.utils.Alignment;
+import fr.ttl.atlasdd.utils.CharacterStatus;
+import fr.ttl.atlasdd.utils.ShieldType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Data;
 
 import java.util.List;
@@ -29,11 +36,14 @@ public class CustomCharacterSheetUpdateRequestApiDto {
     private int intelligence;
     private int wisdom;
     private int charisma;
-    private String status;
-    private Long userId;
-    private Long raceId;
-    private Long backgroundId;
-    private Long classId;
+
+    @Enumerated(EnumType.STRING)
+    private CharacterStatus status;
+
+    private UserApiDto owner;
+    private CustomRaceApiDto race;
+    private CustomBackgroundApiDto background;
+    private CustomClassApiDto classe;
 
     @JsonProperty("skillIds")
     private List<Long> skillIds;
@@ -41,8 +51,7 @@ public class CustomCharacterSheetUpdateRequestApiDto {
     @JsonProperty("preparedSpellIds")
     private List<Long> preparedSpellIds;
 
-    @JsonProperty("weaponIds")
-    private List<Long> weaponIds;
-
-    private Long armorId;
+    private List<CustomWeaponApiDto> weapons;
+    private CustomArmorApiDto armor;
+    private List<NoteCharacterApiDto> notes;
 }

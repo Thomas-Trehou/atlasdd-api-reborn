@@ -26,12 +26,4 @@ public class CustomRaceSqlDto extends BaseSqlDto {
 
     @OneToMany(mappedBy = "race")
     private List<CustomCharacterSheetSqlDto> characterSheets;
-
-    @ManyToMany
-    @JoinTable(
-            name = "custom_race_has_spells",
-            joinColumns = @JoinColumn(name = "race_id"),
-            inverseJoinColumns = @JoinColumn(name = "spell_id")
-    )
-    private List<CustomSpellSqlDto> raceSpells;
 }

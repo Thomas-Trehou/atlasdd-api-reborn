@@ -18,6 +18,4 @@ public class CustomRaceApiDto extends BaseApiDto {
     private String speed;
     private String languages;
     private String traits;
-
-    private List<CustomSpellApiDto> raceSpells;
 }

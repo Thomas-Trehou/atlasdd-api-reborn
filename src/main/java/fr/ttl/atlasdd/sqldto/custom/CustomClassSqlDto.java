@@ -26,12 +26,4 @@ public class CustomClassSqlDto extends BaseSqlDto {
 
     @OneToMany(mappedBy = "classe")
     private List<CustomCharacterSheetSqlDto> characterSheets;
-
-    @ManyToMany
-    @JoinTable(
-            name = "custom_class_has_spells",
-            joinColumns = @JoinColumn(name = "class_id"),
-            inverseJoinColumns = @JoinColumn(name = "spell_id")
-    )
-    private List<CustomSpellSqlDto> classSpells;
 }

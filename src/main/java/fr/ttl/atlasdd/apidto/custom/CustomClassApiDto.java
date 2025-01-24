@@ -18,6 +18,4 @@ public class CustomClassApiDto extends BaseApiDto {
     private String hitDice;
     private int startingHitPoints;
     private String startingEquipment;
-
-    private List<CustomSpellApiDto> classSpells;
 }
