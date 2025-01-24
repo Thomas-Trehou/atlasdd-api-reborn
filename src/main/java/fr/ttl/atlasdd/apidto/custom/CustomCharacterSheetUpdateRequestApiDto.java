@@ -53,5 +53,4 @@ public class CustomCharacterSheetUpdateRequestApiDto {
 
     private List<CustomWeaponApiDto> weapons;
     private CustomArmorApiDto armor;
-    private List<NoteCharacterApiDto> notes;
 }

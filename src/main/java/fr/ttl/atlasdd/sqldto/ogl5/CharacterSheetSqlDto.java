@@ -97,12 +97,7 @@ public class CharacterSheetSqlDto extends BaseSqlDto {
     @JoinColumn(name = "armor_id")
     private ArmorSqlDto armor;
 
-    @ManyToMany
-    @JoinTable(
-            name = "ogl5_character_sheets_has_notes",
-            joinColumns = @JoinColumn(name = "character_id"),
-            inverseJoinColumns = @JoinColumn(name = "characterNote_id")
-    )
+    @OneToMany(mappedBy = "ogl5CharacterSheet")
     private List<NoteCharacterSqlDto> characterNotes;
 
 }

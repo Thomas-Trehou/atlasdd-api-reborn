@@ -1,10 +1,8 @@
 package fr.ttl.atlasdd.sqldto;
 
+import fr.ttl.atlasdd.sqldto.custom.CustomCharacterSheetSqlDto;
 import fr.ttl.atlasdd.sqldto.ogl5.CharacterSheetSqlDto;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,6 +23,11 @@ public class NoteCharacterSqlDto extends BaseSqlDto {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @ManyToMany(mappedBy = "characterNotes")
-    private List<CharacterSheetSqlDto> characterSheets;
+    @ManyToOne
+    @JoinColumn(name = "ogl5CharacterSheet_id")
+    private CharacterSheetSqlDto ogl5CharacterSheet;
+
+    @ManyToOne
+    @JoinColumn(name = "customCharacterSheet_id")
+    private CustomCharacterSheetSqlDto customCharacterSheet;
 }

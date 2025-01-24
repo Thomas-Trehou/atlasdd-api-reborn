@@ -6,6 +6,7 @@ import fr.ttl.atlasdd.apidto.ogl5.CharacterSheetUpdateRequestApiDto;
 import fr.ttl.atlasdd.mapper.ogl5.CharacterSheetMapper;
 import fr.ttl.atlasdd.repository.*;
 import fr.ttl.atlasdd.repository.ogl5.*;
+import fr.ttl.atlasdd.service.global.NoteCharacterService;
 import fr.ttl.atlasdd.service.ogl5.CharacterSheetService;
 import fr.ttl.atlasdd.sqldto.*;
 import fr.ttl.atlasdd.sqldto.ogl5.*;
@@ -67,7 +68,6 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         List<SpellSqlDto> spells = spellRepository.findAllById(request.getPreparedSpellIds());
         List<WeaponSqlDto> weapons = weaponRepository.findAllById(request.getWeaponIds());
         ArmorSqlDto armor = armorRepository.findById(request.getArmorId()).orElseThrow();
-        List<NoteCharacterSqlDto> notes = new ArrayList<>();
 
         CharacterSheetSqlDto characterSheet = new CharacterSheetSqlDto();
         characterSheet.setName(request.getName());
@@ -99,7 +99,6 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         characterSheet.setPreparedSpells(spells);
         characterSheet.setWeapons(weapons);
         characterSheet.setArmor(armor);
-        characterSheet.setCharacterNotes(notes);
 
         CharacterSheetSqlDto savedCharacterSheet = characterSheetRepository.save(characterSheet);
 
@@ -109,6 +108,8 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
     @Override
     public CharacterSheetApiDto getCharacterSheetById(Long id) {
         CharacterSheetSqlDto characterSheet = characterSheetRepository.findById(id).orElseThrow();
+
+        CharacterSheetApiDto characterSheetApiDto = characterSheetMapper.toApiDto(characterSheet);
 
         return characterSheetMapper.toApiDto(characterSheet);
     }

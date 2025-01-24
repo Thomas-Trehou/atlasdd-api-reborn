@@ -1,5 +1,6 @@
 package fr.ttl.atlasdd.apidto.custom;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.ttl.atlasdd.apidto.BaseApiDto;
 import fr.ttl.atlasdd.apidto.NoteCharacterApiDto;
 import fr.ttl.atlasdd.apidto.UserApiDto;
@@ -59,5 +60,4 @@ public class CustomCharacterSheetApiDto extends BaseApiDto {
     private List<CustomSpellApiDto> preparedSpells;
     private List<CustomWeaponApiDto> weapons;
     private CustomArmorApiDto armor;
-    private List<NoteCharacterApiDto> notes;
 }
