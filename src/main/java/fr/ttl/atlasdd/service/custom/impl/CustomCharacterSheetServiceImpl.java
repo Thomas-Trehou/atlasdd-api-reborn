@@ -8,7 +8,7 @@ import fr.ttl.atlasdd.mapper.custom.CustomCharacterSheetMapper;
 import fr.ttl.atlasdd.mapper.custom.CustomCharacterSheetUpdateRequestMapper;
 import fr.ttl.atlasdd.repository.UserRepo;
 import fr.ttl.atlasdd.repository.custom.*;
-import fr.ttl.atlasdd.service.custom.CustomCharacterSheetService;
+import fr.ttl.atlasdd.service.custom.*;
 import fr.ttl.atlasdd.sqldto.NoteCharacterSqlDto;
 import fr.ttl.atlasdd.sqldto.UserSqlDto;
 import fr.ttl.atlasdd.sqldto.custom.CustomCharacterSheetSqlDto;
@@ -25,13 +25,13 @@ import java.util.List;
 public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetService {
 
     private final UserRepo userRepository;
-    private final CustomRaceRepo customRaceRepository;
-    private final CustomBackgroundRepo customBackgroundRepository;
-    private final CustomClassRepo customClassRepository;
+    private final CustomRaceService customRaceService;
+    private final CustomBackgroundService customBackgroundService;
+    private final CustomClassService customClassService;
     private final CustomSkillRepo customSkillRepository;
     private final CustomSpellRepo customSpellRepository;
-    private final CustomWeaponRepo customWeaponRepository;
-    private final CustomArmorRepo customArmorRepository;
+    private final CustomWeaponService customWeaponService;
+    private final CustomArmorService customArmorService;
     private final CustomCharacterSheetRepo customCharacterSheetRepository;
     private final CustomCharacterSheetMapper customCharacterSheetMapper;
     private final CustomCharacterSheetCreateRequestMapper customCharacterSheetCreateRequestMapper;
@@ -39,26 +39,26 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
 
     public CustomCharacterSheetServiceImpl(
             UserRepo userRepository,
-            CustomRaceRepo customRaceRepository,
-            CustomBackgroundRepo customBackgroundRepository,
-            CustomClassRepo customClassRepository,
+            CustomRaceService customRaceService,
+            CustomBackgroundService customBackgroundService,
+            CustomClassService customClassService,
             CustomSkillRepo customSkillRepository,
             CustomSpellRepo customSpellRepository,
-            CustomWeaponRepo customWeaponRepository,
-            CustomArmorRepo customArmorRepository,
+            CustomWeaponService customWeaponService,
+            CustomArmorService customArmorService,
             CustomCharacterSheetRepo customCharacterSheetRepository,
             CustomCharacterSheetMapper customCharacterSheetMapper,
             CustomCharacterSheetCreateRequestMapper customCharacterSheetCreateRequestMapper,
             CustomCharacterSheetUpdateRequestMapper customCharacterSheetUpdateRequestMapper
     ) {
         this.userRepository = userRepository;
-        this.customRaceRepository = customRaceRepository;
-        this.customBackgroundRepository = customBackgroundRepository;
-        this.customClassRepository = customClassRepository;
+        this.customRaceService = customRaceService;
+        this.customBackgroundService = customBackgroundService;
+        this.customClassService = customClassService;
         this.customSkillRepository = customSkillRepository;
         this.customSpellRepository = customSpellRepository;
-        this.customWeaponRepository = customWeaponRepository;
-        this.customArmorRepository = customArmorRepository;
+        this.customWeaponService = customWeaponService;
+        this.customArmorService = customArmorService;
         this.customCharacterSheetRepository = customCharacterSheetRepository;
         this.customCharacterSheetMapper = customCharacterSheetMapper;
         this.customCharacterSheetCreateRequestMapper = customCharacterSheetCreateRequestMapper;
@@ -68,12 +68,18 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
     @Override
     public CustomCharacterSheetApiDto createCharacterSheet(CustomCharacterSheetCreateRequestApiDto characterSheetCreateRequestApiDto) {
 
-        UserSqlDto userSqlDto = userRepository.findById(characterSheetCreateRequestApiDto.getOwner().getId()).orElseThrow();
+        UserSqlDto userSqlDto = userRepository.findById(characterSheetCreateRequestApiDto.getUserId()).orElseThrow();
         List<CustomSkillSqlDto> skills = customSkillRepository.findAllById(characterSheetCreateRequestApiDto.getSkillIds());
         List<CustomSpellSqlDto> spells = customSpellRepository.findAllById(characterSheetCreateRequestApiDto.getPreparedSpellIds());
         List<NoteCharacterSqlDto> notes = new ArrayList<>();
 
         CustomCharacterSheetApiDto characterSheetApiDto = customCharacterSheetCreateRequestMapper.toApiDto(characterSheetCreateRequestApiDto);
+
+        characterSheetApiDto.setRace(customRaceService.createRace(characterSheetApiDto.getRace()));
+        characterSheetApiDto.setBackground(customBackgroundService.createBackground(characterSheetApiDto.getBackground()));
+        characterSheetApiDto.setClasse(customClassService.createClass(characterSheetApiDto.getClasse()));
+        characterSheetApiDto.setWeapons(customWeaponService.createWeapons(characterSheetApiDto.getWeapons()));
+        characterSheetApiDto.setArmor(customArmorService.createArmor(characterSheetApiDto.getArmor()));
 
         CustomCharacterSheetSqlDto characterSheetSqlDto = customCharacterSheetMapper.toSqlDto(characterSheetApiDto);
         characterSheetSqlDto.setOwner(userSqlDto);
@@ -111,6 +117,12 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
         List<CustomSpellSqlDto> spells = customSpellRepository.findAllById(customCharacterSheetUpdateRequestApiDto.getPreparedSpellIds());
 
         CustomCharacterSheetApiDto characterSheetApiDto = customCharacterSheetUpdateRequestMapper.toApiDto(customCharacterSheetUpdateRequestApiDto);
+
+        characterSheetApiDto.setRace(customRaceService.updateRace(characterSheetApiDto.getRace()));
+        characterSheetApiDto.setBackground(customBackgroundService.updateBackground(characterSheetApiDto.getBackground()));
+        characterSheetApiDto.setClasse(customClassService.updateClass(characterSheetApiDto.getClasse()));
+        characterSheetApiDto.setWeapons(customWeaponService.updateWeapons(characterSheetApiDto.getWeapons()));
+        characterSheetApiDto.setArmor(customArmorService.updateArmor(characterSheetApiDto.getArmor()));
 
         customCharacterSheetMapper.updateSqlDto(characterSheetApiDto, characterSheetSqlDto);
         characterSheetSqlDto.setSkills(skills);

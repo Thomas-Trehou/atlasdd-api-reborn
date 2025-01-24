@@ -40,7 +40,7 @@ public class CustomCharacterSheetUpdateRequestApiDto {
     @Enumerated(EnumType.STRING)
     private CharacterStatus status;
 
-    private UserApiDto owner;
+    private Long userId;
     private CustomRaceApiDto race;
     private CustomBackgroundApiDto background;
     private CustomClassApiDto classe;
