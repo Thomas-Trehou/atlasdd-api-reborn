@@ -3,7 +3,9 @@ package fr.ttl.atlasdd.service.ogl5.impl;
 import fr.ttl.atlasdd.apidto.ogl5.CharacterSheetApiDto;
 import fr.ttl.atlasdd.apidto.ogl5.CharacterSheetCreateRequestApiDto;
 import fr.ttl.atlasdd.apidto.ogl5.CharacterSheetUpdateRequestApiDto;
+import fr.ttl.atlasdd.mapper.ogl5.CharacterSheetCreateRequestMapper;
 import fr.ttl.atlasdd.mapper.ogl5.CharacterSheetMapper;
+import fr.ttl.atlasdd.mapper.ogl5.CharacterSheetUpdateRequestMapper;
 import fr.ttl.atlasdd.repository.*;
 import fr.ttl.atlasdd.repository.ogl5.*;
 import fr.ttl.atlasdd.service.global.NoteCharacterService;
@@ -33,6 +35,8 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
     private final ArmorRepo armorRepository;
     private final CharacterSheetRepo characterSheetRepository;
     private final CharacterSheetMapper characterSheetMapper;
+    private final CharacterSheetCreateRequestMapper characterSheetCreateRequestMapper;
+    private final CharacterSheetUpdateRequestMapper characterSheetUpdateRequestMapper;
 
     public CharacterSheetServiceImpl(
             UserRepo userRepository,
@@ -44,7 +48,9 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
             WeaponRepo weaponRepository,
             ArmorRepo armorRepository,
             CharacterSheetRepo characterSheetRepository,
-            CharacterSheetMapper characterSheetMapper
+            CharacterSheetMapper characterSheetMapper,
+            CharacterSheetCreateRequestMapper characterSheetCreateRequestMapper,
+            CharacterSheetUpdateRequestMapper characterSheetUpdateRequestMapper
     ) {
         this.userRepository = userRepository;
         this.raceRepository = raceRepository;
@@ -56,6 +62,8 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         this.armorRepository = armorRepository;
         this.characterSheetRepository = characterSheetRepository;
         this.characterSheetMapper = characterSheetMapper;
+        this.characterSheetCreateRequestMapper = characterSheetCreateRequestMapper;
+        this.characterSheetUpdateRequestMapper = characterSheetUpdateRequestMapper;
     }
 
     @Override
@@ -70,26 +78,9 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         ArmorSqlDto armor = armorRepository.findById(request.getArmorId()).orElseThrow();
 
         CharacterSheetSqlDto characterSheet = new CharacterSheetSqlDto();
-        characterSheet.setName(request.getName());
-        characterSheet.setLevel(request.getLevel());
-        characterSheet.setExperience(request.getExperience());
-        characterSheet.setArmorClass(request.getArmorClass());
-        characterSheet.setInitiative(request.getInitiative());
-        characterSheet.setInspiration(request.getInspiration());
-        characterSheet.setHitPoints(request.getHitPoints());
-        characterSheet.setMaxHitPoints(request.getMaxHitPoints());
-        characterSheet.setBonusHitPoints(request.getBonusHitPoints());
-        characterSheet.setSpeed(request.getSpeed());
-        characterSheet.setPassivePerception(request.getPassivePerception());
+        characterSheetCreateRequestMapper.updateSqlDto(request, characterSheet);
         characterSheet.setShield(ShieldType.valueOf(request.getShield()));
-        characterSheet.setTwoWeaponsFighting(request.isTwoWeaponsFighting());
         characterSheet.setAlignment(Alignment.valueOf(request.getAlignment()));
-        characterSheet.setStrength(request.getStrength());
-        characterSheet.setDexterity(request.getDexterity());
-        characterSheet.setConstitution(request.getConstitution());
-        characterSheet.setIntelligence(request.getIntelligence());
-        characterSheet.setWisdom(request.getWisdom());
-        characterSheet.setCharisma(request.getCharisma());
         characterSheet.setStatus(CharacterStatus.valueOf(request.getStatus()));
         characterSheet.setOwner(user);
         characterSheet.setRace(race);
@@ -128,26 +119,9 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         List<SkillSqlDto> skills = skillRepository.findAllById(request.getSkillIds());
         List<SpellSqlDto> spells = spellRepository.findAllById(request.getPreparedSpellIds());
 
-        characterSheet.setName(request.getName());
-        characterSheet.setLevel(request.getLevel());
-        characterSheet.setExperience(request.getExperience());
-        characterSheet.setArmorClass(request.getArmorClass());
-        characterSheet.setInitiative(request.getInitiative());
-        characterSheet.setInspiration(request.getInspiration());
-        characterSheet.setHitPoints(request.getHitPoints());
-        characterSheet.setMaxHitPoints(request.getMaxHitPoints());
-        characterSheet.setBonusHitPoints(request.getBonusHitPoints());
-        characterSheet.setSpeed(request.getSpeed());
-        characterSheet.setPassivePerception(request.getPassivePerception());
+        characterSheetUpdateRequestMapper.updateSqlDto(request, characterSheet);
         characterSheet.setShield(ShieldType.valueOf(request.getShield()));
-        characterSheet.setTwoWeaponsFighting(request.isTwoWeaponsFighting());
         characterSheet.setAlignment(Alignment.valueOf(request.getAlignment()));
-        characterSheet.setStrength(request.getStrength());
-        characterSheet.setDexterity(request.getDexterity());
-        characterSheet.setConstitution(request.getConstitution());
-        characterSheet.setIntelligence(request.getIntelligence());
-        characterSheet.setWisdom(request.getWisdom());
-        characterSheet.setCharisma(request.getCharisma());
         characterSheet.setStatus(CharacterStatus.valueOf(request.getStatus()));
         characterSheet.setSkills(skills);
         characterSheet.setPreparedSpells(spells);
