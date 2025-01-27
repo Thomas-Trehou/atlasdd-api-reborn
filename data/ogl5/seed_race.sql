@@ -1,4 +1,4 @@
-INSERT INTO "races" ("name", "speed", "strength_bonus", "dexterity_bonus", "constitution_bonus", "intelligence_bonus", "wisdom_bonus", "charisma_bonus", "languages", "traits")
+INSERT INTO "ogl5_races" ("name", "speed", "strength_bonus", "dexterity_bonus", "constitution_bonus", "intelligence_bonus", "wisdom_bonus", "charisma_bonus", "languages", "traits")
 VALUES
     ('Haut-Elfe', '9m', 0, 2, 0, 1, 0, 0, 'Commun, Elfique', 'Vision dans le noir (18m), Sens aiguisés (Maitrise de Perception), Ascendance féérique (Avantage aux JDS contre les effets de charme et la magie ne peut vous endormir), Transe, Entraînement aux armes elfiques'),
     ('Elfe des bois', '10.50m', 0, 2, 0, 0, 1, 0, 'Commun, Elfique', 'Vision dans le noir (18m), Sens aiguisés (Maitrise de Perception), Ascendance féérique (Avantage aux JDS contre les effets de charme), Transe, Entraînement aux armes elfiques, Cachette naturelle (Vous pouvez tenter de vous cacher dans une zone à visibilité réduite)'),

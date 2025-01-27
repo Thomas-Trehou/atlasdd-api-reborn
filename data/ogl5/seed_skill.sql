@@ -1,4 +1,4 @@
-INSERT INTO "skills" ("name")
+INSERT INTO "ogl5_skills" ("name")
 VALUES
     ('Acrobaties'),
     ('Arcanes'),

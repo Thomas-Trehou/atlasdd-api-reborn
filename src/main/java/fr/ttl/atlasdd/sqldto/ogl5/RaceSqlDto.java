@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "races")
+@Table(name = "ogl5_races")
 public class RaceSqlDto extends BaseSqlDto {
 
     private String name;
@@ -35,7 +35,7 @@ public class RaceSqlDto extends BaseSqlDto {
 
     @ManyToMany
     @JoinTable(
-            name = "race_has_spells",
+            name = "ogl5_race_has_spells",
             joinColumns = @JoinColumn(name = "race_id"),
             inverseJoinColumns = @JoinColumn(name = "spell_id")
     )

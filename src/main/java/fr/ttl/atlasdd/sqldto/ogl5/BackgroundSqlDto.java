@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "backgrounds")
+@Table(name = "ogl5_backgrounds")
 public class BackgroundSqlDto extends BaseSqlDto {
 
     private String name;

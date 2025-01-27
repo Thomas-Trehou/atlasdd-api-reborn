@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "skills")
+@Table(name = "ogl5_skills")
 public class SkillSqlDto extends BaseSqlDto {
 
     private String name;

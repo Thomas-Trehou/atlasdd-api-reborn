@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "spells")
+@Table(name = "ogl5_spells")
 @EntityListeners(SpellEntityListener.class)
 public class SpellSqlDto extends BaseSqlDto {
 

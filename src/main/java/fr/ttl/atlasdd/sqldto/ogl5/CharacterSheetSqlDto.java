@@ -19,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "character_sheets")
+@Table(name = "ogl5_character_sheets")
 public class CharacterSheetSqlDto extends BaseSqlDto {
 
     private String name;
@@ -71,7 +71,7 @@ public class CharacterSheetSqlDto extends BaseSqlDto {
 
     @ManyToMany
     @JoinTable(
-            name = "character_sheets_has_skills",
+            name = "ogl5_character_sheets_has_skills",
             joinColumns = @JoinColumn(name = "character_id"),
             inverseJoinColumns = @JoinColumn(name = "skill_id")
     )
@@ -79,7 +79,7 @@ public class CharacterSheetSqlDto extends BaseSqlDto {
 
     @ManyToMany
     @JoinTable(
-            name = "character_prepared_spells",
+            name = "ogl5_character_prepared_spells",
             joinColumns = @JoinColumn(name = "character_id"),
             inverseJoinColumns = @JoinColumn(name = "spell_id")
     )
@@ -87,7 +87,7 @@ public class CharacterSheetSqlDto extends BaseSqlDto {
 
     @ManyToMany
     @JoinTable(
-            name = "character_sheets_has_weapons",
+            name = "ogl5_character_sheets_has_weapons",
             joinColumns = @JoinColumn(name = "character_id"),
             inverseJoinColumns = @JoinColumn(name = "weapon_id")
     )
@@ -97,12 +97,7 @@ public class CharacterSheetSqlDto extends BaseSqlDto {
     @JoinColumn(name = "armor_id")
     private ArmorSqlDto armor;
 
-    @ManyToMany
-    @JoinTable(
-            name = "character_sheets_has_notes",
-            joinColumns = @JoinColumn(name = "character_id"),
-            inverseJoinColumns = @JoinColumn(name = "characterNote_id")
-    )
+    @OneToMany(mappedBy = "ogl5CharacterSheet")
     private List<NoteCharacterSqlDto> characterNotes;
 
 }

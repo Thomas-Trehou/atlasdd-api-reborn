@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "classes")
+@Table(name = "ogl5_classes")
 public class ClassSqlDto extends BaseSqlDto {
 
     private String name;
@@ -29,7 +29,7 @@ public class ClassSqlDto extends BaseSqlDto {
 
     @ManyToMany
     @JoinTable(
-            name = "class_has_spells",
+            name = "ogl5_class_has_spells",
             joinColumns = @JoinColumn(name = "class_id"),
             inverseJoinColumns = @JoinColumn(name = "spell_id")
     )

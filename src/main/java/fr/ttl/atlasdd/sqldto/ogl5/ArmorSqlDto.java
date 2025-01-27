@@ -16,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "armors")
+@Table(name = "ogl5_armors")
 public class ArmorSqlDto extends BaseSqlDto {
 
     private String index;

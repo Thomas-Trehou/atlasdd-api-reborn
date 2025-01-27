@@ -1,6 +1,6 @@
 BEGIN;
 
-INSERT INTO "armors" ("index", "name", "armor_category", "armor_class", "strength_minimum", "stealth_disadvantage", "weight", "cost", "properties", "created_at", "updated_at")
+INSERT INTO "ogl5_armors" ("index", "name", "armor_category", "armor_class", "strength_minimum", "stealth_disadvantage", "weight", "cost", "properties", "created_at", "updated_at")
 VALUES
     ('padded armor','Armure matelassée','LIGHT',11,0,false,4,'5 po','Une armure matelassée est faite de couches de tissu rembourrées.', now(), now()),
     ('leather armor','Armure de cuir','LIGHT',11,0,false,5,'10 po','La cuirasse et les spalières de cette armure sont en cuir bouilli dans l''huile pour le durcir. Le reste de l''armure est composé de matériaux plus souples et plus flexibles.', now(), now()),

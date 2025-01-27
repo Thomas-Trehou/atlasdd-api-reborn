@@ -1,4 +1,4 @@
-INSERT INTO "backgrounds" ("name", "mastered_tools","starting_equipment", "background_feature")
+INSERT INTO "ogl5_backgrounds" ("name", "mastered_tools","starting_equipment", "background_feature")
 VALUES
     ('Acolyte', ' ', 'un symbole sacré (cadeau reçu lorsque vous êtes entré en sacerdoce), un livre de prières, 5 bâtons d''encens, des habits de cérémonie, des vêtements communs et une bourse contenant 15 po.', 'Abri du fidèle' ),
     ('Artisan de Guilde', 'Un type d''outil d''artisan', 'un jeu d''outil d''artisan (de votre choix), une lettre de recommandation de votre guilde, des vêtements de voyage et une bourse contenant 15 po.', 'Membre de guilde'),

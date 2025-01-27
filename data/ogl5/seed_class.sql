@@ -1,4 +1,4 @@
-INSERT INTO "classes" ("name", "hit_dice", "starting_hit_points", "starting_equipment")
+INSERT INTO "ogl5_classes" ("name", "hit_dice", "starting_hit_points", "starting_equipment")
 VALUES
     ('Barbare', '1d12', 12, '(a) une hache à deux mains ou (b) n''importe quelle arme de guerre de corps à corps /et/ (a) deux hachettes ou (b) n''importe quelle arme courante /et/ un sac d''explorateur et quatre javelines'),
     ('Barde', '1d8', 8, '(a) une rapière, (b) une épée longue ou (c) n''importe quelle arme courante /et/ (a) un sac de diplomate ou (b) un sac d''artiste /et/ (a) un luth ou (b) n''importe quel autre instrument de musique /et/ une armure de cuir et une dague'),
