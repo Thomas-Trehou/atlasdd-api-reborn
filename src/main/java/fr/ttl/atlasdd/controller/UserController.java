@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/user")
 public class UserController {
@@ -25,5 +27,10 @@ public class UserController {
     @GetMapping("/{slug}")
     public UserLightApiDto getUserBySlug(@PathVariable String slug) {
         return userService.getUserBySlug(slug);
+    }
+
+    @GetMapping("/{id}/friends")
+    public List<UserLightApiDto> getFriends(@PathVariable Long id) {
+        return userService.getFriends(id);
     }
 }
