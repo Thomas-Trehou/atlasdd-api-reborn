@@ -33,4 +33,10 @@ public class UserSqlDto extends BaseSqlDto{
     )
     private List<UserSqlDto> friends;
 
+    @ManyToMany(mappedBy = "campaignPlayers")
+    private List<CampaignSqlDto> campaignsAsPlayer;
+
+    @OneToMany(mappedBy = "gameMaster")
+    private List<CampaignSqlDto> campaignsAsGameMaster;
+
 }

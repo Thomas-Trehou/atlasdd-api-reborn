@@ -1,6 +1,7 @@
 package fr.ttl.atlasdd.sqldto.custom;
 
 import fr.ttl.atlasdd.sqldto.BaseSqlDto;
+import fr.ttl.atlasdd.sqldto.CampaignSqlDto;
 import fr.ttl.atlasdd.sqldto.NoteCharacterSqlDto;
 import fr.ttl.atlasdd.sqldto.UserSqlDto;
 import fr.ttl.atlasdd.utils.Alignment;
@@ -99,5 +100,8 @@ public class CustomCharacterSheetSqlDto extends BaseSqlDto {
 
     @OneToMany(mappedBy = "customCharacterSheet")
     private List<NoteCharacterSqlDto> characterNotes;
+
+    @ManyToMany(mappedBy = "campaignCustomCharacterSheets")
+    private List<CampaignSqlDto> campaigns;
 
 }
