@@ -1,9 +1,7 @@
 package fr.ttl.atlasdd.sqldto;
 
 import fr.ttl.atlasdd.sqldto.ogl5.CharacterSheetSqlDto;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,5 +24,13 @@ public class UserSqlDto extends BaseSqlDto{
 
     @OneToMany(mappedBy = "owner")
     private List<CharacterSheetSqlDto> characterSheetList;
+
+    @ManyToMany
+    @JoinTable(
+            name = "users_have_friends",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "friend_id")
+    )
+    private List<UserSqlDto> friends;
 
 }

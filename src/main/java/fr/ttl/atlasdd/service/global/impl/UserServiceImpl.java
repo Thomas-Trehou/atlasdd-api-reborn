@@ -6,6 +6,9 @@ import fr.ttl.atlasdd.repository.UserRepo;
 import fr.ttl.atlasdd.service.global.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class UserServiceImpl implements UserService {
 
@@ -26,6 +29,15 @@ public class UserServiceImpl implements UserService {
     public UserLightApiDto getUserBySlug(String slug) {
         return userRepository.findBySlug(slug)
                 .map(UserLightMapper.INSTANCE::toApiDto)
+                .orElse(null);
+    }
+
+    @Override
+    public List<UserLightApiDto> getFriends(Long userId) {
+        return userRepository.findById(userId)
+                .map(user -> user.getFriends().stream()
+                        .map(UserLightMapper.INSTANCE::toApiDto)
+                        .collect(Collectors.toList()))
                 .orElse(null);
     }
 }
