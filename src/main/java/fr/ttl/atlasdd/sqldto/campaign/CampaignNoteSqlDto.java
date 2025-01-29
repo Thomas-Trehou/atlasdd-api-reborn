@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.sqldto.campaign;
 
 import fr.ttl.atlasdd.sqldto.BaseSqlDto;
-import fr.ttl.atlasdd.sqldto.UserSqlDto;
+import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

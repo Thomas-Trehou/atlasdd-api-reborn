@@ -3,15 +3,15 @@ package fr.ttl.atlasdd.service.campaign.impl;
 import fr.ttl.atlasdd.apidto.campaign.CampaignApiDto;
 import fr.ttl.atlasdd.apidto.campaign.CampaignCreateRequestApiDto;
 import fr.ttl.atlasdd.mapper.campaign.CampaignMapper;
-import fr.ttl.atlasdd.repository.UserRepo;
+import fr.ttl.atlasdd.repository.user.UserRepo;
 import fr.ttl.atlasdd.repository.campaign.CampaignRepo;
-import fr.ttl.atlasdd.repository.custom.CustomCharacterSheetRepo;
-import fr.ttl.atlasdd.repository.ogl5.CharacterSheetRepo;
+import fr.ttl.atlasdd.repository.character.custom.CustomCharacterSheetRepo;
+import fr.ttl.atlasdd.repository.character.ogl5.CharacterSheetRepo;
 import fr.ttl.atlasdd.service.campaign.CampaignService;
-import fr.ttl.atlasdd.sqldto.UserSqlDto;
+import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
 import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
-import fr.ttl.atlasdd.sqldto.custom.CustomCharacterSheetSqlDto;
-import fr.ttl.atlasdd.sqldto.ogl5.CharacterSheetSqlDto;
+import fr.ttl.atlasdd.sqldto.character.custom.CustomCharacterSheetSqlDto;
+import fr.ttl.atlasdd.sqldto.character.ogl5.CharacterSheetSqlDto;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -68,6 +68,10 @@ public class CampaignServiceImpl implements CampaignService {
     public CampaignApiDto addPlayerToCampaign(Long campaignId, Long playerId) {
         CampaignSqlDto campaign = campaignRepository.findById(campaignId).orElseThrow();
         UserSqlDto player = userRepository.findById(playerId).orElseThrow();
+
+        if (campaign.getCampaignPlayers().contains(player)) {
+            return campaignMapper.toApiDto(campaign);
+        }
 
         campaign.getCampaignPlayers().add(player);
 

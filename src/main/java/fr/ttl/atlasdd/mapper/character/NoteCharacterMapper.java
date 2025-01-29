@@ -1,0 +1,19 @@
+package fr.ttl.atlasdd.mapper.character;
+
+import fr.ttl.atlasdd.apidto.character.NoteCharacterApiDto;
+import fr.ttl.atlasdd.sqldto.character.NoteCharacterSqlDto;
+import org.mapstruct.Mapper;
+import org.mapstruct.MappingTarget;
+import org.mapstruct.factory.Mappers;
+
+@Mapper(componentModel = "spring")
+public interface NoteCharacterMapper {
+
+    NoteCharacterMapper INSTANCE = Mappers.getMapper(NoteCharacterMapper.class);
+
+    NoteCharacterApiDto toApiDto(NoteCharacterSqlDto noteCharacterSqlDto);
+
+    NoteCharacterSqlDto toSqlDto(NoteCharacterApiDto noteCharacterApiDto);
+
+    void updateSqlDto(NoteCharacterApiDto noteCharacterApiDto, @MappingTarget NoteCharacterSqlDto noteCharacterSqlDto);
+}
