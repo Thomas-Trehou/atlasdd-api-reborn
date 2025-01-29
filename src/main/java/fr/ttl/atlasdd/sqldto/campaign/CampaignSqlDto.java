@@ -21,6 +21,8 @@ import java.util.List;
 public class CampaignSqlDto extends BaseSqlDto {
 
     private String name;
+
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     @ManyToOne
