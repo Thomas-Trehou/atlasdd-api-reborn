@@ -1,5 +1,6 @@
 package fr.ttl.atlasdd.sqldto;
 
+import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
 import fr.ttl.atlasdd.sqldto.ogl5.CharacterSheetSqlDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -32,5 +33,11 @@ public class UserSqlDto extends BaseSqlDto{
             inverseJoinColumns = @JoinColumn(name = "friend_id")
     )
     private List<UserSqlDto> friends;
+
+    @ManyToMany(mappedBy = "campaignPlayers")
+    private List<CampaignSqlDto> campaignsAsPlayer;
+
+    @OneToMany(mappedBy = "gameMaster")
+    private List<CampaignSqlDto> campaignsAsGameMaster;
 
 }

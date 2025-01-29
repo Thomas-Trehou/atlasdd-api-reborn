@@ -100,8 +100,6 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
     public CharacterSheetApiDto getCharacterSheetById(Long id) {
         CharacterSheetSqlDto characterSheet = characterSheetRepository.findById(id).orElseThrow();
 
-        CharacterSheetApiDto characterSheetApiDto = characterSheetMapper.toApiDto(characterSheet);
-
         return characterSheetMapper.toApiDto(characterSheet);
     }
 
