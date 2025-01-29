@@ -39,10 +39,11 @@ public class CampaignServiceImpl implements CampaignService {
     @Override
     public CampaignApiDto createCampaign(CampaignCreateRequestApiDto campaignCreateRequestApiDto) {
         CampaignSqlDto newCampaign = new CampaignSqlDto();
+        UserSqlDto gameMaster = userRepository.findById(campaignCreateRequestApiDto.getGameMasterId()).orElseThrow();
 
         newCampaign.setName(campaignCreateRequestApiDto.getName());
         newCampaign.setDescription(campaignCreateRequestApiDto.getDescription());
-        newCampaign.setGameMaster(userRepository.findById(campaignCreateRequestApiDto.getGameMasterId()).orElseThrow());
+        newCampaign.setGameMaster(gameMaster);
 
         return campaignMapper.toApiDto(campaignRepository.save(newCampaign));
     }

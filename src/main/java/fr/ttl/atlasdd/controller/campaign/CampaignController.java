@@ -16,7 +16,7 @@ public class CampaignController {
     }
 
     @PostMapping
-    public CampaignApiDto createCampaign(CampaignCreateRequestApiDto campaignCreateRequestApiDto) {
+    public CampaignApiDto createCampaign(@RequestBody CampaignCreateRequestApiDto campaignCreateRequestApiDto) {
         return campaignService.createCampaign(campaignCreateRequestApiDto);
     }
 
@@ -26,7 +26,7 @@ public class CampaignController {
     }
 
     @PatchMapping("/{id}")
-    public CampaignApiDto updateCampaign(@PathVariable Long id, CampaignCreateRequestApiDto campaignCreateRequestApiDto) {
+    public CampaignApiDto updateCampaign(@PathVariable Long id,@RequestBody CampaignCreateRequestApiDto campaignCreateRequestApiDto) {
         return campaignService.updateCampaign(id, campaignCreateRequestApiDto);
     }
 
