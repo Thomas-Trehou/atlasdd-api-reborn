@@ -1,5 +1,7 @@
-package fr.ttl.atlasdd.sqldto;
+package fr.ttl.atlasdd.sqldto.campaign;
 
+import fr.ttl.atlasdd.sqldto.BaseSqlDto;
+import fr.ttl.atlasdd.sqldto.UserSqlDto;
 import fr.ttl.atlasdd.sqldto.custom.CustomCharacterSheetSqlDto;
 import fr.ttl.atlasdd.sqldto.ogl5.CharacterSheetSqlDto;
 import jakarta.persistence.*;

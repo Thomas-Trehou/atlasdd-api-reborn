@@ -1,7 +1,7 @@
-package fr.ttl.atlasdd.mapper;
+package fr.ttl.atlasdd.mapper.campaign;
 
-import fr.ttl.atlasdd.apidto.CampaignApiDto;
-import fr.ttl.atlasdd.sqldto.CampaignSqlDto;
+import fr.ttl.atlasdd.apidto.campaign.CampaignApiDto;
+import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;

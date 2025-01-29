@@ -1,5 +1,7 @@
-package fr.ttl.atlasdd.apidto;
+package fr.ttl.atlasdd.apidto.campaign;
 
+import fr.ttl.atlasdd.apidto.BaseApiDto;
+import fr.ttl.atlasdd.apidto.UserLightApiDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

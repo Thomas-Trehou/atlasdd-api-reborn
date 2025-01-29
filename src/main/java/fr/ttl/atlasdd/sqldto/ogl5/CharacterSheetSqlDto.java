@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.sqldto.ogl5;
 
 import fr.ttl.atlasdd.sqldto.BaseSqlDto;
-import fr.ttl.atlasdd.sqldto.CampaignSqlDto;
+import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
 import fr.ttl.atlasdd.sqldto.NoteCharacterSqlDto;
 import fr.ttl.atlasdd.sqldto.UserSqlDto;
 import fr.ttl.atlasdd.utils.Alignment;

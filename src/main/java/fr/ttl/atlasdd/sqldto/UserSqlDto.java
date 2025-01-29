@@ -1,5 +1,6 @@
 package fr.ttl.atlasdd.sqldto;
 
+import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
 import fr.ttl.atlasdd.sqldto.ogl5.CharacterSheetSqlDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
