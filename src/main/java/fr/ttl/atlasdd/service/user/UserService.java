@@ -1,6 +1,10 @@
 package fr.ttl.atlasdd.service.user;
 
+import fr.ttl.atlasdd.apidto.user.SignInDto;
+import fr.ttl.atlasdd.apidto.user.UserApiDto;
 import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
+import fr.ttl.atlasdd.apidto.user.UserLightAuthApiDto;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,4 +17,10 @@ public interface UserService {
     UserLightApiDto getUserBySlug(String slug);
 
     List<UserLightApiDto> getFriends(Long id);
+
+    UserLightApiDto createUser(UserApiDto userApiDto);
+
+    String verifyToken(String token, HttpSession session);
+
+    UserLightAuthApiDto signIn(SignInDto signInDto);
 }

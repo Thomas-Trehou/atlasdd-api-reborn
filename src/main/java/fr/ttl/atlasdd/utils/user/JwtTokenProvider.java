@@ -1,0 +1,61 @@
+package fr.ttl.atlasdd.utils.user;
+
+import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
+import fr.ttl.atlasdd.apidto.user.UserLightAuthApiDto;
+import io.jsonwebtoken.Jwts;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+@Component
+public class JwtTokenProvider {
+
+    @Value("${JWT_SECRET}")
+    private String jwtSecret;
+
+    @Value("${JWT_EXPIRATION}")
+    private long jwtExpiration;
+
+    public String generateToken(UserLightAuthApiDto user) {
+        String mail = user.getEmail();
+
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + jwtExpiration);
+
+        Map< String, Object > claims = new HashMap< >();
+
+        return Jwts.builder()
+                .setSubject(mail)
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(io.jsonwebtoken.security.Keys.hmacShaKeyFor(jwtSecret.getBytes()))
+                .compact();
+    }
+
+    public String getMailFromToken(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(jwtSecret.getBytes())
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getSubject();
+    }
+
+    public boolean validateToken(String authToken) {
+        try {
+            Jwts.parserBuilder()
+                    .setSigningKey(jwtSecret.getBytes())
+                    .build()
+                    .parseClaimsJws(authToken);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
+}
