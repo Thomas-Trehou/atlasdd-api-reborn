@@ -1,0 +1,32 @@
+package fr.ttl.atlasdd.apidto.character.custom;
+
+import fr.ttl.atlasdd.apidto.BaseApiDto;
+import fr.ttl.atlasdd.utils.character.ArmorCategory;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+
+import java.math.BigDecimal;
+
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+public class CustomArmorApiDto extends BaseApiDto {
+
+    private String index;
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    private ArmorCategory armorCategory;
+
+    private int armorClass;
+    private int strengthMinimum;
+    private boolean stealthDisadvantage;
+    private BigDecimal weight;
+    private String cost;
+    private String properties;
+}

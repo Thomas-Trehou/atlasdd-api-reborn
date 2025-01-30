@@ -1,7 +1,6 @@
-package fr.ttl.atlasdd.apidto.campaign;
+package fr.ttl.atlasdd.apidto.character.custom;
 
 import fr.ttl.atlasdd.apidto.BaseApiDto;
-import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,11 +12,10 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class CampaignApiDto extends BaseApiDto {
+public class CustomClassApiDto extends BaseApiDto {
 
     private String name;
-    private String description;
-
-    private UserLightApiDto gameMaster;
-    private List<UserLightApiDto> campaignPlayers;
+    private String hitDice;
+    private int startingHitPoints;
+    private String startingEquipment;
 }

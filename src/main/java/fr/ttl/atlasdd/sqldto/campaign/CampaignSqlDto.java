@@ -1,9 +1,9 @@
 package fr.ttl.atlasdd.sqldto.campaign;
 
 import fr.ttl.atlasdd.sqldto.BaseSqlDto;
-import fr.ttl.atlasdd.sqldto.UserSqlDto;
-import fr.ttl.atlasdd.sqldto.custom.CustomCharacterSheetSqlDto;
-import fr.ttl.atlasdd.sqldto.ogl5.CharacterSheetSqlDto;
+import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
+import fr.ttl.atlasdd.sqldto.character.custom.CustomCharacterSheetSqlDto;
+import fr.ttl.atlasdd.sqldto.character.ogl5.CharacterSheetSqlDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

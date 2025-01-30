@@ -2,12 +2,11 @@ package fr.ttl.atlasdd.service.campaign.impl;
 
 import fr.ttl.atlasdd.apidto.campaign.CampaignNoteApiDto;
 import fr.ttl.atlasdd.mapper.campaign.CampaignNoteMapper;
-import fr.ttl.atlasdd.repository.UserRepo;
+import fr.ttl.atlasdd.repository.user.UserRepo;
 import fr.ttl.atlasdd.repository.campaign.CampaignNoteRepo;
 import fr.ttl.atlasdd.repository.campaign.CampaignRepo;
 import fr.ttl.atlasdd.service.campaign.CampaignNoteService;
-import fr.ttl.atlasdd.service.campaign.CampaignService;
-import fr.ttl.atlasdd.sqldto.UserSqlDto;
+import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
 import fr.ttl.atlasdd.sqldto.campaign.CampaignNoteSqlDto;
 import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
 import org.springframework.stereotype.Service;
