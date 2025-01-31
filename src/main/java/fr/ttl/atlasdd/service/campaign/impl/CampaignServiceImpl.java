@@ -4,6 +4,7 @@ import fr.ttl.atlasdd.apidto.campaign.CampaignApiDto;
 import fr.ttl.atlasdd.apidto.campaign.CampaignCreateRequestApiDto;
 import fr.ttl.atlasdd.exception.campaign.CampaignNotFoundException;
 import fr.ttl.atlasdd.exception.campaign.CampaignSavingErrorException;
+import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterNotFoundException;
 import fr.ttl.atlasdd.exception.user.UserNotFoundException;
 import fr.ttl.atlasdd.mapper.campaign.CampaignMapper;
 import fr.ttl.atlasdd.repository.user.UserRepo;
@@ -122,7 +123,8 @@ public class CampaignServiceImpl implements CampaignService {
         CampaignSqlDto campaign = campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée", 404));
 
-        CharacterSheetSqlDto character = ogl5CharacterSheetRepository.findById(characterId).orElseThrow();
+        CharacterSheetSqlDto character = ogl5CharacterSheetRepository.findById(characterId)
+                .orElseThrow(() -> new Ogl5CharacterNotFoundException("Personnage non trouvé", 404));
 
         campaign.getCampaignOgl5CharacterSheets().add(character);
 
@@ -138,7 +140,8 @@ public class CampaignServiceImpl implements CampaignService {
         CampaignSqlDto campaign = campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée", 404));
 
-        CharacterSheetSqlDto character = ogl5CharacterSheetRepository.findById(characterId).orElseThrow();
+        CharacterSheetSqlDto character = ogl5CharacterSheetRepository.findById(characterId)
+                .orElseThrow(() -> new Ogl5CharacterNotFoundException("Personnage non trouvé", 404));
 
         campaign.getCampaignOgl5CharacterSheets().remove(character);
 

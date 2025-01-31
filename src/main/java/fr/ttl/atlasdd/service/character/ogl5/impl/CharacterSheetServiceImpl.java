@@ -3,6 +3,8 @@ package fr.ttl.atlasdd.service.character.ogl5.impl;
 import fr.ttl.atlasdd.apidto.character.ogl5.CharacterSheetApiDto;
 import fr.ttl.atlasdd.apidto.character.ogl5.CharacterSheetCreateRequestApiDto;
 import fr.ttl.atlasdd.apidto.character.ogl5.CharacterSheetUpdateRequestApiDto;
+import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterNotFoundException;
+import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterSavingErrorException;
 import fr.ttl.atlasdd.exception.user.UserNotFoundException;
 import fr.ttl.atlasdd.mapper.character.ogl5.CharacterSheetCreateRequestMapper;
 import fr.ttl.atlasdd.mapper.character.ogl5.CharacterSheetMapper;
@@ -91,14 +93,17 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         characterSheet.setWeapons(weapons);
         characterSheet.setArmor(armor);
 
-        CharacterSheetSqlDto savedCharacterSheet = characterSheetRepository.save(characterSheet);
-
-        return characterSheetMapper.toApiDto(savedCharacterSheet);
+        try {
+            return characterSheetMapper.toApiDto(characterSheetRepository.save(characterSheet));
+        } catch (Exception e) {
+            throw new Ogl5CharacterSavingErrorException("Erreur lors de la sauvegarde du personnage", 500);
+        }
     }
 
     @Override
     public CharacterSheetApiDto getCharacterSheetById(Long id) {
-        CharacterSheetSqlDto characterSheet = characterSheetRepository.findById(id).orElseThrow();
+        CharacterSheetSqlDto characterSheet = characterSheetRepository.findById(id)
+                .orElseThrow(() -> new Ogl5CharacterNotFoundException("Personnage non trouvé", 404));
 
         return characterSheetMapper.toApiDto(characterSheet);
     }
@@ -112,7 +117,8 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
 
     @Override
     public CharacterSheetApiDto updateCharacterSheet(Long id, CharacterSheetUpdateRequestApiDto request) {
-        CharacterSheetSqlDto characterSheet = characterSheetRepository.findById(id).orElseThrow();
+        CharacterSheetSqlDto characterSheet = characterSheetRepository.findById(id)
+                .orElseThrow(() -> new Ogl5CharacterNotFoundException("Personnage non trouvé", 404));
 
         List<SkillSqlDto> skills = skillRepository.findAllById(request.getSkillIds());
         List<SpellSqlDto> spells = spellRepository.findAllById(request.getPreparedSpellIds());
@@ -125,8 +131,10 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         characterSheet.setPreparedSpells(spells);
         characterSheet.setUpdatedAt(LocalDateTime.now());
 
-        CharacterSheetSqlDto savedCharacterSheet = characterSheetRepository.save(characterSheet);
-
-        return characterSheetMapper.toApiDto(savedCharacterSheet);
+        try {
+            return characterSheetMapper.toApiDto(characterSheetRepository.save(characterSheet));
+        } catch (Exception e) {
+            throw new Ogl5CharacterSavingErrorException("Erreur lors de la sauvegarde du personnage", 500);
+        }
     }
 }

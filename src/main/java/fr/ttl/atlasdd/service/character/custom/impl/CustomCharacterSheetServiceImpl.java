@@ -97,7 +97,8 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
     @Override
     public CustomCharacterSheetApiDto getCharacterSheetById(Long id) {
 
-        CustomCharacterSheetSqlDto characterSheetSqlDto = customCharacterSheetRepository.findById(id).orElse(null);
+        CustomCharacterSheetSqlDto characterSheetSqlDto = customCharacterSheetRepository.findById(id)
+                .orElseThrow();
 
         return customCharacterSheetMapper.toApiDto(characterSheetSqlDto);
     }
@@ -113,7 +114,8 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
     @Override
     public CustomCharacterSheetApiDto updateCharacterSheet(Long id, CustomCharacterSheetUpdateRequestApiDto customCharacterSheetUpdateRequestApiDto) {
 
-        CustomCharacterSheetSqlDto characterSheetSqlDto = customCharacterSheetRepository.findById(id).orElseThrow();
+        CustomCharacterSheetSqlDto characterSheetSqlDto = customCharacterSheetRepository.findById(id)
+                .orElseThrow();
 
         List<CustomSkillSqlDto> skills = customSkillRepository.findAllById(customCharacterSheetUpdateRequestApiDto.getSkillIds());
         List<CustomSpellSqlDto> spells = customSpellRepository.findAllById(customCharacterSheetUpdateRequestApiDto.getPreparedSpellIds());
