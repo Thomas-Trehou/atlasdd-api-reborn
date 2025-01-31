@@ -1,6 +1,9 @@
 package fr.ttl.atlasdd.service.character.custom.impl;
 
 import fr.ttl.atlasdd.apidto.character.custom.CustomClassApiDto;
+import fr.ttl.atlasdd.exception.character.custom.CustomCharacterSavingErrorException;
+import fr.ttl.atlasdd.exception.character.custom.CustomClassNotFoundException;
+import fr.ttl.atlasdd.exception.character.custom.CustomClassSavingErrorException;
 import fr.ttl.atlasdd.mapper.character.custom.CustomClassMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomClassRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomClassService;
@@ -25,18 +28,26 @@ public class CustomClassServiceImpl implements CustomClassService {
     public CustomClassApiDto createClass(CustomClassApiDto customClassApiDto) {
 
         CustomClassSqlDto classSqlDto = customClassMapper.toSqlDto(customClassApiDto);
-        CustomClassSqlDto savedClassSqlDto = customClassRepository.save(classSqlDto);
 
-        return customClassMapper.toApiDto(savedClassSqlDto);
+        try {
+            return customClassMapper.toApiDto(customClassRepository.save(classSqlDto));
+        } catch (Exception e) {
+            throw new CustomClassSavingErrorException("Erreur lors de la sauvegarde de la classe", 500);
+        }
     }
 
     @Override
     public CustomClassApiDto updateClass(CustomClassApiDto customClassApiDto) {
 
-        CustomClassSqlDto classSqlDto = customClassRepository.findById(customClassApiDto.getId()).orElseThrow();
-        customClassMapper.updateSqlDto(customClassApiDto, classSqlDto);
-        CustomClassSqlDto savedClassSqlDto = customClassRepository.save(classSqlDto);
+        CustomClassSqlDto classSqlDto = customClassRepository.findById(customClassApiDto.getId())
+                .orElseThrow(() -> new CustomClassNotFoundException("Classe non trouvée", 404));
 
-        return customClassMapper.toApiDto(savedClassSqlDto);
+        customClassMapper.updateSqlDto(customClassApiDto, classSqlDto);
+
+        try {
+            return customClassMapper.toApiDto(customClassRepository.save(classSqlDto));
+        } catch (Exception e) {
+            throw new CustomClassSavingErrorException("Erreur lors de la sauvegarde de la classe", 500);
+        }
     }
 }
