@@ -13,6 +13,7 @@ import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
 import fr.ttl.atlasdd.utils.user.JwtTokenProvider;
 import fr.ttl.atlasdd.utils.user.UserState;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -49,6 +50,9 @@ public class UserServiceImpl implements UserService {
         this.userMapper = userMapper;
         this.userLightAuthMapper = userLightAuthMapper;
     }
+
+    @Value("${MAIL_ADDRESS}")
+    private String mailAddress;
 
     @Override
     public UserLightApiDto getUserById(Long id) {
@@ -110,7 +114,7 @@ public class UserServiceImpl implements UserService {
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(user.getEmail());
-        email.setFrom("atlasroyaumesoublies@gmail.com");
+        email.setFrom(mailAddress);
         email.setSubject("Vérification de l'adresse email");
         email.setText("Cliquez sur le lien pour vérifier votre adresse email : " + url);
         javaMailSender.send(email);
