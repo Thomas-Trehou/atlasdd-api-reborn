@@ -1,11 +1,10 @@
 package fr.ttl.atlasdd.controller.user;
 
-import fr.ttl.atlasdd.apidto.user.SignInDto;
-import fr.ttl.atlasdd.apidto.user.UserApiDto;
-import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
-import fr.ttl.atlasdd.apidto.user.UserLightAuthApiDto;
+import fr.ttl.atlasdd.apidto.user.*;
 import fr.ttl.atlasdd.service.user.UserService;
+import fr.ttl.atlasdd.utils.user.JwtTokenProvider;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,9 +14,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final JwtTokenProvider tokenProvider;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, JwtTokenProvider tokenProvider) {
         this.userService = userService;
+        this.tokenProvider = tokenProvider;
     }
 
     @GetMapping("/{id}")

@@ -1,6 +1,6 @@
 package fr.ttl.atlasdd.config;
 
-
+import fr.ttl.atlasdd.service.user.CustomUserDetailsService;
 import fr.ttl.atlasdd.utils.user.JwtAuthenticationFilter;
 import fr.ttl.atlasdd.utils.user.JwtTokenProvider;
 import org.springframework.context.annotation.Bean;
@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
@@ -19,34 +18,32 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final CustomUserDetailsService customUserDetailsService;
 
-    public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
+    public SecurityConfig(JwtTokenProvider jwtTokenProvider, CustomUserDetailsService customUserDetailsService) {
         this.jwtTokenProvider = jwtTokenProvider;
+        this.customUserDetailsService = customUserDetailsService;
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http, UserDetailsService userDetailsService) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
-                                "/user/**",
-                                "/friends-invitation/**",
-                                "/note-character/**",
-                                "/ogl5/characters/**",
-                                "/campaigns/**",
-                                "/campaign-notes/**",
-                                "/custom/characters/**").permitAll() // Public routes
+                                "/user/singup",
+                                "/user/verify",
+                                "/user/signin").permitAll() // Public routes
                         .anyRequest().authenticated() // Secure all other routes
                 )
-                .addFilterBefore(jwtAuthenticationFilter(userDetailsService), UsernamePasswordAuthenticationFilter.class);
+                .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }
 
     @Bean
-    public JwtAuthenticationFilter jwtAuthenticationFilter(UserDetailsService userDetailsService) {
-        return new JwtAuthenticationFilter(jwtTokenProvider, userDetailsService);
+    public JwtAuthenticationFilter jwtAuthenticationFilter() {
+        return new JwtAuthenticationFilter(jwtTokenProvider, customUserDetailsService);
     }
 
     @Bean
