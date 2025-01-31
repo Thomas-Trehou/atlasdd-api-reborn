@@ -68,6 +68,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
 
+    @ExceptionHandler(CustomWeaponNotFoundException.class)
+    public ResponseEntity<String> handleCustomException(CustomWeaponNotFoundException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
     // Saving error exception
 
     @ExceptionHandler(CampaignSavingErrorException.class)
@@ -112,6 +117,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomRaceSavingErrorException.class)
     public ResponseEntity<String> handleCustomException(CustomRaceSavingErrorException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(CustomWeaponSavingErrorException.class)
+    public ResponseEntity<String> handleCustomException(CustomWeaponSavingErrorException ex) {
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
 
