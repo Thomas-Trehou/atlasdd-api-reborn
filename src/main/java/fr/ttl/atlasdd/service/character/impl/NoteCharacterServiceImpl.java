@@ -1,8 +1,8 @@
 package fr.ttl.atlasdd.service.character.impl;
 
 import fr.ttl.atlasdd.apidto.character.NoteCharacterApiDto;
-import fr.ttl.atlasdd.exception.character.custom.CustomCharacterNotFoundException;
-import fr.ttl.atlasdd.exception.character.custom.CustomCharacterSavingErrorException;
+import fr.ttl.atlasdd.exception.character.custom.notfound.CustomCharacterNotFoundException;
+import fr.ttl.atlasdd.exception.character.custom.savingerror.CustomCharacterSavingErrorException;
 import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterNotFoundException;
 import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterSavingErrorException;
 import fr.ttl.atlasdd.mapper.character.NoteCharacterMapper;

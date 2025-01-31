@@ -1,8 +1,8 @@
 package fr.ttl.atlasdd.service.character.custom.impl;
 
 import fr.ttl.atlasdd.apidto.character.custom.CustomRaceApiDto;
-import fr.ttl.atlasdd.exception.character.custom.CustomRaceNotFoundException;
-import fr.ttl.atlasdd.exception.character.custom.CustomRaceSavingErrorException;
+import fr.ttl.atlasdd.exception.character.custom.notfound.CustomRaceNotFoundException;
+import fr.ttl.atlasdd.exception.character.custom.savingerror.CustomRaceSavingErrorException;
 import fr.ttl.atlasdd.mapper.character.custom.CustomRaceMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomRaceRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomRaceService;

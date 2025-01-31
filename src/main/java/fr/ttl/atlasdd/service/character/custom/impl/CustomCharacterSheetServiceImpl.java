@@ -3,7 +3,7 @@ package fr.ttl.atlasdd.service.character.custom.impl;
 import fr.ttl.atlasdd.apidto.character.custom.CustomCharacterSheetApiDto;
 import fr.ttl.atlasdd.apidto.character.custom.CustomCharacterSheetCreateRequestApiDto;
 import fr.ttl.atlasdd.apidto.character.custom.CustomCharacterSheetUpdateRequestApiDto;
-import fr.ttl.atlasdd.exception.character.custom.CustomCharacterNotFoundException;
+import fr.ttl.atlasdd.exception.character.custom.notfound.CustomCharacterNotFoundException;
 import fr.ttl.atlasdd.exception.user.UserNotFoundException;
 import fr.ttl.atlasdd.mapper.character.custom.CustomCharacterSheetCreateRequestMapper;
 import fr.ttl.atlasdd.mapper.character.custom.CustomCharacterSheetMapper;

@@ -1,8 +1,8 @@
 package fr.ttl.atlasdd.service.character.custom.impl;
 
 import fr.ttl.atlasdd.apidto.character.custom.CustomBackgroundApiDto;
-import fr.ttl.atlasdd.exception.character.custom.CustomBackgroundNotFoundException;
-import fr.ttl.atlasdd.exception.character.custom.CustomBackgroundSavingErrorException;
+import fr.ttl.atlasdd.exception.character.custom.notfound.CustomBackgroundNotFoundException;
+import fr.ttl.atlasdd.exception.character.custom.savingerror.CustomBackgroundSavingErrorException;
 import fr.ttl.atlasdd.mapper.character.custom.CustomBackgroundMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomBackgroundRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomBackgroundService;

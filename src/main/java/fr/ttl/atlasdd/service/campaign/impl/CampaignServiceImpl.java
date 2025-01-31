@@ -4,7 +4,7 @@ import fr.ttl.atlasdd.apidto.campaign.CampaignApiDto;
 import fr.ttl.atlasdd.apidto.campaign.CampaignCreateRequestApiDto;
 import fr.ttl.atlasdd.exception.campaign.CampaignNotFoundException;
 import fr.ttl.atlasdd.exception.campaign.CampaignSavingErrorException;
-import fr.ttl.atlasdd.exception.character.custom.CustomCharacterNotFoundException;
+import fr.ttl.atlasdd.exception.character.custom.notfound.CustomCharacterNotFoundException;
 import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterNotFoundException;
 import fr.ttl.atlasdd.exception.user.UserNotFoundException;
 import fr.ttl.atlasdd.mapper.campaign.CampaignMapper;

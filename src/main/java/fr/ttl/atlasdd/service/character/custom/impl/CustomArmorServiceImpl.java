@@ -1,8 +1,8 @@
 package fr.ttl.atlasdd.service.character.custom.impl;
 
 import fr.ttl.atlasdd.apidto.character.custom.CustomArmorApiDto;
-import fr.ttl.atlasdd.exception.character.custom.CustomArmorNotFoundException;
-import fr.ttl.atlasdd.exception.character.custom.CustomArmorSavingErrorException;
+import fr.ttl.atlasdd.exception.character.custom.notfound.CustomArmorNotFoundException;
+import fr.ttl.atlasdd.exception.character.custom.savingerror.CustomArmorSavingErrorException;
 import fr.ttl.atlasdd.mapper.character.custom.CustomArmorMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomArmorRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomArmorService;

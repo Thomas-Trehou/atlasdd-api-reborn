@@ -1,9 +1,8 @@
 package fr.ttl.atlasdd.service.character.custom.impl;
 
 import fr.ttl.atlasdd.apidto.character.custom.CustomClassApiDto;
-import fr.ttl.atlasdd.exception.character.custom.CustomCharacterSavingErrorException;
-import fr.ttl.atlasdd.exception.character.custom.CustomClassNotFoundException;
-import fr.ttl.atlasdd.exception.character.custom.CustomClassSavingErrorException;
+import fr.ttl.atlasdd.exception.character.custom.notfound.CustomClassNotFoundException;
+import fr.ttl.atlasdd.exception.character.custom.savingerror.CustomClassSavingErrorException;
 import fr.ttl.atlasdd.mapper.character.custom.CustomClassMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomClassRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomClassService;

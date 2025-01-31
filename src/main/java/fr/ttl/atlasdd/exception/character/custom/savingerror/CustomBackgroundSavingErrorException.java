@@ -1,4 +1,4 @@
-package fr.ttl.atlasdd.exception.character.custom;
+package fr.ttl.atlasdd.exception.character.custom.savingerror;
 
 import lombok.Getter;
 
