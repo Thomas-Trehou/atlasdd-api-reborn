@@ -1,6 +1,8 @@
 package fr.ttl.atlasdd.service.character.impl;
 
 import fr.ttl.atlasdd.apidto.character.NoteCharacterApiDto;
+import fr.ttl.atlasdd.exception.character.CharacterNoteNotFoundException;
+import fr.ttl.atlasdd.exception.character.CharacterNoteSavingErrorException;
 import fr.ttl.atlasdd.exception.character.custom.notfound.CustomCharacterNotFoundException;
 import fr.ttl.atlasdd.exception.character.custom.savingerror.CustomCharacterSavingErrorException;
 import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterNotFoundException;
@@ -47,7 +49,13 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
         NoteCharacterSqlDto noteCharacterSqlDto = noteCharacterMapper.toSqlDto(noteCharacterApiDto);
         noteCharacterSqlDto.setOgl5CharacterSheet(characterSheetSqlDto);
 
-        NoteCharacterSqlDto savedNoteCharacterSqlDto = noteCharacterRepository.save(noteCharacterSqlDto);
+        NoteCharacterSqlDto savedNoteCharacterSqlDto;
+
+        try {
+            savedNoteCharacterSqlDto = noteCharacterRepository.save(noteCharacterSqlDto);
+        } catch (Exception e) {
+            throw new CharacterNoteSavingErrorException("Erreur lors de la sauvegarde de la note", 500);
+        }
 
         characterSheetSqlDto.getCharacterNotes().add(savedNoteCharacterSqlDto);
 
@@ -69,7 +77,13 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
         NoteCharacterSqlDto noteCharacterSqlDto = noteCharacterMapper.toSqlDto(noteCharacterApiDto);
         noteCharacterSqlDto.setCustomCharacterSheet(characterSheetSqlDto);
 
-        NoteCharacterSqlDto savedNoteCharacterSqlDto = noteCharacterRepository.save(noteCharacterSqlDto);
+        NoteCharacterSqlDto savedNoteCharacterSqlDto;
+
+        try {
+            savedNoteCharacterSqlDto = noteCharacterRepository.save(noteCharacterSqlDto);
+        } catch (Exception e) {
+            throw new CharacterNoteSavingErrorException("Erreur lors de la sauvegarde de la note", 500);
+        }
 
         characterSheetSqlDto.getCharacterNotes().add(savedNoteCharacterSqlDto);
 
@@ -85,13 +99,17 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
     @Override
     public NoteCharacterApiDto updateNote(Long noteId, NoteCharacterApiDto noteCharacterApiDto) {
 
-        NoteCharacterSqlDto noteCharacterSqlDto = noteCharacterRepository.findById(noteId).orElseThrow();
+        NoteCharacterSqlDto noteCharacterSqlDto = noteCharacterRepository.findById(noteId)
+                .orElseThrow(() -> new CharacterNoteNotFoundException("Note non trouvée", 404));
+
         noteCharacterSqlDto.setContent(noteCharacterApiDto.getContent());
         noteCharacterSqlDto.setTitle(noteCharacterApiDto.getTitle());
 
-        NoteCharacterSqlDto savedNoteCharacterSqlDto = noteCharacterRepository.save(noteCharacterSqlDto);
-
-        return noteCharacterMapper.toApiDto(savedNoteCharacterSqlDto);
+        try {
+            return noteCharacterMapper.toApiDto(noteCharacterRepository.save(noteCharacterSqlDto));
+        } catch (Exception e) {
+            throw new CharacterNoteSavingErrorException("Erreur lors de la sauvegarde de la note", 500);
+        }
     }
 
     @Override
@@ -110,7 +128,11 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
 
     @Override
     public void deleteNote(Long noteId) {
-        noteCharacterRepository.deleteById(noteId);
+        try {
+            noteCharacterRepository.deleteById(noteId);
+        } catch (Exception e) {
+            throw new CharacterNoteSavingErrorException("Erreur lors de la suppression de la note", 500);
+        }
     }
 
 
