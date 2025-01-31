@@ -1,6 +1,8 @@
 package fr.ttl.atlasdd.service.character.impl;
 
 import fr.ttl.atlasdd.apidto.character.NoteCharacterApiDto;
+import fr.ttl.atlasdd.exception.character.custom.CustomCharacterNotFoundException;
+import fr.ttl.atlasdd.exception.character.custom.CustomCharacterSavingErrorException;
 import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterNotFoundException;
 import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterSavingErrorException;
 import fr.ttl.atlasdd.mapper.character.NoteCharacterMapper;
@@ -61,7 +63,8 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
     @Override
     public NoteCharacterApiDto createCustomCharacterNote(Long characterSheetId, NoteCharacterApiDto noteCharacterApiDto) {
 
-        CustomCharacterSheetSqlDto characterSheetSqlDto = customCharacterSheetRepository.findById(characterSheetId).orElseThrow();
+        CustomCharacterSheetSqlDto characterSheetSqlDto = customCharacterSheetRepository.findById(characterSheetId)
+                .orElseThrow(() -> new CustomCharacterNotFoundException("Personnage non trouvé", 404));
 
         NoteCharacterSqlDto noteCharacterSqlDto = noteCharacterMapper.toSqlDto(noteCharacterApiDto);
         noteCharacterSqlDto.setCustomCharacterSheet(characterSheetSqlDto);
@@ -70,7 +73,11 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
 
         characterSheetSqlDto.getCharacterNotes().add(savedNoteCharacterSqlDto);
 
-        customCharacterSheetRepository.save(characterSheetSqlDto);
+        try {
+            customCharacterSheetRepository.save(characterSheetSqlDto);
+        } catch (Exception e) {
+            throw new CustomCharacterSavingErrorException("Erreur lors de la sauvegarde du personnage", 500);
+        }
 
         return noteCharacterMapper.toApiDto(savedNoteCharacterSqlDto);
     }
