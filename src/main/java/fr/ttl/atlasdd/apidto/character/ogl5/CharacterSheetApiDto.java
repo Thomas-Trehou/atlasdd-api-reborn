@@ -2,6 +2,7 @@ package fr.ttl.atlasdd.apidto.character.ogl5;
 
 import fr.ttl.atlasdd.apidto.BaseApiDto;
 import fr.ttl.atlasdd.apidto.user.UserApiDto;
+import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
 import fr.ttl.atlasdd.utils.character.Alignment;
 import fr.ttl.atlasdd.utils.character.CharacterStatus;
 import fr.ttl.atlasdd.utils.character.ShieldType;
@@ -50,7 +51,7 @@ public class CharacterSheetApiDto extends BaseApiDto {
     @Enumerated(EnumType.STRING)
     private CharacterStatus status;
 
-    private UserApiDto owner;
+    private UserLightApiDto owner;
     private RaceApiDto race;
     private BackgroundApiDto background;
     private ClassApiDto classe;

@@ -1,6 +1,8 @@
 package fr.ttl.atlasdd.service.character.custom.impl;
 
 import fr.ttl.atlasdd.apidto.character.custom.CustomArmorApiDto;
+import fr.ttl.atlasdd.exception.character.custom.notfound.CustomArmorNotFoundException;
+import fr.ttl.atlasdd.exception.character.custom.savingerror.CustomArmorSavingErrorException;
 import fr.ttl.atlasdd.mapper.character.custom.CustomArmorMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomArmorRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomArmorService;
@@ -25,19 +27,27 @@ public class CustomArmorServiceImpl implements CustomArmorService {
     public CustomArmorApiDto createArmor(CustomArmorApiDto armorApiDto) {
 
         CustomArmorSqlDto armorSqlDto = customArmorMapper.toSqlDto(armorApiDto);
-        CustomArmorSqlDto savedArmorSqlDto = customArmorRepository.save(armorSqlDto);
 
-        return customArmorMapper.toApiDto(savedArmorSqlDto);
+        try {
+            return customArmorMapper.toApiDto(customArmorRepository.save(armorSqlDto));
+        } catch (Exception e) {
+            throw new CustomArmorSavingErrorException("Erreur lors de la sauvegarde de l'armure", 500);
+        }
     }
 
     @Override
     public CustomArmorApiDto updateArmor(CustomArmorApiDto armorApiDto) {
 
-        CustomArmorSqlDto armorSqlDto = customArmorRepository.findById(armorApiDto.getId()).orElseThrow();
-        customArmorMapper.updateSqlDto(armorApiDto, armorSqlDto);
-        CustomArmorSqlDto savedArmorSqlDto = customArmorRepository.save(armorSqlDto);
+        CustomArmorSqlDto armorSqlDto = customArmorRepository.findById(armorApiDto.getId())
+                .orElseThrow(() -> new CustomArmorNotFoundException("Armure non trouvée", 404));
 
-        return customArmorMapper.toApiDto(savedArmorSqlDto);
+        customArmorMapper.updateSqlDto(armorApiDto, armorSqlDto);
+
+        try {
+            return customArmorMapper.toApiDto(customArmorRepository.save(armorSqlDto));
+        } catch (Exception e) {
+            throw new CustomArmorSavingErrorException("Erreur lors de la sauvegarde de l'armure", 500);
+        }
     }
 
 }

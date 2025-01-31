@@ -1,6 +1,8 @@
 package fr.ttl.atlasdd.service.character.custom.impl;
 
 import fr.ttl.atlasdd.apidto.character.custom.CustomWeaponApiDto;
+import fr.ttl.atlasdd.exception.character.custom.notfound.CustomWeaponNotFoundException;
+import fr.ttl.atlasdd.exception.character.custom.savingerror.CustomWeaponSavingErrorException;
 import fr.ttl.atlasdd.mapper.character.custom.CustomWeaponMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomWeaponRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomWeaponService;
@@ -26,23 +28,36 @@ public class CustomWeaponServiceImpl implements CustomWeaponService {
 
     @Override
     public List<CustomWeaponApiDto> createWeapons(List<CustomWeaponApiDto> customWeaponApiDtos) {
-        return customWeaponApiDtos.stream()
-                .map(customWeaponMapper::toSqlDto)
-                .map(customWeaponRepository::save)
-                .map(customWeaponMapper::toApiDto)
-                .collect(Collectors.toList());
+        try {
+            return customWeaponApiDtos.stream()
+                    .map(customWeaponMapper::toSqlDto)
+                    .map(customWeaponRepository::save)
+                    .map(customWeaponMapper::toApiDto)
+                    .collect(Collectors.toList());
+
+        } catch (Exception e) {
+            throw new CustomWeaponSavingErrorException("Erreur lors de la sauvegarde des armes", 500);
+        }
+
     }
 
     @Override
     public List<CustomWeaponApiDto> updateWeapons(List<CustomWeaponApiDto> customWeaponApiDtos) {
-        return customWeaponApiDtos.stream()
-                .map(customWeaponApiDto -> {
-                    CustomWeaponSqlDto existingWeapon = customWeaponRepository.findById(customWeaponApiDto.getId())
-                            .orElseThrow(() -> new IllegalArgumentException("Weapon not found: " + customWeaponApiDto.getId()));
-                    customWeaponMapper.updateSqlDto(customWeaponApiDto, existingWeapon);
-                    return customWeaponRepository.save(existingWeapon);
-                })
-                .map(customWeaponMapper::toApiDto)
-                .collect(Collectors.toList());
+
+        try {
+            return customWeaponApiDtos.stream()
+                    .map(customWeaponApiDto -> {
+                        CustomWeaponSqlDto existingWeapon = customWeaponRepository.findById(customWeaponApiDto.getId())
+                                .orElseThrow(() -> new CustomWeaponNotFoundException("Weapon not found: " + customWeaponApiDto.getId(), 404));
+                        customWeaponMapper.updateSqlDto(customWeaponApiDto, existingWeapon);
+                        return customWeaponRepository.save(existingWeapon);
+                    })
+                    .map(customWeaponMapper::toApiDto)
+                    .collect(Collectors.toList());
+
+        } catch (Exception e) {
+            throw new CustomWeaponSavingErrorException("Erreur lors de la sauvegarde des armes", 500);
+        }
+
     }
 }
