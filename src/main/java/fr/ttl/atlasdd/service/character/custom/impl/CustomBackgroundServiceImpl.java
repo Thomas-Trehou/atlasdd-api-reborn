@@ -1,6 +1,8 @@
 package fr.ttl.atlasdd.service.character.custom.impl;
 
 import fr.ttl.atlasdd.apidto.character.custom.CustomBackgroundApiDto;
+import fr.ttl.atlasdd.exception.character.custom.CustomBackgroundNotFoundException;
+import fr.ttl.atlasdd.exception.character.custom.CustomBackgroundSavingErrorException;
 import fr.ttl.atlasdd.mapper.character.custom.CustomBackgroundMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomBackgroundRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomBackgroundService;
@@ -25,18 +27,26 @@ public class CustomBackgroundServiceImpl implements CustomBackgroundService {
     public CustomBackgroundApiDto createBackground(CustomBackgroundApiDto customBackgroundApiDto) {
 
         CustomBackgroundSqlDto customBackgroundSqlDto = customBackgroundMapper.toSqlDto(customBackgroundApiDto);
-        CustomBackgroundSqlDto savedCustomBackgroundSqlDto = customBackgroundRepository.save(customBackgroundSqlDto);
 
-        return customBackgroundMapper.toApiDto(savedCustomBackgroundSqlDto);
+        try {
+            return customBackgroundMapper.toApiDto(customBackgroundRepository.save(customBackgroundSqlDto));
+        } catch (Exception e) {
+            throw new CustomBackgroundSavingErrorException("Erreur lors de la sauvegarde de l'arrière-plan", 500);
+        }
     }
 
     @Override
     public CustomBackgroundApiDto updateBackground(CustomBackgroundApiDto customBackgroundApiDto) {
 
-        CustomBackgroundSqlDto customBackgroundSqlDto = customBackgroundRepository.findById(customBackgroundApiDto.getId()).orElseThrow();
-        customBackgroundMapper.updateFromApiDto(customBackgroundApiDto, customBackgroundSqlDto);
-        CustomBackgroundSqlDto savedCustomBackgroundSqlDto = customBackgroundRepository.save(customBackgroundSqlDto);
+        CustomBackgroundSqlDto customBackgroundSqlDto = customBackgroundRepository.findById(customBackgroundApiDto.getId())
+                .orElseThrow(() -> new CustomBackgroundNotFoundException("Background non trouvé", 404));
 
-        return customBackgroundMapper.toApiDto(savedCustomBackgroundSqlDto);
+        customBackgroundMapper.updateFromApiDto(customBackgroundApiDto, customBackgroundSqlDto);
+
+        try {
+            return customBackgroundMapper.toApiDto(customBackgroundRepository.save(customBackgroundSqlDto));
+        } catch (Exception e) {
+            throw new CustomBackgroundSavingErrorException("Erreur lors de la sauvegarde de l'arrière-plan", 500);
+        }
     }
 }

@@ -4,10 +4,7 @@ import fr.ttl.atlasdd.exception.campaign.CampaignNotFoundException;
 import fr.ttl.atlasdd.exception.campaign.CampaignNoteNotFoundException;
 import fr.ttl.atlasdd.exception.campaign.CampaignNoteSavingErrorException;
 import fr.ttl.atlasdd.exception.campaign.CampaignSavingErrorException;
-import fr.ttl.atlasdd.exception.character.custom.CustomArmorNotFoundException;
-import fr.ttl.atlasdd.exception.character.custom.CustomArmorSavingErrorException;
-import fr.ttl.atlasdd.exception.character.custom.CustomCharacterNotFoundException;
-import fr.ttl.atlasdd.exception.character.custom.CustomCharacterSavingErrorException;
+import fr.ttl.atlasdd.exception.character.custom.*;
 import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterNotFoundException;
 import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterSavingErrorException;
 import fr.ttl.atlasdd.exception.user.UserNotFoundException;
@@ -56,6 +53,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
 
+    @ExceptionHandler(CustomBackgroundNotFoundException.class)
+    public ResponseEntity<String> handleCustomException(CustomBackgroundNotFoundException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
     // Saving error exception
 
     @ExceptionHandler(CampaignSavingErrorException.class)
@@ -88,6 +90,9 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
 
-
+    @ExceptionHandler(CustomBackgroundSavingErrorException.class)
+    public ResponseEntity<String> handleCustomException(CustomBackgroundSavingErrorException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
 
 }
