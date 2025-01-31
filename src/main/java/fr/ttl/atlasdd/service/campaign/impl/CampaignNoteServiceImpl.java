@@ -1,6 +1,7 @@
 package fr.ttl.atlasdd.service.campaign.impl;
 
 import fr.ttl.atlasdd.apidto.campaign.CampaignNoteApiDto;
+import fr.ttl.atlasdd.exception.campaign.CampaignNotFoundException;
 import fr.ttl.atlasdd.mapper.campaign.CampaignNoteMapper;
 import fr.ttl.atlasdd.repository.user.UserRepo;
 import fr.ttl.atlasdd.repository.campaign.CampaignNoteRepo;
@@ -35,7 +36,9 @@ public class CampaignNoteServiceImpl implements CampaignNoteService {
 
     @Override
     public CampaignNoteApiDto createCampaignNote(Long campaignId, Long userId, CampaignNoteApiDto campaignNoteApiDto) {
-        CampaignSqlDto campaignSqlDto =  campaignRepository.findById(campaignId).orElseThrow(() -> new RuntimeException("Campaign not found"));
+        CampaignSqlDto campaignSqlDto =  campaignRepository.findById(campaignId)
+                .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée", 404));
+
         UserSqlDto owner = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
 
         CampaignNoteSqlDto newNote = new CampaignNoteSqlDto();
