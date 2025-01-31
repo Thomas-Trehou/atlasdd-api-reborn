@@ -2,6 +2,10 @@ package fr.ttl.atlasdd.service.campaign.impl;
 
 import fr.ttl.atlasdd.apidto.campaign.CampaignNoteApiDto;
 import fr.ttl.atlasdd.exception.campaign.CampaignNotFoundException;
+import fr.ttl.atlasdd.exception.campaign.CampaignNoteNotFoundException;
+import fr.ttl.atlasdd.exception.campaign.CampaignNoteSavingErrorException;
+import fr.ttl.atlasdd.exception.campaign.CampaignSavingErrorException;
+import fr.ttl.atlasdd.exception.user.UserNotFoundException;
 import fr.ttl.atlasdd.mapper.campaign.CampaignNoteMapper;
 import fr.ttl.atlasdd.repository.user.UserRepo;
 import fr.ttl.atlasdd.repository.campaign.CampaignNoteRepo;
@@ -39,19 +43,25 @@ public class CampaignNoteServiceImpl implements CampaignNoteService {
         CampaignSqlDto campaignSqlDto =  campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée", 404));
 
-        UserSqlDto owner = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        UserSqlDto owner = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé", 404));
 
         CampaignNoteSqlDto newNote = new CampaignNoteSqlDto();
         campaignNoteMapper.updateSqlDto(campaignNoteApiDto, newNote);
         newNote.setCampaign(campaignSqlDto);
         newNote.setOwner(owner);
 
-        return campaignNoteMapper.toApiDto(campaignNoteRepository.save(newNote));
+        try {
+            return campaignNoteMapper.toApiDto(campaignNoteRepository.save(newNote));
+        } catch (Exception e) {
+            throw new CampaignNoteSavingErrorException("Erreur lors de la sauvegarde de la note de campagne", 500);
+        }
     }
 
     @Override
     public CampaignNoteApiDto getCampaignNoteById(Long id) {
-        return campaignNoteMapper.toApiDto(campaignNoteRepository.findById(id).orElseThrow(() -> new RuntimeException("Campaign note not found")));
+        return campaignNoteMapper.toApiDto(campaignNoteRepository.findById(id)
+                .orElseThrow(() -> new CampaignNoteNotFoundException("Note de campagne non trouvée", 404)));
     }
 
     @Override
@@ -61,16 +71,25 @@ public class CampaignNoteServiceImpl implements CampaignNoteService {
 
     @Override
     public CampaignNoteApiDto updateCampaignNoteById(Long id, CampaignNoteApiDto campaignNoteApiDto) {
-        CampaignNoteSqlDto note = campaignNoteRepository.findById(id).orElseThrow(() -> new RuntimeException("Campaign note not found"));
+        CampaignNoteSqlDto note = campaignNoteRepository.findById(id)
+                .orElseThrow(() -> new CampaignNoteNotFoundException("Note de campagne non trouvée", 404));
 
         note.setTitle(campaignNoteApiDto.getTitle());
         note.setContent(campaignNoteApiDto.getContent());
 
-        return campaignNoteMapper.toApiDto(campaignNoteRepository.save(note));
+        try {
+            return campaignNoteMapper.toApiDto(campaignNoteRepository.save(note));
+        } catch (Exception e) {
+            throw new CampaignNoteSavingErrorException("Erreur lors de la sauvegarde de la note de campagne", 500);
+        }
     }
 
     @Override
     public void deleteCampaignNoteById(Long id) {
-        campaignNoteRepository.deleteById(id);
+        try {
+            campaignNoteRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new CampaignNoteSavingErrorException("Erreur lors de la suppression de la note de campagne", 500);
+        }
     }
 }
