@@ -31,7 +31,7 @@ public class CustomBackgroundServiceImpl implements CustomBackgroundService {
         try {
             return customBackgroundMapper.toApiDto(customBackgroundRepository.save(customBackgroundSqlDto));
         } catch (Exception e) {
-            throw new CustomBackgroundSavingErrorException("Erreur lors de la sauvegarde de l'arrière-plan", 500);
+            throw new CustomBackgroundSavingErrorException("Erreur lors de la sauvegarde du background", 500);
         }
     }
 
@@ -46,7 +46,7 @@ public class CustomBackgroundServiceImpl implements CustomBackgroundService {
         try {
             return customBackgroundMapper.toApiDto(customBackgroundRepository.save(customBackgroundSqlDto));
         } catch (Exception e) {
-            throw new CustomBackgroundSavingErrorException("Erreur lors de la sauvegarde de l'arrière-plan", 500);
+            throw new CustomBackgroundSavingErrorException("Erreur lors de la sauvegarde du background", 500);
         }
     }
 }
