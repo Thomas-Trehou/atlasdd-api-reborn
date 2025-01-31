@@ -3,6 +3,7 @@ package fr.ttl.atlasdd.sqldto.user;
 import fr.ttl.atlasdd.sqldto.BaseSqlDto;
 import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
 import fr.ttl.atlasdd.sqldto.character.ogl5.CharacterSheetSqlDto;
+import fr.ttl.atlasdd.utils.user.UserState;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +24,9 @@ public class UserSqlDto extends BaseSqlDto {
     private String slug;
     private String email;
     private String password;
+
+    @Enumerated(EnumType.STRING)
+    private UserState state = UserState.ACTIVE;
 
     @OneToMany(mappedBy = "owner")
     private List<CharacterSheetSqlDto> characterSheetList;
