@@ -3,8 +3,8 @@ package fr.ttl.atlasdd.service.character.ogl5.impl;
 import fr.ttl.atlasdd.apidto.character.ogl5.CharacterSheetApiDto;
 import fr.ttl.atlasdd.apidto.character.ogl5.CharacterSheetCreateRequestApiDto;
 import fr.ttl.atlasdd.apidto.character.ogl5.CharacterSheetUpdateRequestApiDto;
-import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterNotFoundException;
-import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterSavingErrorException;
+import fr.ttl.atlasdd.exception.character.ogl5.notfound.*;
+import fr.ttl.atlasdd.exception.character.ogl5.savingerror.Ogl5CharacterSavingErrorException;
 import fr.ttl.atlasdd.exception.user.UserNotFoundException;
 import fr.ttl.atlasdd.mapper.character.ogl5.CharacterSheetCreateRequestMapper;
 import fr.ttl.atlasdd.mapper.character.ogl5.CharacterSheetMapper;
@@ -69,15 +69,39 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
 
     @Override
     public CharacterSheetApiDto createCharacterSheet(CharacterSheetCreateRequestApiDto request) {
+
         UserSqlDto user = userRepository.findById(request.getUserId())
                 .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé", 404));
-        RaceSqlDto race = raceRepository.findById(request.getRaceId()).orElseThrow();
-        BackgroundSqlDto background = backgroundRepository.findById(request.getBackgroundId()).orElseThrow();
-        ClassSqlDto classe = classRepository.findById(request.getClassId()).orElseThrow();
-        List<SkillSqlDto> skills = skillRepository.findAllById(request.getSkillIds());
-        List<SpellSqlDto> spells = spellRepository.findAllById(request.getPreparedSpellIds());
-        List<WeaponSqlDto> weapons = weaponRepository.findAllById(request.getWeaponIds());
-        ArmorSqlDto armor = armorRepository.findById(request.getArmorId()).orElseThrow();
+        RaceSqlDto race = raceRepository.findById(request.getRaceId())
+                .orElseThrow(() -> new Ogl5ArmorNotFoundException("Armure non trouvée", 404));
+        BackgroundSqlDto background = backgroundRepository.findById(request.getBackgroundId())
+                .orElseThrow(() -> new Ogl5BackgroundNotFoundException("Background non trouvé", 404));
+        ClassSqlDto classe = classRepository.findById(request.getClassId())
+                .orElseThrow(() -> new Ogl5ClassNotFoundException("Classe non trouvée", 404));
+
+        List<SkillSqlDto> skills;
+        try {
+            skills = skillRepository.findAllById(request.getSkillIds());
+        } catch (Exception e) {
+            throw new Ogl5SkillNotFoundException("Erreur lors de la récupération des compétences", 404);
+        }
+
+        List<SpellSqlDto> spells;
+        try {
+            spells = spellRepository.findAllById(request.getPreparedSpellIds());
+        } catch (Exception e) {
+            throw new Ogl5PreparedSpellNotFoundException("Erreur lors de la récupération des sorts", 404);
+        }
+
+        List<WeaponSqlDto> weapons;
+        try {
+            weapons = weaponRepository.findAllById(request.getWeaponIds());
+        } catch (Exception e) {
+            throw new Ogl5WeaponNotFoundException("Erreur lors de la récupération des armes", 404);
+        }
+
+        ArmorSqlDto armor = armorRepository.findById(request.getArmorId())
+                .orElseThrow(() -> new Ogl5ArmorNotFoundException("Armure non trouvée", 404));
 
         CharacterSheetSqlDto characterSheet = new CharacterSheetSqlDto();
         characterSheetCreateRequestMapper.updateSqlDto(request, characterSheet);
@@ -120,8 +144,19 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         CharacterSheetSqlDto characterSheet = characterSheetRepository.findById(id)
                 .orElseThrow(() -> new Ogl5CharacterNotFoundException("Personnage non trouvé", 404));
 
-        List<SkillSqlDto> skills = skillRepository.findAllById(request.getSkillIds());
-        List<SpellSqlDto> spells = spellRepository.findAllById(request.getPreparedSpellIds());
+        List<SkillSqlDto> skills;
+        try {
+            skills = skillRepository.findAllById(request.getSkillIds());
+        } catch (Exception e) {
+            throw new Ogl5SkillNotFoundException("Erreur lors de la récupération des compétences", 404);
+        }
+
+        List<SpellSqlDto> spells;
+        try {
+            spells = spellRepository.findAllById(request.getPreparedSpellIds());
+        } catch (Exception e) {
+            throw new Ogl5PreparedSpellNotFoundException("Erreur lors de la récupération des sorts", 404);
+        }
 
         characterSheetUpdateRequestMapper.updateSqlDto(request, characterSheet);
         characterSheet.setShield(ShieldType.valueOf(request.getShield()));

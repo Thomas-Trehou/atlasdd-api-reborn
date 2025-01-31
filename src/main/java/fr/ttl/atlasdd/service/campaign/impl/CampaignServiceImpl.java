@@ -5,7 +5,7 @@ import fr.ttl.atlasdd.apidto.campaign.CampaignCreateRequestApiDto;
 import fr.ttl.atlasdd.exception.campaign.CampaignNotFoundException;
 import fr.ttl.atlasdd.exception.campaign.CampaignSavingErrorException;
 import fr.ttl.atlasdd.exception.character.custom.notfound.CustomCharacterNotFoundException;
-import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterNotFoundException;
+import fr.ttl.atlasdd.exception.character.ogl5.notfound.Ogl5CharacterNotFoundException;
 import fr.ttl.atlasdd.exception.user.UserNotFoundException;
 import fr.ttl.atlasdd.mapper.campaign.CampaignMapper;
 import fr.ttl.atlasdd.repository.user.UserRepo;
@@ -72,7 +72,10 @@ public class CampaignServiceImpl implements CampaignService {
 
         campaign.setName(campaignCreateRequestApiDto.getName());
         campaign.setDescription(campaignCreateRequestApiDto.getDescription());
-        campaign.setGameMaster(userRepository.findById(campaignCreateRequestApiDto.getGameMasterId()).orElseThrow());
+        campaign.setGameMaster(
+                userRepository.findById(campaignCreateRequestApiDto.getGameMasterId())
+                        .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé", 404))
+        );
 
         try {
             return campaignMapper.toApiDto(campaignRepository.save(campaign));

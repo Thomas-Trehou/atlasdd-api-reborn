@@ -1,4 +1,4 @@
-package fr.ttl.atlasdd.exception.character.ogl5;
+package fr.ttl.atlasdd.exception.character.ogl5.notfound;
 
 import lombok.Getter;
 

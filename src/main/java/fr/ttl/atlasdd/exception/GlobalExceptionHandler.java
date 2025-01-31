@@ -8,8 +8,8 @@ import fr.ttl.atlasdd.exception.character.CharacterNoteNotFoundException;
 import fr.ttl.atlasdd.exception.character.CharacterNoteSavingErrorException;
 import fr.ttl.atlasdd.exception.character.custom.notfound.*;
 import fr.ttl.atlasdd.exception.character.custom.savingerror.*;
-import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterNotFoundException;
-import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterSavingErrorException;
+import fr.ttl.atlasdd.exception.character.ogl5.notfound.*;
+import fr.ttl.atlasdd.exception.character.ogl5.savingerror.Ogl5CharacterSavingErrorException;
 import fr.ttl.atlasdd.exception.user.FriendsInvitationNotFoundException;
 import fr.ttl.atlasdd.exception.user.FriendsInvitationSavingErrorException;
 import fr.ttl.atlasdd.exception.user.UserNotFoundException;
@@ -85,6 +85,41 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(FriendsInvitationNotFoundException.class)
     public ResponseEntity<String> handleCustomException(FriendsInvitationNotFoundException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Ogl5RaceNotFoundException.class)
+    public ResponseEntity<String> handleCustomException(Ogl5RaceNotFoundException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Ogl5BackgroundNotFoundException.class)
+    public ResponseEntity<String> handleCustomException(Ogl5BackgroundNotFoundException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Ogl5ClassNotFoundException.class)
+    public ResponseEntity<String> handleCustomException(Ogl5ClassNotFoundException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Ogl5SkillNotFoundException.class)
+    public ResponseEntity<String> handleCustomException(Ogl5SkillNotFoundException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Ogl5PreparedSpellNotFoundException.class)
+    public ResponseEntity<String> handleCustomException(Ogl5PreparedSpellNotFoundException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Ogl5WeaponNotFoundException.class)
+    public ResponseEntity<String> handleCustomException(Ogl5WeaponNotFoundException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Ogl5ArmorNotFoundException.class)
+    public ResponseEntity<String> handleCustomException(Ogl5ArmorNotFoundException ex) {
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
 
