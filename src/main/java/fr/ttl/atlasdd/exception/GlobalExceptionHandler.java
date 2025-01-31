@@ -6,6 +6,8 @@ import fr.ttl.atlasdd.exception.campaign.CampaignNoteSavingErrorException;
 import fr.ttl.atlasdd.exception.campaign.CampaignSavingErrorException;
 import fr.ttl.atlasdd.exception.character.CharacterNoteNotFoundException;
 import fr.ttl.atlasdd.exception.character.CharacterNoteSavingErrorException;
+import fr.ttl.atlasdd.exception.character.CharacterPreparedSpellNotFoundException;
+import fr.ttl.atlasdd.exception.character.CharacterSkillNotFoundException;
 import fr.ttl.atlasdd.exception.character.custom.notfound.*;
 import fr.ttl.atlasdd.exception.character.custom.savingerror.*;
 import fr.ttl.atlasdd.exception.character.ogl5.notfound.*;
@@ -103,13 +105,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
 
-    @ExceptionHandler(Ogl5SkillNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(Ogl5SkillNotFoundException ex) {
+    @ExceptionHandler(CharacterSkillNotFoundException.class)
+    public ResponseEntity<String> handleCustomException(CharacterSkillNotFoundException ex) {
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
 
-    @ExceptionHandler(Ogl5PreparedSpellNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(Ogl5PreparedSpellNotFoundException ex) {
+    @ExceptionHandler(CharacterPreparedSpellNotFoundException.class)
+    public ResponseEntity<String> handleCustomException(CharacterPreparedSpellNotFoundException ex) {
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
 
