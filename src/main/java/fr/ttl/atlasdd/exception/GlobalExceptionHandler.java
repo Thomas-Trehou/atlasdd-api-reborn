@@ -10,6 +10,8 @@ import fr.ttl.atlasdd.exception.character.custom.notfound.*;
 import fr.ttl.atlasdd.exception.character.custom.savingerror.*;
 import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterNotFoundException;
 import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterSavingErrorException;
+import fr.ttl.atlasdd.exception.user.FriendsInvitationNotFoundException;
+import fr.ttl.atlasdd.exception.user.FriendsInvitationSavingErrorException;
 import fr.ttl.atlasdd.exception.user.UserNotFoundException;
 import fr.ttl.atlasdd.exception.user.UserSavingErrorException;
 import org.springframework.http.ResponseEntity;
@@ -81,6 +83,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
 
+    @ExceptionHandler(FriendsInvitationNotFoundException.class)
+    public ResponseEntity<String> handleCustomException(FriendsInvitationNotFoundException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
     // Saving error exception
 
     @ExceptionHandler(CampaignSavingErrorException.class)
@@ -135,6 +142,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CharacterNoteSavingErrorException.class)
     public ResponseEntity<String> handleCustomException(CharacterNoteSavingErrorException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(FriendsInvitationSavingErrorException.class)
+    public ResponseEntity<String> handleCustomException(FriendsInvitationSavingErrorException ex) {
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
 
