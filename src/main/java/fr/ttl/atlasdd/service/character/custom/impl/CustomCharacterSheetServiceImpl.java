@@ -3,6 +3,7 @@ package fr.ttl.atlasdd.service.character.custom.impl;
 import fr.ttl.atlasdd.apidto.character.custom.CustomCharacterSheetApiDto;
 import fr.ttl.atlasdd.apidto.character.custom.CustomCharacterSheetCreateRequestApiDto;
 import fr.ttl.atlasdd.apidto.character.custom.CustomCharacterSheetUpdateRequestApiDto;
+import fr.ttl.atlasdd.exception.user.UserNotFoundException;
 import fr.ttl.atlasdd.mapper.character.custom.CustomCharacterSheetCreateRequestMapper;
 import fr.ttl.atlasdd.mapper.character.custom.CustomCharacterSheetMapper;
 import fr.ttl.atlasdd.mapper.character.custom.CustomCharacterSheetUpdateRequestMapper;
@@ -68,7 +69,8 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
     @Override
     public CustomCharacterSheetApiDto createCharacterSheet(CustomCharacterSheetCreateRequestApiDto characterSheetCreateRequestApiDto) {
 
-        UserSqlDto userSqlDto = userRepository.findById(characterSheetCreateRequestApiDto.getUserId()).orElseThrow();
+        UserSqlDto userSqlDto = userRepository.findById(characterSheetCreateRequestApiDto.getUserId())
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé", 404));
         List<CustomSkillSqlDto> skills = customSkillRepository.findAllById(characterSheetCreateRequestApiDto.getSkillIds());
         List<CustomSpellSqlDto> spells = customSpellRepository.findAllById(characterSheetCreateRequestApiDto.getPreparedSpellIds());
         List<NoteCharacterSqlDto> notes = new ArrayList<>();

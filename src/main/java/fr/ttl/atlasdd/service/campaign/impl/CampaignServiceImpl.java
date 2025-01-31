@@ -4,6 +4,7 @@ import fr.ttl.atlasdd.apidto.campaign.CampaignApiDto;
 import fr.ttl.atlasdd.apidto.campaign.CampaignCreateRequestApiDto;
 import fr.ttl.atlasdd.exception.campaign.CampaignNotFoundException;
 import fr.ttl.atlasdd.exception.campaign.CampaignSavingErrorException;
+import fr.ttl.atlasdd.exception.user.UserNotFoundException;
 import fr.ttl.atlasdd.mapper.campaign.CampaignMapper;
 import fr.ttl.atlasdd.repository.user.UserRepo;
 import fr.ttl.atlasdd.repository.campaign.CampaignRepo;
@@ -41,7 +42,8 @@ public class CampaignServiceImpl implements CampaignService {
     @Override
     public CampaignApiDto createCampaign(CampaignCreateRequestApiDto campaignCreateRequestApiDto) {
         CampaignSqlDto newCampaign = new CampaignSqlDto();
-        UserSqlDto gameMaster = userRepository.findById(campaignCreateRequestApiDto.getGameMasterId()).orElseThrow();
+        UserSqlDto gameMaster = userRepository.findById(campaignCreateRequestApiDto.getGameMasterId())
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé", 404));
 
         newCampaign.setName(campaignCreateRequestApiDto.getName());
         newCampaign.setDescription(campaignCreateRequestApiDto.getDescription());
@@ -82,7 +84,8 @@ public class CampaignServiceImpl implements CampaignService {
         CampaignSqlDto campaign = campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée", 404));
 
-        UserSqlDto player = userRepository.findById(playerId).orElseThrow();
+        UserSqlDto player = userRepository.findById(playerId)
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé", 404));
 
         if (campaign.getCampaignPlayers().contains(player)) {
             return campaignMapper.toApiDto(campaign);
@@ -102,7 +105,8 @@ public class CampaignServiceImpl implements CampaignService {
         CampaignSqlDto campaign = campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée", 404));
 
-        UserSqlDto player = userRepository.findById(playerId).orElseThrow();
+        UserSqlDto player = userRepository.findById(playerId)
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé", 404));
 
         campaign.getCampaignPlayers().remove(player);
 

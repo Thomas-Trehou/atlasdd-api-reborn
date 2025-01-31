@@ -3,6 +3,7 @@ package fr.ttl.atlasdd.service.character.ogl5.impl;
 import fr.ttl.atlasdd.apidto.character.ogl5.CharacterSheetApiDto;
 import fr.ttl.atlasdd.apidto.character.ogl5.CharacterSheetCreateRequestApiDto;
 import fr.ttl.atlasdd.apidto.character.ogl5.CharacterSheetUpdateRequestApiDto;
+import fr.ttl.atlasdd.exception.user.UserNotFoundException;
 import fr.ttl.atlasdd.mapper.character.ogl5.CharacterSheetCreateRequestMapper;
 import fr.ttl.atlasdd.mapper.character.ogl5.CharacterSheetMapper;
 import fr.ttl.atlasdd.mapper.character.ogl5.CharacterSheetUpdateRequestMapper;
@@ -66,7 +67,8 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
 
     @Override
     public CharacterSheetApiDto createCharacterSheet(CharacterSheetCreateRequestApiDto request) {
-        UserSqlDto user = userRepository.findById(request.getUserId()).orElseThrow();
+        UserSqlDto user = userRepository.findById(request.getUserId())
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé", 404));
         RaceSqlDto race = raceRepository.findById(request.getRaceId()).orElseThrow();
         BackgroundSqlDto background = backgroundRepository.findById(request.getBackgroundId()).orElseThrow();
         ClassSqlDto classe = classRepository.findById(request.getClassId()).orElseThrow();
