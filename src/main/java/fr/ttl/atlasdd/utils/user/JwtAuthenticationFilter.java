@@ -4,8 +4,6 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,8 +16,6 @@ import java.io.IOException;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
-    private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
     private final JwtTokenProvider jwtTokenProvider;
     private final UserDetailsService userDetailsService;
@@ -34,8 +30,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             throws ServletException, IOException {
         final String authorizationHeader = request.getHeader("Authorization");
 
-        logger.info("Authorization Header: {}", authorizationHeader);
-
         String email = null;
         String jwt = null;
 
@@ -43,12 +37,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             jwt = authorizationHeader.substring(7);
             try {
                 email = jwtTokenProvider.getMailFromToken(jwt);
-                logger.info("JWT Token parsed successfully, email: {}", email);
             } catch (Exception e) {
-                logger.error("Error parsing JWT Token", e);
+                throw new RuntimeException("JWT Token parsing failed");
             }
-        } else {
-            logger.warn("Authorization header is missing or does not start with Bearer");
         }
 
         if (email != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -58,12 +49,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                         userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                logger.info("User authenticated successfully, email: {}", email);
-            } else {
-                logger.warn("JWT Token validation failed");
             }
-        } else {
-            logger.warn("Email is null or context already has authentication");
         }
 
         chain.doFilter(request, response);
