@@ -5,6 +5,7 @@ import fr.ttl.atlasdd.exception.campaign.CampaignNoteNotFoundException;
 import fr.ttl.atlasdd.exception.campaign.CampaignNoteSavingErrorException;
 import fr.ttl.atlasdd.exception.campaign.CampaignSavingErrorException;
 import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterNotFoundException;
+import fr.ttl.atlasdd.exception.character.ogl5.Ogl5CharacterSavingErrorException;
 import fr.ttl.atlasdd.exception.user.UserNotFoundException;
 import fr.ttl.atlasdd.exception.user.UserSavingErrorException;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +56,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CampaignNoteSavingErrorException.class)
     public ResponseEntity<String> handleCustomException(CampaignNoteSavingErrorException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(Ogl5CharacterSavingErrorException.class)
+    public ResponseEntity<String> handleCustomException(Ogl5CharacterSavingErrorException ex) {
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
 
