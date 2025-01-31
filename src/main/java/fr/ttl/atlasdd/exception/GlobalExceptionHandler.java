@@ -63,6 +63,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
 
+    @ExceptionHandler(CustomRaceNotFoundException.class)
+    public ResponseEntity<String> handleCustomException(CustomRaceNotFoundException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
     // Saving error exception
 
     @ExceptionHandler(CampaignSavingErrorException.class)
@@ -102,6 +107,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomClassSavingErrorException.class)
     public ResponseEntity<String> handleCustomException(CustomClassSavingErrorException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(CustomRaceSavingErrorException.class)
+    public ResponseEntity<String> handleCustomException(CustomRaceSavingErrorException ex) {
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
 

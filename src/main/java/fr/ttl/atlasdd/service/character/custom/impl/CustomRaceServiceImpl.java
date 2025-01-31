@@ -1,6 +1,8 @@
 package fr.ttl.atlasdd.service.character.custom.impl;
 
 import fr.ttl.atlasdd.apidto.character.custom.CustomRaceApiDto;
+import fr.ttl.atlasdd.exception.character.custom.CustomRaceNotFoundException;
+import fr.ttl.atlasdd.exception.character.custom.CustomRaceSavingErrorException;
 import fr.ttl.atlasdd.mapper.character.custom.CustomRaceMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomRaceRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomRaceService;
@@ -25,18 +27,26 @@ public class CustomRaceServiceImpl implements CustomRaceService {
     public CustomRaceApiDto createRace(CustomRaceApiDto customRaceApiDto) {
 
         CustomRaceSqlDto raceSqlDto = customRaceMapper.toSqlDto(customRaceApiDto);
-        CustomRaceSqlDto savedRaceSqlDto = customRaceRepository.save(raceSqlDto);
 
-        return customRaceMapper.toApiDto(savedRaceSqlDto);
+        try {
+            return customRaceMapper.toApiDto(customRaceRepository.save(raceSqlDto));
+        } catch (Exception e) {
+            throw new CustomRaceSavingErrorException("Erreur lors de la sauvegarde de la race", 500);
+        }
     }
 
     @Override
     public CustomRaceApiDto updateRace(CustomRaceApiDto customRaceApiDto) {
 
-        CustomRaceSqlDto raceSqlDto = customRaceRepository.findById(customRaceApiDto.getId()).orElseThrow();
-        customRaceMapper.updateFromApiDto(customRaceApiDto, raceSqlDto);
-        CustomRaceSqlDto savedRaceSqlDto = customRaceRepository.save(raceSqlDto);
+        CustomRaceSqlDto raceSqlDto = customRaceRepository.findById(customRaceApiDto.getId())
+                .orElseThrow(() -> new CustomRaceNotFoundException("Race non trouvée", 404));
 
-        return customRaceMapper.toApiDto(savedRaceSqlDto);
+        customRaceMapper.updateFromApiDto(customRaceApiDto, raceSqlDto);
+
+        try {
+            return customRaceMapper.toApiDto(customRaceRepository.save(raceSqlDto));
+        } catch (Exception e) {
+            throw new CustomRaceSavingErrorException("Erreur lors de la sauvegarde de la race", 500);
+        }
     }
 }
