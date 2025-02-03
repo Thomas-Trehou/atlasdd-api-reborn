@@ -4,6 +4,7 @@ import fr.ttl.atlasdd.apidto.campaign.CampaignNoteApiDto;
 import fr.ttl.atlasdd.service.campaign.CampaignNoteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,8 @@ public class CampaignNoteController {
     @Operation(summary = "Create a campaign note")
     @ApiResponses( value = {
             @ApiResponse(responseCode = "200", description = "Campaign note created, returns the created campaign"),
-            @ApiResponse(responseCode = "404", description = "Campaign not found", content = {}),
-            @ApiResponse(responseCode = "404", description = "User not found", content = {}),
-            @ApiResponse(responseCode = "500", description = "Error at campaign note saving", content = {})
+            @ApiResponse(responseCode = "404", description = "Campaign not found / " + "User not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error at campaign note saving", content = @Content)
     })
     @PostMapping("/campaign/{campaignId}/user/{userId}")
     public CampaignNoteApiDto createCampaignNote(
@@ -42,7 +42,7 @@ public class CampaignNoteController {
     @Operation(summary = "Get a campaign note by ID")
     @ApiResponses( value = {
             @ApiResponse(responseCode = "200", description = "Campaign note found, returns the campaign note"),
-            @ApiResponse(responseCode = "404", description = "Campaign note not found", content = {})
+            @ApiResponse(responseCode = "404", description = "Campaign note not found", content = @Content)
     })
     @GetMapping("/{id}")
     public CampaignNoteApiDto getCampaignNoteById(
@@ -55,7 +55,7 @@ public class CampaignNoteController {
     @Operation(summary = "Get all campaign notes by campaign ID and user ID")
     @ApiResponses( value = {
             @ApiResponse(responseCode = "200", description = "Campaign notes found, returns the campaign notes"),
-            @ApiResponse(responseCode = "500", description = "Something goes wrong at list creation", content = {})
+            @ApiResponse(responseCode = "500", description = "Something goes wrong at list creation", content = @Content)
     })
     @GetMapping("/campaign/{campaignId}/user/{userId}")
     public List<CampaignNoteApiDto> getCampaignNoteByCampaignIdAndUserId(
@@ -70,8 +70,8 @@ public class CampaignNoteController {
     @Operation(summary = "Update a campaign note")
     @ApiResponses( value = {
             @ApiResponse(responseCode = "200", description = "Campaign note updated, returns the updated campaign note"),
-            @ApiResponse(responseCode = "404", description = "Campaign note not found", content = {}),
-            @ApiResponse(responseCode = "500", description = "Error at campaign note saving", content = {})
+            @ApiResponse(responseCode = "404", description = "Campaign note not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error at campaign note saving", content = @Content)
     })
     @PatchMapping("/{id}")
     public CampaignNoteApiDto updateCampaignNote(
@@ -86,7 +86,7 @@ public class CampaignNoteController {
     @Operation(summary = "Delete a campaign note")
     @ApiResponses( value = {
             @ApiResponse(responseCode = "200", description = "Campaign note deleted"),
-            @ApiResponse(responseCode = "500", description = "Error at campaign not deletion", content = {})
+            @ApiResponse(responseCode = "500", description = "Error at campaign not deletion", content = @Content)
     })
     @DeleteMapping("/{id}")
     public void deleteCampaignNoteById(

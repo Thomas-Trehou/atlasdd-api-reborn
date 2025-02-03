@@ -6,6 +6,7 @@ import fr.ttl.atlasdd.service.campaign.CampaignService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.*;
@@ -50,9 +51,8 @@ public class CampaignController {
     @Operation(summary = "Update a campaign")
     @ApiResponses( value = {
             @ApiResponse(responseCode = "200", description = "Campaign updated, returns the updated campaign"),
-            @ApiResponse(responseCode = "404", description = "User not found", content = {}),
-            @ApiResponse(responseCode = "404", description = "Campaign not found", content = {}),
-            @ApiResponse(responseCode = "500", description = "Error at campaign creation", content = {})
+            @ApiResponse(responseCode = "404", description = "User not found / " + "Campaign not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error at campaign creation", content = @Content)
     })
     @PatchMapping("/{id}")
     public CampaignApiDto updateCampaign(
@@ -67,9 +67,8 @@ public class CampaignController {
     @Operation(summary = "Add a player to a campaign")
     @ApiResponses( value = {
             @ApiResponse(responseCode = "200", description = "Campaign updated, returns the updated campaign"),
-            @ApiResponse(responseCode = "404", description = "User not found", content = {}),
-            @ApiResponse(responseCode = "404", description = "Campaign not found", content = {}),
-            @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = {})
+            @ApiResponse(responseCode = "404", description = "User not found / " + "Campaign not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = @Content)
     })
     @PatchMapping("/{id}/add-player/{playerId}")
     public CampaignApiDto addPlayerToCampaign(
@@ -84,9 +83,8 @@ public class CampaignController {
     @Operation(summary = "Remove a player from a campaign")
     @ApiResponses( value = {
             @ApiResponse(responseCode = "200", description = "Campaign updated, returns the updated campaign"),
-            @ApiResponse(responseCode = "404", description = "User not found", content = {}),
-            @ApiResponse(responseCode = "404", description = "Campaign not found", content = {}),
-            @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = {})
+            @ApiResponse(responseCode = "404", description = "User not found / " + "Campaign not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = @Content)
     })
     @PatchMapping("/{id}/remove-player/{playerId}")
     public CampaignApiDto removePlayerFromCampaign(
@@ -101,9 +99,8 @@ public class CampaignController {
     @Operation(summary = "Add an Ogl5 character to a campaign")
     @ApiResponses( value = {
             @ApiResponse(responseCode = "200", description = "Campaign updated, returns the updated campaign"),
-            @ApiResponse(responseCode = "404", description = "Personnage non trouvé", content = {}),
-            @ApiResponse(responseCode = "404", description = "Campaign not found", content = {}),
-            @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = {})
+            @ApiResponse(responseCode = "404", description = "Personnage non trouvé / " + "Campaign not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = @Content)
     })
     @PatchMapping("/{id}/add-ogl5-character/{characterId}")
     public CampaignApiDto addOgl5CharacterToCampaign(
@@ -118,9 +115,8 @@ public class CampaignController {
     @Operation(summary = "Remove a Ogl5 from a campaign")
     @ApiResponses( value = {
             @ApiResponse(responseCode = "200", description = "Campaign updated, returns the updated campaign"),
-            @ApiResponse(responseCode = "404", description = "Character non trouvé", content = {}),
-            @ApiResponse(responseCode = "404", description = "Campaign not found", content = {}),
-            @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = {})
+            @ApiResponse(responseCode = "404", description = "Character non trouvé / " + "Campaign not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = @Content)
     })
     @PatchMapping("/{id}/remove-ogl5-character/{characterId}")
     public CampaignApiDto removeOgl5CharacterFromCampaign(
@@ -135,9 +131,8 @@ public class CampaignController {
     @Operation(summary = "Add an Custom character to a campaign")
     @ApiResponses( value = {
             @ApiResponse(responseCode = "200", description = "Campaign updated, returns the updated campaign"),
-            @ApiResponse(responseCode = "404", description = "Personnage non trouvé", content = {}),
-            @ApiResponse(responseCode = "404", description = "Campaign not found", content = {}),
-            @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = {})
+            @ApiResponse(responseCode = "404", description = "Personnage non trouvé / " + "Campaign not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = @Content)
     })
     @PatchMapping("/{id}/add-custom-character/{characterId}")
     public CampaignApiDto addCustomCharacterToCampaign(
@@ -152,9 +147,8 @@ public class CampaignController {
     @Operation(summary = "Remove a Ogl5 from a campaign")
     @ApiResponses( value = {
             @ApiResponse(responseCode = "200", description = "Campaign updated, returns the updated campaign"),
-            @ApiResponse(responseCode = "404", description = "Character non trouvé", content = {}),
-            @ApiResponse(responseCode = "404", description = "Campaign not found", content = {}),
-            @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = {})
+            @ApiResponse(responseCode = "404", description = "Character non trouvé / " + "Campaign not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = @Content)
     })
     @PatchMapping("/{id}/remove-custom-character/{characterId}")
     public CampaignApiDto removeCustomCharacterFromCampaign(
@@ -168,7 +162,7 @@ public class CampaignController {
 
     @Operation(summary = "Delete a campaign")
     @ApiResponses( value = {
-            @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = {})
+            @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = @Content)
     })
     @DeleteMapping("/{id}")
     public void deleteCampaign(
