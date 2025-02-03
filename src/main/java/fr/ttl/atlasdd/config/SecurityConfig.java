@@ -31,7 +31,7 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
-                                "/user/singup",
+                                "/user/signup",
                                 "/user/verify",
                                 "/user/signin").permitAll() // Public routes
                         .anyRequest().authenticated() // Secure all other routes
