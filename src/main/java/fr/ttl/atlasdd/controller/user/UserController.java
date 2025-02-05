@@ -9,7 +9,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpSession;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,11 +18,9 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final JwtTokenProvider tokenProvider;
 
-    public UserController(UserService userService, JwtTokenProvider tokenProvider) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.tokenProvider = tokenProvider;
     }
 
     @Operation(summary = "Get one user by ID")
