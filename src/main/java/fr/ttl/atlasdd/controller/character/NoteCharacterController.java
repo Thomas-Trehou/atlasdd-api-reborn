@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/note-character")
+@RequestMapping("/character-notes")
 public class NoteCharacterController {
 
     private final NoteCharacterService noteCharacterService;
