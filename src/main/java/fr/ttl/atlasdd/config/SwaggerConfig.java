@@ -15,9 +15,9 @@ public class SwaggerConfig {
                         "/campaign-notes/**",
                         "/custom/characters/**",
                         "/ogl5/characters/**",
-                        "/note-character/**",
-                        "/friends-invitation/**",
-                        "/user/**")
+                        "/character-notes/**",
+                        "/friends-invitations/**",
+                        "/users/**")
                 .build();
     }
 }

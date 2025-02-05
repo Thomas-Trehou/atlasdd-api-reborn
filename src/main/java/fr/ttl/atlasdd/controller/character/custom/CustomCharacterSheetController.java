@@ -26,10 +26,11 @@ public class CustomCharacterSheetController {
     @Operation(summary = "Create a custom character sheet")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Custom character sheet created, returns the created character sheet"),
-            @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
-            @ApiResponse(responseCode = "500", description =
+            @ApiResponse(responseCode = "404", description =
                     "Error when trying to retrieve skills / " +
                     "Error when trying to retrieve spells / " +
+                    "User not found", content = @Content),
+            @ApiResponse(responseCode = "500", description =
                     "Error at race saving / " +
                     "Error at background saving / " +
                     "Error at class saving / " +
@@ -81,10 +82,10 @@ public class CustomCharacterSheetController {
                     "Class not found / " +
                     "Weapons not found / " +
                     "Armor not found / " +
-                    "Custom character not found", content = @Content),
-            @ApiResponse(responseCode = "500", description =
                     "Error when trying to retrieve skills / " +
                     "Error when trying to retrieve spells / " +
+                    "Custom character not found", content = @Content),
+            @ApiResponse(responseCode = "500", description =
                     "Error at race saving / " +
                     "Error at background saving / " +
                     "Error at class saving / " +

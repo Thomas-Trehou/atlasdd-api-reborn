@@ -9,7 +9,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/friends-invitation")
+@RequestMapping("/friends-invitations")
 public class FriendsInvitatationController {
 
     private final FriendsInvitationService friendsInvitationService;

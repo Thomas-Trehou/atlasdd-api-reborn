@@ -32,11 +32,11 @@ public class CharacterSheetController {
                     "Background not found / " +
                     "Class not found / " +
                     "Armor not found / " +
-                    "Ogl5 character not found", content = @Content),
-            @ApiResponse(responseCode = "500", description =
                     "Error when trying to retrieve skills / " +
                     "Error when trying to retrieve spells / " +
                     "Error when trying to retrieve weapons / " +
+                    "Ogl5 character not found", content = @Content),
+            @ApiResponse(responseCode = "500", description =
                     "Error at character sheet saving", content = @Content)
     })
     @PostMapping
@@ -80,11 +80,11 @@ public class CharacterSheetController {
             @ApiResponse(responseCode = "404", description =
                     "User not found / " +
                     "Armor not found / " +
-                    "Ogl5 character not found", content = @Content),
-            @ApiResponse(responseCode = "500", description =
                     "Error when trying to retrieve skills / " +
                     "Error when trying to retrieve spells / " +
                     "Error when trying to retrieve weapons / " +
+                    "Ogl5 character not found", content = @Content),
+            @ApiResponse(responseCode = "500", description =
                     "Error at character sheet saving", content = @Content)
     })
     @PatchMapping("/{id}")

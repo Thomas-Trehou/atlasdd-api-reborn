@@ -32,9 +32,9 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(
-                                "/user/signup",
-                                "/user/verify",
-                                "/user/signin").permitAll() // Public routes
+                                "/users/signup",
+                                "/users/verify",
+                                "/users/signin").permitAll() // Public routes
                         .anyRequest().authenticated() // Secure all other routes
                 )
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

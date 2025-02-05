@@ -27,7 +27,7 @@ public class CampaignNoteController {
             @ApiResponse(responseCode = "404", description = "Campaign not found / " + "User not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Error at campaign note saving", content = @Content)
     })
-    @PostMapping("/campaign/{campaignId}/user/{userId}")
+    @PostMapping("/campaigns/{campaignId}/users/{userId}")
     public CampaignNoteApiDto createCampaignNote(
             @Parameter(description = "ID of the campaign", required = true)
             @PathVariable Long campaignId,
@@ -57,7 +57,7 @@ public class CampaignNoteController {
             @ApiResponse(responseCode = "200", description = "Campaign notes found, returns the campaign notes"),
             @ApiResponse(responseCode = "500", description = "Something goes wrong at list creation", content = @Content)
     })
-    @GetMapping("/campaign/{campaignId}/user/{userId}")
+    @GetMapping("/campaigns/{campaignId}/users/{userId}")
     public List<CampaignNoteApiDto> getCampaignNoteByCampaignIdAndUserId(
             @Parameter(description = "ID of the campaign", required = true)
             @PathVariable Long campaignId,
