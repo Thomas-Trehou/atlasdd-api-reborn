@@ -37,7 +37,6 @@ public class UserControllerTest {
 
     @Test
     void testSignUp() throws Exception {
-        UserApiDto userApiDto = new UserApiDto();
         UserLightApiDto userLightApiDto = new UserLightApiDto();
         userLightApiDto.setEmail("email@test.com");
         userLightApiDto.setPseudo("nom");
