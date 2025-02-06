@@ -9,6 +9,6 @@ public class CampaignNoteSavingErrorException extends RuntimeException{
 
     public CampaignNoteSavingErrorException(String message) {
         super(message);
-        this.statusCode = statusCode;
+        this.statusCode = 500;
     }
 }

@@ -27,7 +27,7 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
      public void sendInvitation(Long senderId, Long receiverId) {
 
         UserSqlDto sender = userRepo.findById(senderId)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));;
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
         UserSqlDto receiver = userRepo.findById(receiverId)
                 .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
 
