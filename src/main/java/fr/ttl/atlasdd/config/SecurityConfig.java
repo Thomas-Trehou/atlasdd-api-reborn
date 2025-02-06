@@ -34,7 +34,9 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/users/signup",
                                 "/users/verify",
-                                "/users/signin").permitAll() // Public routes
+                                "/users/signin",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**").permitAll() // Public routes
                         .anyRequest().authenticated() // Secure all other routes
                 )
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
@@ -50,11 +52,5 @@ public class SecurityConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring()
-                .requestMatchers("/swagger-ui/**", "/v3/api-docs/**");
     }
 }
