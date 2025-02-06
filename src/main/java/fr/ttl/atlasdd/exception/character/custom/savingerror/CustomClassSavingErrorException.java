@@ -7,7 +7,7 @@ public class CustomClassSavingErrorException extends RuntimeException{
 
     private final int statusCode;
 
-    public CustomClassSavingErrorException(String message, int statusCode) {
+    public CustomClassSavingErrorException(String message) {
         super(message);
         this.statusCode = 500;
     }

@@ -7,7 +7,7 @@ public class Ogl5WeaponNotFoundException extends RuntimeException{
 
     private final int statusCode;
 
-    public Ogl5WeaponNotFoundException(String message, int statusCode) {
+    public Ogl5WeaponNotFoundException(String message) {
         super(message);
         this.statusCode = 404;
     }

@@ -7,7 +7,7 @@ public class CustomWeaponNotFoundException extends RuntimeException{
 
     private final int statusCode;
 
-    public CustomWeaponNotFoundException(String message, int statusCode) {
+    public CustomWeaponNotFoundException(String message) {
         super(message);
         this.statusCode = 404;
     }

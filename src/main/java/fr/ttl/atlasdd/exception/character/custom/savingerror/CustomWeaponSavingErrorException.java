@@ -7,7 +7,7 @@ public class CustomWeaponSavingErrorException extends RuntimeException{
 
     private final int statusCode;
 
-    public CustomWeaponSavingErrorException(String message, int statusCode) {
+    public CustomWeaponSavingErrorException(String message) {
         super(message);
         this.statusCode = 500;
     }

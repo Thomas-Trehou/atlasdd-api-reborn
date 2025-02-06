@@ -7,7 +7,7 @@ public class CustomRaceNotFoundException extends RuntimeException{
 
     private final int statusCode;
 
-    public CustomRaceNotFoundException(String message, int statusCode) {
+    public CustomRaceNotFoundException(String message) {
         super(message);
         this.statusCode = 404;
     }

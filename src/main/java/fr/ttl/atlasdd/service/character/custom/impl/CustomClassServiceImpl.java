@@ -31,7 +31,7 @@ public class CustomClassServiceImpl implements CustomClassService {
         try {
             return customClassMapper.toApiDto(customClassRepository.save(classSqlDto));
         } catch (Exception e) {
-            throw new CustomClassSavingErrorException("Erreur lors de la sauvegarde de la classe", 500);
+            throw new CustomClassSavingErrorException("Erreur lors de la sauvegarde de la classe");
         }
     }
 
@@ -39,14 +39,14 @@ public class CustomClassServiceImpl implements CustomClassService {
     public CustomClassApiDto updateClass(CustomClassApiDto customClassApiDto) {
 
         CustomClassSqlDto classSqlDto = customClassRepository.findById(customClassApiDto.getId())
-                .orElseThrow(() -> new CustomClassNotFoundException("Classe non trouvée", 404));
+                .orElseThrow(() -> new CustomClassNotFoundException("Classe non trouvée"));
 
         customClassMapper.updateSqlDto(customClassApiDto, classSqlDto);
 
         try {
             return customClassMapper.toApiDto(customClassRepository.save(classSqlDto));
         } catch (Exception e) {
-            throw new CustomClassSavingErrorException("Erreur lors de la sauvegarde de la classe", 500);
+            throw new CustomClassSavingErrorException("Erreur lors de la sauvegarde de la classe");
         }
     }
 }

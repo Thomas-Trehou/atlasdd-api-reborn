@@ -7,8 +7,8 @@ public class Ogl5CharacterSavingErrorException extends RuntimeException{
 
     private final int statusCode;
 
-    public Ogl5CharacterSavingErrorException(String message, int statusCode) {
+    public Ogl5CharacterSavingErrorException(String message) {
         super(message);
-        this.statusCode = statusCode;
+        this.statusCode = 500;
     }
 }

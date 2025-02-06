@@ -7,7 +7,7 @@ public class CustomCharacterNotFoundException extends RuntimeException{
 
     private final int statusCode;
 
-    public CustomCharacterNotFoundException(String message, int statusCode) {
+    public CustomCharacterNotFoundException(String message) {
         super(message);
         this.statusCode = 404;
     }

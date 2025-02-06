@@ -31,7 +31,7 @@ public class CustomArmorServiceImpl implements CustomArmorService {
         try {
             return customArmorMapper.toApiDto(customArmorRepository.save(armorSqlDto));
         } catch (Exception e) {
-            throw new CustomArmorSavingErrorException("Erreur lors de la sauvegarde de l'armure", 500);
+            throw new CustomArmorSavingErrorException("Erreur lors de la sauvegarde de l'armure");
         }
     }
 
@@ -39,14 +39,14 @@ public class CustomArmorServiceImpl implements CustomArmorService {
     public CustomArmorApiDto updateArmor(CustomArmorApiDto armorApiDto) {
 
         CustomArmorSqlDto armorSqlDto = customArmorRepository.findById(armorApiDto.getId())
-                .orElseThrow(() -> new CustomArmorNotFoundException("Armure non trouvée", 404));
+                .orElseThrow(() -> new CustomArmorNotFoundException("Armure non trouvée"));
 
         customArmorMapper.updateSqlDto(armorApiDto, armorSqlDto);
 
         try {
             return customArmorMapper.toApiDto(customArmorRepository.save(armorSqlDto));
         } catch (Exception e) {
-            throw new CustomArmorSavingErrorException("Erreur lors de la sauvegarde de l'armure", 500);
+            throw new CustomArmorSavingErrorException("Erreur lors de la sauvegarde de l'armure");
         }
     }
 

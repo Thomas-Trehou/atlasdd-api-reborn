@@ -12,10 +12,7 @@ import fr.ttl.atlasdd.exception.character.custom.notfound.*;
 import fr.ttl.atlasdd.exception.character.custom.savingerror.*;
 import fr.ttl.atlasdd.exception.character.ogl5.notfound.*;
 import fr.ttl.atlasdd.exception.character.ogl5.savingerror.Ogl5CharacterSavingErrorException;
-import fr.ttl.atlasdd.exception.user.FriendsInvitationNotFoundException;
-import fr.ttl.atlasdd.exception.user.FriendsInvitationSavingErrorException;
-import fr.ttl.atlasdd.exception.user.UserNotFoundException;
-import fr.ttl.atlasdd.exception.user.UserSavingErrorException;
+import fr.ttl.atlasdd.exception.user.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -184,6 +181,28 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(FriendsInvitationSavingErrorException.class)
     public ResponseEntity<String> handleCustomException(FriendsInvitationSavingErrorException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
+    // Bad request exception
+
+    @ExceptionHandler(EmailAlreadyUsedException.class)
+    public ResponseEntity<String> handleCustomException(EmailAlreadyUsedException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(PseudoAlreadyUsedException.class)
+    public ResponseEntity<String> handleCustomException(PseudoAlreadyUsedException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(IncorrectEmailOrPasswordException.class)
+    public ResponseEntity<String> handleCustomException(IncorrectEmailOrPasswordException ex) {
+        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(EmailNotVerifiedException.class)
+    public ResponseEntity<String> handleCustomException(EmailNotVerifiedException ex) {
         return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
     }
 

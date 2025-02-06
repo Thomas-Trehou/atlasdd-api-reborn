@@ -31,7 +31,7 @@ public class CustomRaceServiceImpl implements CustomRaceService {
         try {
             return customRaceMapper.toApiDto(customRaceRepository.save(raceSqlDto));
         } catch (Exception e) {
-            throw new CustomRaceSavingErrorException("Erreur lors de la sauvegarde de la race", 500);
+            throw new CustomRaceSavingErrorException("Erreur lors de la sauvegarde de la race");
         }
     }
 
@@ -39,14 +39,14 @@ public class CustomRaceServiceImpl implements CustomRaceService {
     public CustomRaceApiDto updateRace(CustomRaceApiDto customRaceApiDto) {
 
         CustomRaceSqlDto raceSqlDto = customRaceRepository.findById(customRaceApiDto.getId())
-                .orElseThrow(() -> new CustomRaceNotFoundException("Race non trouvée", 404));
+                .orElseThrow(() -> new CustomRaceNotFoundException("Race non trouvée"));
 
         customRaceMapper.updateFromApiDto(customRaceApiDto, raceSqlDto);
 
         try {
             return customRaceMapper.toApiDto(customRaceRepository.save(raceSqlDto));
         } catch (Exception e) {
-            throw new CustomRaceSavingErrorException("Erreur lors de la sauvegarde de la race", 500);
+            throw new CustomRaceSavingErrorException("Erreur lors de la sauvegarde de la race");
         }
     }
 }

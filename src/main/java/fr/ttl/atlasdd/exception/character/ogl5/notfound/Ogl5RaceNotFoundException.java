@@ -7,7 +7,7 @@ public class Ogl5RaceNotFoundException extends RuntimeException{
 
     private final int statusCode;
 
-    public Ogl5RaceNotFoundException(String message, int statusCode) {
+    public Ogl5RaceNotFoundException(String message) {
         super(message);
         this.statusCode = 404;
     }

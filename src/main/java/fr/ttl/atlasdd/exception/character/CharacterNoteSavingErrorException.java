@@ -7,7 +7,7 @@ public class CharacterNoteSavingErrorException extends RuntimeException{
 
     private final int statusCode;
 
-    public CharacterNoteSavingErrorException(String message, int statusCode) {
+    public CharacterNoteSavingErrorException(String message) {
         super(message);
         this.statusCode = 500;
     }

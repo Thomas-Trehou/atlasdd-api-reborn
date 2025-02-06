@@ -7,7 +7,7 @@ public class CampaignNotFoundException extends RuntimeException{
 
     private final int statusCode;
 
-    public CampaignNotFoundException(String message, int statusCode) {
+    public CampaignNotFoundException(String message) {
         super(message);
         this.statusCode = 404;
     }

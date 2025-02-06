@@ -7,7 +7,7 @@ public class CustomBackgroundNotFoundException extends RuntimeException{
 
     private final int statusCode;
 
-    public CustomBackgroundNotFoundException(String message, int statusCode) {
+    public CustomBackgroundNotFoundException(String message) {
         super(message);
         this.statusCode = 404;
     }

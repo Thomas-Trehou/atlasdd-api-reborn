@@ -7,7 +7,7 @@ public class CustomRaceSavingErrorException extends RuntimeException {
 
     private final int statusCode;
 
-    public CustomRaceSavingErrorException(String message, int statusCode) {
+    public CustomRaceSavingErrorException(String message) {
         super(message);
         this.statusCode = 500;
     }

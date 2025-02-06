@@ -44,7 +44,7 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
     public NoteCharacterApiDto createOgl5CharacterNote(Long characterSheetId, NoteCharacterApiDto noteCharacterApiDto) {
 
         CharacterSheetSqlDto characterSheetSqlDto = ogl5CharacterSheetRepository.findById(characterSheetId)
-                .orElseThrow(() -> new Ogl5CharacterNotFoundException("Personnage non trouvé", 404));
+                .orElseThrow(() -> new Ogl5CharacterNotFoundException("Personnage non trouvé"));
 
         NoteCharacterSqlDto noteCharacterSqlDto = noteCharacterMapper.toSqlDto(noteCharacterApiDto);
         noteCharacterSqlDto.setOgl5CharacterSheet(characterSheetSqlDto);
@@ -54,7 +54,7 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
         try {
             savedNoteCharacterSqlDto = noteCharacterRepository.save(noteCharacterSqlDto);
         } catch (Exception e) {
-            throw new CharacterNoteSavingErrorException("Erreur lors de la sauvegarde de la note", 500);
+            throw new CharacterNoteSavingErrorException("Erreur lors de la sauvegarde de la note");
         }
 
         characterSheetSqlDto.getCharacterNotes().add(savedNoteCharacterSqlDto);
@@ -62,7 +62,7 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
         try {
             ogl5CharacterSheetRepository.save(characterSheetSqlDto);
         } catch (Exception e) {
-            throw new Ogl5CharacterSavingErrorException("Erreur lors de la sauvegarde du personnage", 500);
+            throw new Ogl5CharacterSavingErrorException("Erreur lors de la sauvegarde du personnage");
         }
 
         return noteCharacterMapper.toApiDto(savedNoteCharacterSqlDto);
@@ -72,7 +72,7 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
     public NoteCharacterApiDto createCustomCharacterNote(Long characterSheetId, NoteCharacterApiDto noteCharacterApiDto) {
 
         CustomCharacterSheetSqlDto characterSheetSqlDto = customCharacterSheetRepository.findById(characterSheetId)
-                .orElseThrow(() -> new CustomCharacterNotFoundException("Personnage non trouvé", 404));
+                .orElseThrow(() -> new CustomCharacterNotFoundException("Personnage non trouvé"));
 
         NoteCharacterSqlDto noteCharacterSqlDto = noteCharacterMapper.toSqlDto(noteCharacterApiDto);
         noteCharacterSqlDto.setCustomCharacterSheet(characterSheetSqlDto);
@@ -82,7 +82,7 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
         try {
             savedNoteCharacterSqlDto = noteCharacterRepository.save(noteCharacterSqlDto);
         } catch (Exception e) {
-            throw new CharacterNoteSavingErrorException("Erreur lors de la sauvegarde de la note", 500);
+            throw new CharacterNoteSavingErrorException("Erreur lors de la sauvegarde de la note");
         }
 
         characterSheetSqlDto.getCharacterNotes().add(savedNoteCharacterSqlDto);
@@ -90,7 +90,7 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
         try {
             customCharacterSheetRepository.save(characterSheetSqlDto);
         } catch (Exception e) {
-            throw new CustomCharacterSavingErrorException("Erreur lors de la sauvegarde du personnage", 500);
+            throw new CustomCharacterSavingErrorException("Erreur lors de la sauvegarde du personnage");
         }
 
         return noteCharacterMapper.toApiDto(savedNoteCharacterSqlDto);
@@ -100,7 +100,7 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
     public NoteCharacterApiDto updateNote(Long noteId, NoteCharacterApiDto noteCharacterApiDto) {
 
         NoteCharacterSqlDto noteCharacterSqlDto = noteCharacterRepository.findById(noteId)
-                .orElseThrow(() -> new CharacterNoteNotFoundException("Note non trouvée", 404));
+                .orElseThrow(() -> new CharacterNoteNotFoundException("Note non trouvée"));
 
         noteCharacterSqlDto.setContent(noteCharacterApiDto.getContent());
         noteCharacterSqlDto.setTitle(noteCharacterApiDto.getTitle());
@@ -108,7 +108,7 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
         try {
             return noteCharacterMapper.toApiDto(noteCharacterRepository.save(noteCharacterSqlDto));
         } catch (Exception e) {
-            throw new CharacterNoteSavingErrorException("Erreur lors de la sauvegarde de la note", 500);
+            throw new CharacterNoteSavingErrorException("Erreur lors de la sauvegarde de la note");
         }
     }
 
@@ -131,7 +131,7 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
         try {
             noteCharacterRepository.deleteById(noteId);
         } catch (Exception e) {
-            throw new CharacterNoteSavingErrorException("Erreur lors de la suppression de la note", 500);
+            throw new CharacterNoteSavingErrorException("Erreur lors de la suppression de la note");
         }
     }
 

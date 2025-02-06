@@ -36,7 +36,7 @@ public class CustomWeaponServiceImpl implements CustomWeaponService {
                     .collect(Collectors.toList());
 
         } catch (Exception e) {
-            throw new CustomWeaponSavingErrorException("Erreur lors de la sauvegarde des armes", 500);
+            throw new CustomWeaponSavingErrorException("Erreur lors de la sauvegarde des armes");
         }
 
     }
@@ -48,7 +48,7 @@ public class CustomWeaponServiceImpl implements CustomWeaponService {
             return customWeaponApiDtos.stream()
                     .map(customWeaponApiDto -> {
                         CustomWeaponSqlDto existingWeapon = customWeaponRepository.findById(customWeaponApiDto.getId())
-                                .orElseThrow(() -> new CustomWeaponNotFoundException("Weapon not found: " + customWeaponApiDto.getId(), 404));
+                                .orElseThrow(() -> new CustomWeaponNotFoundException("Weapon not found: " + customWeaponApiDto.getId()));
                         customWeaponMapper.updateSqlDto(customWeaponApiDto, existingWeapon);
                         return customWeaponRepository.save(existingWeapon);
                     })
@@ -56,7 +56,7 @@ public class CustomWeaponServiceImpl implements CustomWeaponService {
                     .collect(Collectors.toList());
 
         } catch (Exception e) {
-            throw new CustomWeaponSavingErrorException("Erreur lors de la sauvegarde des armes", 500);
+            throw new CustomWeaponSavingErrorException("Erreur lors de la sauvegarde des armes");
         }
 
     }

@@ -7,7 +7,7 @@ public class CustomArmorNotFoundException extends RuntimeException{
 
     private final int statusCode;
 
-    public CustomArmorNotFoundException(String message, int statusCode) {
+    public CustomArmorNotFoundException(String message) {
         super(message);
         this.statusCode = 404;
     }

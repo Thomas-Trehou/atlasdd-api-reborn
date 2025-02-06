@@ -7,7 +7,7 @@ public class Ogl5BackgroundNotFoundException extends RuntimeException{
 
     private final int statusCode;
 
-    public Ogl5BackgroundNotFoundException(String message, int statusCode) {
+    public Ogl5BackgroundNotFoundException(String message) {
         super(message);
         this.statusCode = 404;
     }

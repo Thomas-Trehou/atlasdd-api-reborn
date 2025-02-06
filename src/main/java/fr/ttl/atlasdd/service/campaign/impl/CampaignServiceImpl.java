@@ -45,7 +45,7 @@ public class CampaignServiceImpl implements CampaignService {
     public CampaignApiDto createCampaign(CampaignCreateRequestApiDto campaignCreateRequestApiDto) {
         CampaignSqlDto newCampaign = new CampaignSqlDto();
         UserSqlDto gameMaster = userRepository.findById(campaignCreateRequestApiDto.getGameMasterId())
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé", 404));
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
 
         newCampaign.setName(campaignCreateRequestApiDto.getName());
         newCampaign.setDescription(campaignCreateRequestApiDto.getDescription());
@@ -54,7 +54,7 @@ public class CampaignServiceImpl implements CampaignService {
         try {
             return campaignMapper.toApiDto(campaignRepository.save(newCampaign));
         } catch (Exception e) {
-            throw new CampaignSavingErrorException("Erreur lors de la sauvegarde de la campagne", 500);
+            throw new CampaignSavingErrorException("Erreur lors de la sauvegarde de la campagne");
         }
     }
 
@@ -62,35 +62,35 @@ public class CampaignServiceImpl implements CampaignService {
     public CampaignApiDto getCampaignById(Long id) {
         return campaignMapper.toApiDto(
                 campaignRepository.findById(id)
-                        .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée", 404)));
+                        .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée")));
     }
 
     @Override
     public CampaignApiDto updateCampaign(Long id, CampaignCreateRequestApiDto campaignCreateRequestApiDto) {
         CampaignSqlDto campaign = campaignRepository.findById(id)
-                .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée", 404));
+                .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée"));
 
         campaign.setName(campaignCreateRequestApiDto.getName());
         campaign.setDescription(campaignCreateRequestApiDto.getDescription());
         campaign.setGameMaster(
                 userRepository.findById(campaignCreateRequestApiDto.getGameMasterId())
-                        .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé", 404))
+                        .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"))
         );
 
         try {
             return campaignMapper.toApiDto(campaignRepository.save(campaign));
         } catch (Exception e) {
-            throw new CampaignSavingErrorException("Erreur lors de la sauvegarde de la campagne", 500);
+            throw new CampaignSavingErrorException("Erreur lors de la sauvegarde de la campagne");
         }
     }
 
     @Override
     public CampaignApiDto addPlayerToCampaign(Long campaignId, Long playerId) {
         CampaignSqlDto campaign = campaignRepository.findById(campaignId)
-                .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée", 404));
+                .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée"));
 
         UserSqlDto player = userRepository.findById(playerId)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé", 404));
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
 
         if (campaign.getCampaignPlayers().contains(player)) {
             return campaignMapper.toApiDto(campaign);
@@ -101,92 +101,92 @@ public class CampaignServiceImpl implements CampaignService {
         try {
             return campaignMapper.toApiDto(campaignRepository.save(campaign));
         } catch (Exception e) {
-            throw new CampaignSavingErrorException("Erreur lors de la sauvegarde de la campagne", 500);
+            throw new CampaignSavingErrorException("Erreur lors de la sauvegarde de la campagne");
         }
     }
 
     @Override
     public CampaignApiDto removePlayerFromCampaign(Long campaignId, Long playerId) {
         CampaignSqlDto campaign = campaignRepository.findById(campaignId)
-                .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée", 404));
+                .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée"));
 
         UserSqlDto player = userRepository.findById(playerId)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé", 404));
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
 
         campaign.getCampaignPlayers().remove(player);
 
         try {
             return campaignMapper.toApiDto(campaignRepository.save(campaign));
         } catch (Exception e) {
-            throw new CampaignSavingErrorException("Erreur lors de la sauvegarde de la campagne", 500);
+            throw new CampaignSavingErrorException("Erreur lors de la sauvegarde de la campagne");
         }
     }
 
     @Override
     public CampaignApiDto addOgl5CharacterToCampaign(Long campaignId, Long characterId) {
         CampaignSqlDto campaign = campaignRepository.findById(campaignId)
-                .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée", 404));
+                .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée"));
 
         CharacterSheetSqlDto character = ogl5CharacterSheetRepository.findById(characterId)
-                .orElseThrow(() -> new Ogl5CharacterNotFoundException("Personnage non trouvé", 404));
+                .orElseThrow(() -> new Ogl5CharacterNotFoundException("Personnage non trouvé"));
 
         campaign.getCampaignOgl5CharacterSheets().add(character);
 
         try {
             return campaignMapper.toApiDto(campaignRepository.save(campaign));
         } catch (Exception e) {
-            throw new CampaignSavingErrorException("Erreur lors de la sauvegarde de la campagne", 500);
+            throw new CampaignSavingErrorException("Erreur lors de la sauvegarde de la campagne");
         }
     }
 
     @Override
     public CampaignApiDto removeOgl5CharacterFromCampaign(Long campaignId, Long characterId) {
         CampaignSqlDto campaign = campaignRepository.findById(campaignId)
-                .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée", 404));
+                .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée"));
 
         CharacterSheetSqlDto character = ogl5CharacterSheetRepository.findById(characterId)
-                .orElseThrow(() -> new Ogl5CharacterNotFoundException("Personnage non trouvé", 404));
+                .orElseThrow(() -> new Ogl5CharacterNotFoundException("Personnage non trouvé"));
 
         campaign.getCampaignOgl5CharacterSheets().remove(character);
 
         try {
             return campaignMapper.toApiDto(campaignRepository.save(campaign));
         } catch (Exception e) {
-            throw new CampaignSavingErrorException("Erreur lors de la sauvegarde de la campagne", 500);
+            throw new CampaignSavingErrorException("Erreur lors de la sauvegarde de la campagne");
         }
     }
 
     @Override
     public CampaignApiDto addCustomCharacterToCampaign(Long campaignId, Long characterId) {
         CampaignSqlDto campaign = campaignRepository.findById(campaignId)
-                .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée", 404));
+                .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée"));
 
         CustomCharacterSheetSqlDto character = customCharacterSheetRepo.findById(characterId)
-                .orElseThrow(() -> new CustomCharacterNotFoundException("Personnage non trouvé", 404));
+                .orElseThrow(() -> new CustomCharacterNotFoundException("Personnage non trouvé"));
 
         campaign.getCampaignCustomCharacterSheets().add(character);
 
         try {
             return campaignMapper.toApiDto(campaignRepository.save(campaign));
         } catch (Exception e) {
-            throw new CampaignSavingErrorException("Erreur lors de la sauvegarde de la campagne", 500);
+            throw new CampaignSavingErrorException("Erreur lors de la sauvegarde de la campagne");
         }
     }
 
     @Override
     public CampaignApiDto removeCustomCharacterFromCampaign(Long campaignId, Long characterId) {
         CampaignSqlDto campaign = campaignRepository.findById(campaignId)
-                .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée", 404));
+                .orElseThrow(() -> new CampaignNotFoundException("Campagne non trouvée"));
 
         CustomCharacterSheetSqlDto character = customCharacterSheetRepo.findById(characterId)
-                .orElseThrow(() -> new CustomCharacterNotFoundException("Personnage non trouvé", 404));
+                .orElseThrow(() -> new CustomCharacterNotFoundException("Personnage non trouvé"));
 
         campaign.getCampaignCustomCharacterSheets().remove(character);
 
         try {
             return campaignMapper.toApiDto(campaignRepository.save(campaign));
         } catch (Exception e) {
-            throw new CampaignSavingErrorException("Erreur lors de la sauvegarde de la campagne", 500);
+            throw new CampaignSavingErrorException("Erreur lors de la sauvegarde de la campagne");
         }
     }
 
@@ -195,7 +195,7 @@ public class CampaignServiceImpl implements CampaignService {
         try {
             campaignRepository.deleteById(id);
         } catch (Exception e) {
-            throw new CampaignSavingErrorException("Erreur lors de la suppression de la campagne", 500);
+            throw new CampaignSavingErrorException("Erreur lors de la suppression de la campagne");
         }
     }
 }

@@ -27,9 +27,9 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
      public void sendInvitation(Long senderId, Long receiverId) {
 
         UserSqlDto sender = userRepo.findById(senderId)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé", 404));;
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));;
         UserSqlDto receiver = userRepo.findById(receiverId)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé", 404));
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
 
         boolean invitationAlreadyExist =  friendsInvitationRepo.existsByRequestUser_IdAndReceiverUser_Id(senderId, receiverId);
 
@@ -43,10 +43,10 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
             try {
                 friendsInvitationRepo.save(friendInvitationSqlDto);
             } catch (Exception e) {
-                throw new FriendsInvitationSavingErrorException("Erreur lors de la sauvegarde de l'invitation", 500);
+                throw new FriendsInvitationSavingErrorException("Erreur lors de la sauvegarde de l'invitation");
             }
         } else {
-            throw new FriendsInvitationSavingErrorException("Invitation déjà envoyée", 400);
+            throw new FriendsInvitationSavingErrorException("Invitation déjà envoyée");
         }
 
     }
@@ -56,7 +56,7 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
         FriendInvitationSqlDto friendInvitationSqlDto = friendsInvitationRepo.findByIdAndReceiverUser_Id(invitationId, receiverId);
 
         if(friendInvitationSqlDto == null) {
-            throw new FriendsInvitationNotFoundException("Invitation non trouvée", 404);
+            throw new FriendsInvitationNotFoundException("Invitation non trouvée");
         }
 
         UserSqlDto sender = friendInvitationSqlDto.getRequestUser();
@@ -69,7 +69,7 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
             userRepo.save(sender);
             userRepo.save(receiver);
         } catch (Exception e) {
-            throw new UserSavingErrorException("Erreur lors de la sauvegarde de l'utilisateur", 500);
+            throw new UserSavingErrorException("Erreur lors de la sauvegarde de l'utilisateur");
         }
 
         friendInvitationSqlDto.setStatus(InvitationStatus.ACCEPTED);
@@ -77,7 +77,7 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
         try {
             friendsInvitationRepo.save(friendInvitationSqlDto);
         } catch (Exception e) {
-            throw new FriendsInvitationSavingErrorException("Erreur lors de la sauvegarde de l'invitation", 500);
+            throw new FriendsInvitationSavingErrorException("Erreur lors de la sauvegarde de l'invitation");
         }
     }
 
@@ -86,13 +86,13 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
         FriendInvitationSqlDto friendInvitationSqlDto = friendsInvitationRepo.findByIdAndReceiverUser_Id(invitationId, receiverId);
 
         if(friendInvitationSqlDto == null) {
-            throw new FriendsInvitationNotFoundException("Invitation non trouvée", 404);
+            throw new FriendsInvitationNotFoundException("Invitation non trouvée");
         }
 
         try {
             friendsInvitationRepo.delete(friendInvitationSqlDto);
         } catch (Exception e) {
-            throw new FriendsInvitationSavingErrorException("Erreur lors du refus de l'invitation", 500);
+            throw new FriendsInvitationSavingErrorException("Erreur lors du refus de l'invitation");
         }
 
     }
@@ -102,13 +102,13 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
         FriendInvitationSqlDto friendInvitationSqlDto = friendsInvitationRepo.findByIdAndRequestUser_Id(invitationId, senderId);
 
         if(friendInvitationSqlDto == null) {
-            throw new FriendsInvitationNotFoundException("Invitation non trouvée", 404);
+            throw new FriendsInvitationNotFoundException("Invitation non trouvée");
         }
 
         try {
             friendsInvitationRepo.delete(friendInvitationSqlDto);
         } catch (Exception e) {
-            throw new FriendsInvitationSavingErrorException("Erreur lors de l'annulation de l'invitation", 500);
+            throw new FriendsInvitationSavingErrorException("Erreur lors de l'annulation de l'invitation");
         }
     }
 }

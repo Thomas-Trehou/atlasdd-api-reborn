@@ -3,7 +3,10 @@ package fr.ttl.atlasdd.service.character.custom.impl;
 import fr.ttl.atlasdd.apidto.character.custom.CustomCharacterSheetApiDto;
 import fr.ttl.atlasdd.apidto.character.custom.CustomCharacterSheetCreateRequestApiDto;
 import fr.ttl.atlasdd.apidto.character.custom.CustomCharacterSheetUpdateRequestApiDto;
+import fr.ttl.atlasdd.exception.character.CharacterPreparedSpellNotFoundException;
+import fr.ttl.atlasdd.exception.character.CharacterSkillNotFoundException;
 import fr.ttl.atlasdd.exception.character.custom.notfound.CustomCharacterNotFoundException;
+import fr.ttl.atlasdd.exception.character.custom.savingerror.CustomCharacterSavingErrorException;
 import fr.ttl.atlasdd.exception.user.UserNotFoundException;
 import fr.ttl.atlasdd.mapper.character.custom.CustomCharacterSheetCreateRequestMapper;
 import fr.ttl.atlasdd.mapper.character.custom.CustomCharacterSheetMapper;
@@ -87,14 +90,14 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
         try {
             return customCharacterSheetMapper.toApiDto(customCharacterSheetRepository.save(characterSheetSqlDto));
         } catch (Exception e) {
-            throw new CustomCharacterNotFoundException("Erreur lors de la sauvegarde du personnage", 500);
+            throw new CustomCharacterSavingErrorException("Erreur lors de la sauvegarde du personnage");
         }
     }
 
     @Override
     public CustomCharacterSheetApiDto getCharacterSheetById(Long id) {
         CustomCharacterSheetSqlDto characterSheet = customCharacterSheetRepository.findById(id)
-                .orElseThrow(() -> new CustomCharacterNotFoundException("Personnage non trouvé", 404));
+                .orElseThrow(() -> new CustomCharacterNotFoundException("Personnage non trouvé"));
 
         return customCharacterSheetMapper.toApiDto(characterSheet);
     }
@@ -108,7 +111,7 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
     @Override
     public CustomCharacterSheetApiDto updateCharacterSheet(Long id, CustomCharacterSheetUpdateRequestApiDto request) {
         CustomCharacterSheetSqlDto characterSheet = customCharacterSheetRepository.findById(id)
-                .orElseThrow(() -> new CustomCharacterNotFoundException("Personnage non trouvé", 404));
+                .orElseThrow(() -> new CustomCharacterNotFoundException("Personnage non trouvé"));
 
         List<CustomSkillSqlDto> skills = findSkillsByIds(request.getSkillIds());
         List<CustomSpellSqlDto> spells = findSpellsByIds(request.getPreparedSpellIds());
@@ -127,20 +130,20 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
         try {
             return customCharacterSheetMapper.toApiDto(customCharacterSheetRepository.save(characterSheet));
         } catch (Exception e) {
-            throw new CustomCharacterNotFoundException("Erreur lors de la sauvegarde du personnage", 500);
+            throw new CustomCharacterSavingErrorException("Erreur lors de la sauvegarde du personnage");
         }
     }
 
     private UserSqlDto findUserById(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé", 404));
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
     }
 
     private List<CustomSkillSqlDto> findSkillsByIds(List<Long> skillIds) {
         try {
             return customSkillRepository.findAllById(skillIds);
         } catch (Exception e) {
-            throw new CustomCharacterNotFoundException("Erreur lors de la récupération des compétences", 404);
+            throw new CharacterSkillNotFoundException("Erreur lors de la récupération des compétences");
         }
     }
 
@@ -148,7 +151,7 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
         try {
             return customSpellRepository.findAllById(spellIds);
         } catch (Exception e) {
-            throw new CustomCharacterNotFoundException("Erreur lors de la récupération des sorts", 404);
+            throw new CharacterPreparedSpellNotFoundException("Erreur lors de la récupération des sorts");
         }
     }
 }

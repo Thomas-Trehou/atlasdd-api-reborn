@@ -4,8 +4,7 @@ import fr.ttl.atlasdd.apidto.user.SignInDto;
 import fr.ttl.atlasdd.apidto.user.UserApiDto;
 import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
 import fr.ttl.atlasdd.apidto.user.UserLightAuthApiDto;
-import fr.ttl.atlasdd.exception.user.UserNotFoundException;
-import fr.ttl.atlasdd.exception.user.UserSavingErrorException;
+import fr.ttl.atlasdd.exception.user.*;
 import fr.ttl.atlasdd.mapper.user.UserLightAuthMapper;
 import fr.ttl.atlasdd.mapper.user.UserLightMapper;
 import fr.ttl.atlasdd.mapper.user.UserMapper;
@@ -60,7 +59,7 @@ public class UserServiceImpl implements UserService {
     public UserLightApiDto getUserById(Long id) {
         return userRepository.findById(id)
                 .map(UserLightMapper.INSTANCE::toApiDto)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé", 404));
+                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
     }
 
     @Override
@@ -84,7 +83,7 @@ public class UserServiceImpl implements UserService {
         Optional<UserSqlDto> existingUser = userRepository.findByEmail(userApiDto.getEmail());
 
         if (existingUser.isPresent()) {
-            throw new IllegalArgumentException("Email déjà utilisé");
+            throw new EmailAlreadyUsedException("Email déjà utilisé");
         }
 
         userApiDto.setPassword(bCryptPasswordEncoder.encode(userApiDto.getPassword()));
@@ -95,7 +94,7 @@ public class UserServiceImpl implements UserService {
         UserSqlDto userWithSameSlug = userRepository.findBySlug(userSqlDto.getSlug()).orElse(null);
 
         if (userWithSameSlug != null) {
-            throw new IllegalArgumentException("Pseudo déjà utilisé");
+            throw new PseudoAlreadyUsedException("Pseudo déjà utilisé");
         }
 
         userSqlDto.setState(UserState.INACTIVE);
@@ -103,7 +102,7 @@ public class UserServiceImpl implements UserService {
         try {
             userRepository.save(userSqlDto);
         } catch (Exception e) {
-            throw new UserSavingErrorException("Erreur lors de la création de l'utilisateur", 500);
+            throw new UserSavingErrorException("Erreur lors de la création de l'utilisateur");
         }
 
         String token = UUID.randomUUID().toString();
@@ -150,7 +149,7 @@ public class UserServiceImpl implements UserService {
         try {
             userRepository.save(user);
         } catch (Exception e) {
-            throw new UserSavingErrorException("Erreur lors de la vérification de l'utilisateur", 500);
+            throw new UserSavingErrorException("Erreur lors de la vérification de l'utilisateur");
         }
 
         return "Compte vérifié avec succès";
@@ -161,11 +160,11 @@ public class UserServiceImpl implements UserService {
         Optional<UserSqlDto> user = userRepository.findByEmail(signInDto.getEmail());
 
         if (user.isEmpty() || !bCryptPasswordEncoder.matches(signInDto.getPassword(), user.get().getPassword())) {
-            throw new IllegalArgumentException("Email ou mot de passe incorrect");
+            throw new IncorrectEmailOrPasswordException("Email ou mot de passe incorrect");
         }
 
         if (user.get().getState() != UserState.ACTIVE) {
-            throw new IllegalArgumentException("Vous devez vérifier votre adresse email");
+            throw new EmailNotVerifiedException("Vous devez vérifier votre adresse email");
         }
 
         UserLightAuthApiDto userLightAuthApiDto = userLightAuthMapper.toApiDto(user.get());

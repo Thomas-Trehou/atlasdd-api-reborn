@@ -7,7 +7,7 @@ public class Ogl5ArmorNotFoundException extends RuntimeException{
 
     private final int statusCode;
 
-    public Ogl5ArmorNotFoundException(String message, int statusCode) {
+    public Ogl5ArmorNotFoundException(String message) {
         super(message);
         this.statusCode = 404;
     }

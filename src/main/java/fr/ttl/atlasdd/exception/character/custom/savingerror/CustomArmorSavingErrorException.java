@@ -7,7 +7,7 @@ public class CustomArmorSavingErrorException extends RuntimeException{
 
     private final int statusCode;
 
-    public CustomArmorSavingErrorException(String message, int statusCode) {
+    public CustomArmorSavingErrorException(String message) {
         super(message);
         this.statusCode = 500;
     }
