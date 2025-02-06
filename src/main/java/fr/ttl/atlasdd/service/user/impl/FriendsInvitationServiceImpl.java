@@ -9,6 +9,7 @@ import fr.ttl.atlasdd.repository.user.UserRepo;
 import fr.ttl.atlasdd.service.user.FriendsInvitationService;
 import fr.ttl.atlasdd.sqldto.user.FriendInvitationSqlDto;
 import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
+import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import fr.ttl.atlasdd.utils.user.InvitationStatus;
 import org.springframework.stereotype.Service;
 
@@ -27,9 +28,9 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
      public void sendInvitation(Long senderId, Long receiverId) {
 
         UserSqlDto sender = userRepo.findById(senderId)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
         UserSqlDto receiver = userRepo.findById(receiverId)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
 
         boolean invitationAlreadyExist =  friendsInvitationRepo.existsByRequestUser_IdAndReceiverUser_Id(senderId, receiverId);
 
@@ -43,10 +44,10 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
             try {
                 friendsInvitationRepo.save(friendInvitationSqlDto);
             } catch (Exception e) {
-                throw new FriendsInvitationSavingErrorException("Erreur lors de la sauvegarde de l'invitation");
+                throw new FriendsInvitationSavingErrorException(ExceptionMessage.FRIENDS_INVITATION_SAVE_ERROR.getMessage());
             }
         } else {
-            throw new FriendsInvitationSavingErrorException("Invitation déjà envoyée");
+            throw new FriendsInvitationSavingErrorException(ExceptionMessage.FRIENDS_INVITATION_ALREADY_SENT.getMessage());
         }
 
     }
@@ -56,7 +57,7 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
         FriendInvitationSqlDto friendInvitationSqlDto = friendsInvitationRepo.findByIdAndReceiverUser_Id(invitationId, receiverId);
 
         if(friendInvitationSqlDto == null) {
-            throw new FriendsInvitationNotFoundException("Invitation non trouvée");
+            throw new FriendsInvitationNotFoundException(ExceptionMessage.FRIENDS_INVITATION_NOT_FOUND.getMessage());
         }
 
         UserSqlDto sender = friendInvitationSqlDto.getRequestUser();
@@ -69,7 +70,7 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
             userRepo.save(sender);
             userRepo.save(receiver);
         } catch (Exception e) {
-            throw new UserSavingErrorException("Erreur lors de la sauvegarde de l'utilisateur");
+            throw new UserSavingErrorException(ExceptionMessage.USER_SAVE_ERROR.getMessage());
         }
 
         friendInvitationSqlDto.setStatus(InvitationStatus.ACCEPTED);
@@ -77,7 +78,7 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
         try {
             friendsInvitationRepo.save(friendInvitationSqlDto);
         } catch (Exception e) {
-            throw new FriendsInvitationSavingErrorException("Erreur lors de la sauvegarde de l'invitation");
+            throw new FriendsInvitationSavingErrorException(ExceptionMessage.FRIENDS_INVITATION_ACCEPT_ERROR.getMessage());
         }
     }
 
@@ -86,13 +87,13 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
         FriendInvitationSqlDto friendInvitationSqlDto = friendsInvitationRepo.findByIdAndReceiverUser_Id(invitationId, receiverId);
 
         if(friendInvitationSqlDto == null) {
-            throw new FriendsInvitationNotFoundException("Invitation non trouvée");
+            throw new FriendsInvitationNotFoundException(ExceptionMessage.FRIENDS_INVITATION_NOT_FOUND.getMessage());
         }
 
         try {
             friendsInvitationRepo.delete(friendInvitationSqlDto);
         } catch (Exception e) {
-            throw new FriendsInvitationSavingErrorException("Erreur lors du refus de l'invitation");
+            throw new FriendsInvitationSavingErrorException(ExceptionMessage.FRIENDS_INVITATION_DECLINE_ERROR.getMessage());
         }
 
     }
@@ -102,13 +103,13 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
         FriendInvitationSqlDto friendInvitationSqlDto = friendsInvitationRepo.findByIdAndRequestUser_Id(invitationId, senderId);
 
         if(friendInvitationSqlDto == null) {
-            throw new FriendsInvitationNotFoundException("Invitation non trouvée");
+            throw new FriendsInvitationNotFoundException(ExceptionMessage.FRIENDS_INVITATION_NOT_FOUND.getMessage());
         }
 
         try {
             friendsInvitationRepo.delete(friendInvitationSqlDto);
         } catch (Exception e) {
-            throw new FriendsInvitationSavingErrorException("Erreur lors de l'annulation de l'invitation");
+            throw new FriendsInvitationSavingErrorException(ExceptionMessage.FRIENDS_INVITATION_CANCEL_ERROR.getMessage());
         }
     }
 }

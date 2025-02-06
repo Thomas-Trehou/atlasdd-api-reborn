@@ -19,6 +19,7 @@ import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
 import fr.ttl.atlasdd.utils.character.Alignment;
 import fr.ttl.atlasdd.utils.character.CharacterStatus;
 import fr.ttl.atlasdd.utils.character.ShieldType;
+import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -97,14 +98,14 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         try {
             return characterSheetMapper.toApiDto(characterSheetRepository.save(characterSheet));
         } catch (Exception e) {
-            throw new Ogl5CharacterSavingErrorException("Erreur lors de la sauvegarde du personnage");
+            throw new Ogl5CharacterSavingErrorException(ExceptionMessage.CHARACTER_SAVE_ERROR.getMessage());
         }
     }
 
     @Override
     public CharacterSheetApiDto getCharacterSheetById(Long id) {
         CharacterSheetSqlDto characterSheet = characterSheetRepository.findById(id)
-                .orElseThrow(() -> new Ogl5CharacterNotFoundException("Personnage non trouvé"));
+                .orElseThrow(() -> new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
         return characterSheetMapper.toApiDto(characterSheet);
     }
@@ -119,7 +120,7 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
     @Override
     public CharacterSheetApiDto updateCharacterSheet(Long id, CharacterSheetUpdateRequestApiDto request) {
         CharacterSheetSqlDto characterSheet = characterSheetRepository.findById(id)
-                .orElseThrow(() -> new Ogl5CharacterNotFoundException("Personnage non trouvé"));
+                .orElseThrow(() -> new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
         List<SkillSqlDto> skills = findSkillsByIds(request.getSkillIds());
         List<SpellSqlDto> spells = findSpellsByIds(request.getPreparedSpellIds());
@@ -135,36 +136,36 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         try {
             return characterSheetMapper.toApiDto(characterSheetRepository.save(characterSheet));
         } catch (Exception e) {
-            throw new Ogl5CharacterSavingErrorException("Erreur lors de la sauvegarde du personnage");
+            throw new Ogl5CharacterSavingErrorException(ExceptionMessage.CHARACTER_UPDATE_ERROR.getMessage());
         }
     }
 
 
     private UserSqlDto findUserById(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
     }
 
     private RaceSqlDto findRaceById(Long raceId) {
         return raceRepository.findById(raceId)
-                .orElseThrow(() -> new Ogl5ArmorNotFoundException("Armure non trouvée"));
+                .orElseThrow(() -> new Ogl5ArmorNotFoundException(ExceptionMessage.ARMOR_NOT_FOUND.getMessage()));
     }
 
     private BackgroundSqlDto findBackgroundById(Long backgroundId) {
         return backgroundRepository.findById(backgroundId)
-                .orElseThrow(() -> new Ogl5BackgroundNotFoundException("Background non trouvé"));
+                .orElseThrow(() -> new Ogl5BackgroundNotFoundException(ExceptionMessage.BACKGROUND_NOT_FOUND.getMessage()));
     }
 
     private ClassSqlDto findClassById(Long classId) {
         return classRepository.findById(classId)
-                .orElseThrow(() -> new Ogl5ClassNotFoundException("Classe non trouvée"));
+                .orElseThrow(() -> new Ogl5ClassNotFoundException(ExceptionMessage.CLASS_NOT_FOUND.getMessage()));
     }
 
     private List<SkillSqlDto> findSkillsByIds(List<Long> skillIds) {
         try {
             return skillRepository.findAllById(skillIds);
         } catch (Exception e) {
-            throw new CharacterSkillNotFoundException("Erreur lors de la récupération des compétences");
+            throw new CharacterSkillNotFoundException(ExceptionMessage.SKILL_RETRIEVE_ERROR.getMessage());
         }
     }
 
@@ -172,7 +173,7 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         try {
             return spellRepository.findAllById(spellIds);
         } catch (Exception e) {
-            throw new CharacterPreparedSpellNotFoundException("Erreur lors de la récupération des sorts");
+            throw new CharacterPreparedSpellNotFoundException(ExceptionMessage.SPELL_RETRIEVE_ERROR.getMessage());
         }
     }
 
@@ -180,12 +181,12 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         try {
             return weaponRepository.findAllById(weaponIds);
         } catch (Exception e) {
-            throw new Ogl5WeaponNotFoundException("Erreur lors de la récupération des armes");
+            throw new Ogl5WeaponNotFoundException(ExceptionMessage.WEAPON_RETRIEVE_ERROR.getMessage());
         }
     }
 
     private ArmorSqlDto findArmorById(Long armorId) {
         return armorRepository.findById(armorId)
-                .orElseThrow(() -> new Ogl5ArmorNotFoundException("Armure non trouvée"));
+                .orElseThrow(() -> new Ogl5ArmorNotFoundException(ExceptionMessage.ARMOR_NOT_FOUND.getMessage()));
     }
 }

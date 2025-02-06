@@ -20,6 +20,7 @@ import fr.ttl.atlasdd.sqldto.character.custom.CustomCharacterSheetSqlDto;
 import fr.ttl.atlasdd.sqldto.character.custom.CustomSkillSqlDto;
 import fr.ttl.atlasdd.sqldto.character.custom.CustomSpellSqlDto;
 import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
+import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -90,14 +91,14 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
         try {
             return customCharacterSheetMapper.toApiDto(customCharacterSheetRepository.save(characterSheetSqlDto));
         } catch (Exception e) {
-            throw new CustomCharacterSavingErrorException("Erreur lors de la sauvegarde du personnage");
+            throw new CustomCharacterSavingErrorException(ExceptionMessage.CHARACTER_SAVE_ERROR.getMessage());
         }
     }
 
     @Override
     public CustomCharacterSheetApiDto getCharacterSheetById(Long id) {
         CustomCharacterSheetSqlDto characterSheet = customCharacterSheetRepository.findById(id)
-                .orElseThrow(() -> new CustomCharacterNotFoundException("Personnage non trouvé"));
+                .orElseThrow(() -> new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
         return customCharacterSheetMapper.toApiDto(characterSheet);
     }
@@ -111,7 +112,7 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
     @Override
     public CustomCharacterSheetApiDto updateCharacterSheet(Long id, CustomCharacterSheetUpdateRequestApiDto request) {
         CustomCharacterSheetSqlDto characterSheet = customCharacterSheetRepository.findById(id)
-                .orElseThrow(() -> new CustomCharacterNotFoundException("Personnage non trouvé"));
+                .orElseThrow(() -> new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
         List<CustomSkillSqlDto> skills = findSkillsByIds(request.getSkillIds());
         List<CustomSpellSqlDto> spells = findSpellsByIds(request.getPreparedSpellIds());
@@ -130,20 +131,20 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
         try {
             return customCharacterSheetMapper.toApiDto(customCharacterSheetRepository.save(characterSheet));
         } catch (Exception e) {
-            throw new CustomCharacterSavingErrorException("Erreur lors de la sauvegarde du personnage");
+            throw new CustomCharacterSavingErrorException(ExceptionMessage.CHARACTER_UPDATE_ERROR.getMessage());
         }
     }
 
     private UserSqlDto findUserById(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé"));
+                .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
     }
 
     private List<CustomSkillSqlDto> findSkillsByIds(List<Long> skillIds) {
         try {
             return customSkillRepository.findAllById(skillIds);
         } catch (Exception e) {
-            throw new CharacterSkillNotFoundException("Erreur lors de la récupération des compétences");
+            throw new CharacterSkillNotFoundException(ExceptionMessage.SKILL_RETRIEVE_ERROR.getMessage());
         }
     }
 
@@ -151,7 +152,7 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
         try {
             return customSpellRepository.findAllById(spellIds);
         } catch (Exception e) {
-            throw new CharacterPreparedSpellNotFoundException("Erreur lors de la récupération des sorts");
+            throw new CharacterPreparedSpellNotFoundException(ExceptionMessage.SPELL_RETRIEVE_ERROR.getMessage());
         }
     }
 }

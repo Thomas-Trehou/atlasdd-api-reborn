@@ -7,6 +7,7 @@ import fr.ttl.atlasdd.mapper.character.custom.CustomRaceMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomRaceRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomRaceService;
 import fr.ttl.atlasdd.sqldto.character.custom.CustomRaceSqlDto;
+import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,7 +32,7 @@ public class CustomRaceServiceImpl implements CustomRaceService {
         try {
             return customRaceMapper.toApiDto(customRaceRepository.save(raceSqlDto));
         } catch (Exception e) {
-            throw new CustomRaceSavingErrorException("Erreur lors de la sauvegarde de la race");
+            throw new CustomRaceSavingErrorException(ExceptionMessage.RACE_SAVE_ERROR.getMessage());
         }
     }
 
@@ -39,14 +40,14 @@ public class CustomRaceServiceImpl implements CustomRaceService {
     public CustomRaceApiDto updateRace(CustomRaceApiDto customRaceApiDto) {
 
         CustomRaceSqlDto raceSqlDto = customRaceRepository.findById(customRaceApiDto.getId())
-                .orElseThrow(() -> new CustomRaceNotFoundException("Race non trouvée"));
+                .orElseThrow(() -> new CustomRaceNotFoundException(ExceptionMessage.RACE_NOT_FOUND.getMessage()));
 
         customRaceMapper.updateFromApiDto(customRaceApiDto, raceSqlDto);
 
         try {
             return customRaceMapper.toApiDto(customRaceRepository.save(raceSqlDto));
         } catch (Exception e) {
-            throw new CustomRaceSavingErrorException("Erreur lors de la sauvegarde de la race");
+            throw new CustomRaceSavingErrorException(ExceptionMessage.RACE_UPDATE_ERROR.getMessage());
         }
     }
 }
