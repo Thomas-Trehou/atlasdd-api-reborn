@@ -7,6 +7,7 @@ import fr.ttl.atlasdd.exception.GlobalExceptionHandler;
 import fr.ttl.atlasdd.exception.user.EmailNotVerifiedException;
 import fr.ttl.atlasdd.exception.user.IncorrectEmailOrPasswordException;
 import fr.ttl.atlasdd.service.user.UserService;
+import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -81,14 +82,14 @@ public class SignInTest {
         requestDto.setEmail(TEST_EMAIL);
         requestDto.setPassword(TEST_PASSWORD);
 
-        when(userService.signIn(any(SignInDto.class))).thenThrow(new IncorrectEmailOrPasswordException("Email ou mot de passe incorrect"));
+        when(userService.signIn(any(SignInDto.class))).thenThrow(new IncorrectEmailOrPasswordException(ExceptionMessage.USER_EMAIL_OR_PASSWORD_INVALID.getMessage()));
 
         mockMvc.perform(post("/users/signin")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(requestDto)))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message").value("Email ou mot de passe incorrect"));
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.USER_EMAIL_OR_PASSWORD_INVALID.getMessage()));
     }
 
     @Test
@@ -97,13 +98,13 @@ public class SignInTest {
         requestDto.setEmail(TEST_EMAIL);
         requestDto.setPassword(TEST_PASSWORD);
 
-        when(userService.signIn(any(SignInDto.class))).thenThrow(new EmailNotVerifiedException("Vous devez vérifier votre adresse email"));
+        when(userService.signIn(any(SignInDto.class))).thenThrow(new EmailNotVerifiedException(ExceptionMessage.USER_EMAIL_NOT_VERIFIED.getMessage()));
 
         mockMvc.perform(post("/users/signin")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(requestDto)))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message").value("Vous devez vérifier votre adresse email"));
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.USER_EMAIL_NOT_VERIFIED.getMessage()));
     }
 }

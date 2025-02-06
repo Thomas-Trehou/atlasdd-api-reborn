@@ -7,6 +7,7 @@ import fr.ttl.atlasdd.exception.GlobalExceptionHandler;
 import fr.ttl.atlasdd.exception.user.EmailAlreadyUsedException;
 import fr.ttl.atlasdd.exception.user.PseudoAlreadyUsedException;
 import fr.ttl.atlasdd.service.user.UserService;
+import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -83,14 +84,14 @@ public class CreateUserTest {
         requestDto.setPassword(TEST_PASSWORD);
 
         when(userService.createUser(any(UserApiDto.class)))
-                .thenThrow(new EmailAlreadyUsedException("Email déjà utilisé"));
+                .thenThrow(new EmailAlreadyUsedException(ExceptionMessage.USER_EMAIL_ALREADY_USED.getMessage()));
 
         mockMvc.perform(post("/users/signup")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(requestDto)))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message").value("Email déjà utilisé"));
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.USER_EMAIL_ALREADY_USED.getMessage()));
 
     }
 
@@ -103,14 +104,14 @@ public class CreateUserTest {
         requestDto.setPassword(TEST_PASSWORD);
 
         when(userService.createUser(any(UserApiDto.class)))
-                .thenThrow(new PseudoAlreadyUsedException("Pseudo déjà utilisé"));
+                .thenThrow(new PseudoAlreadyUsedException(ExceptionMessage.USER_PSEUDO_ALREADY_USED.getMessage()));
 
         mockMvc.perform(post("/users/signup")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(requestDto)))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.message").value("Pseudo déjà utilisé"));
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.USER_PSEUDO_ALREADY_USED.getMessage()));
     }
 
     private String asJsonString(final Object obj) {
