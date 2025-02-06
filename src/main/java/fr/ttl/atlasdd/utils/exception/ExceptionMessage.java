@@ -1,5 +1,8 @@
 package fr.ttl.atlasdd.utils.exception;
 
+import lombok.Getter;
+
+@Getter
 public enum ExceptionMessage {
 
     // Campaign
@@ -64,16 +67,10 @@ public enum ExceptionMessage {
     CHARACTER_NOTE_UPDATE_ERROR("Erreur lors de la mise à jour de la note de personnage"),
     CHARACTER_NOTE_DELETE_ERROR("Erreur lors de la suppression de la note de personnage");
 
-
-
     private final String message;
 
     ExceptionMessage(String message) {
         this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
     }
 
     @Override

@@ -72,6 +72,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserLightApiDto> getFriends(Long userId) {
+
+        Optional<UserSqlDto> userToFind = userRepository.findById(userId);
+
+        if (userToFind.isEmpty()) {
+            throw new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage());
+        }
+
+
         return userRepository.findById(userId)
                 .map(user -> user.getFriends().stream()
                         .map(UserLightMapper.INSTANCE::toApiDto)
