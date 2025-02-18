@@ -131,6 +131,9 @@ public class CampaignServiceImpl implements CampaignService {
         CharacterSheetSqlDto character = ogl5CharacterSheetRepository.findById(characterId)
                 .orElseThrow(() -> new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
+        if (campaign.getCampaignOgl5CharacterSheets().contains(character)) {
+            return campaignMapper.toApiDto(campaign);
+        }
         campaign.getCampaignOgl5CharacterSheets().add(character);
 
         try {
@@ -147,6 +150,10 @@ public class CampaignServiceImpl implements CampaignService {
 
         CharacterSheetSqlDto character = ogl5CharacterSheetRepository.findById(characterId)
                 .orElseThrow(() -> new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+
+        if (!campaign.getCampaignOgl5CharacterSheets().contains(character)) {
+            return campaignMapper.toApiDto(campaign);
+        }
 
         campaign.getCampaignOgl5CharacterSheets().remove(character);
 
@@ -165,6 +172,10 @@ public class CampaignServiceImpl implements CampaignService {
         CustomCharacterSheetSqlDto character = customCharacterSheetRepo.findById(characterId)
                 .orElseThrow(() -> new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
+        if (campaign.getCampaignCustomCharacterSheets().contains(character)) {
+            return campaignMapper.toApiDto(campaign);
+        }
+
         campaign.getCampaignCustomCharacterSheets().add(character);
 
         try {
@@ -181,6 +192,10 @@ public class CampaignServiceImpl implements CampaignService {
 
         CustomCharacterSheetSqlDto character = customCharacterSheetRepo.findById(characterId)
                 .orElseThrow(() -> new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+
+        if (!campaign.getCampaignCustomCharacterSheets().contains(character)) {
+            return campaignMapper.toApiDto(campaign);
+        }
 
         campaign.getCampaignCustomCharacterSheets().remove(character);
 
