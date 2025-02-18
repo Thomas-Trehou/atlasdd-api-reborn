@@ -10,6 +10,7 @@ import fr.ttl.atlasdd.exception.GlobalExceptionHandler;
 import fr.ttl.atlasdd.exception.campaign.CampaignNotFoundException;
 import fr.ttl.atlasdd.exception.campaign.CampaignSavingErrorException;
 import fr.ttl.atlasdd.exception.character.CharacterNoteNotFoundException;
+import fr.ttl.atlasdd.exception.character.custom.notfound.CustomCharacterNotFoundException;
 import fr.ttl.atlasdd.exception.character.ogl5.notfound.Ogl5CharacterNotFoundException;
 import fr.ttl.atlasdd.exception.user.UserNotFoundException;
 import fr.ttl.atlasdd.service.campaign.CampaignService;
@@ -533,6 +534,185 @@ public class CampaignControllerTest {
                 .andExpect(jsonPath("$.name").value("Campagne Test"));
     }
 
+    @Test
+    void addCustomCharacterToCampaign_Success() throws Exception {
+        Long campaignId = 1L;
+        Long characterId = 2L;
+
+        CampaignApiDto expectedResponse = new CampaignApiDto();
+        expectedResponse.setId(campaignId);
+        expectedResponse.setName("Campagne Test");
+
+        when(campaignService.addCustomCharacterToCampaign(campaignId, characterId))
+                .thenReturn(expectedResponse);
+
+        mockMvc.perform(patch("/campaigns/{id}/add-custom-character/{characterId}", campaignId, characterId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(campaignId))
+                .andExpect(jsonPath("$.name").value("Campagne Test"));
+    }
+
+    @Test
+    void addCustomCharacterToCampaign_CampaignNotFound() throws Exception {
+        Long nonExistentCampaignId = 999L;
+        Long characterId = 1L;
+
+        when(campaignService.addCustomCharacterToCampaign(nonExistentCampaignId, characterId))
+                .thenThrow(new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
+
+        mockMvc.perform(patch("/campaigns/{id}/add-custom-character/{characterId}", nonExistentCampaignId, characterId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void addCustomCharacterToCampaign_CharacterNotFound() throws Exception {
+        Long campaignId = 1L;
+        Long nonExistentCharacterId = 999L;
+
+        when(campaignService.addCustomCharacterToCampaign(campaignId, nonExistentCharacterId))
+                .thenThrow(new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+
+        mockMvc.perform(patch("/campaigns/{id}/add-custom-character/{characterId}", campaignId, nonExistentCharacterId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void addCustomCharacterToCampaign_SaveError() throws Exception {
+        Long campaignId = 1L;
+        Long characterId = 2L;
+
+        when(campaignService.addCustomCharacterToCampaign(campaignId, characterId))
+                .thenThrow(new CampaignSavingErrorException(ExceptionMessage.ADD_CHARACTER_TO_CAMPAIGN_ERROR.getMessage()));
+
+        mockMvc.perform(patch("/campaigns/{id}/add-custom-character/{characterId}", campaignId, characterId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.ADD_CHARACTER_TO_CAMPAIGN_ERROR.getMessage()));
+    }
+
+    @Test
+    void addCustomCharacterToCampaign_CharacterAlreadyInCampaign() throws Exception {
+        Long campaignId = 1L;
+        Long characterId = 2L;
+
+        CampaignApiDto existingCampaign = new CampaignApiDto();
+        existingCampaign.setId(campaignId);
+
+        when(campaignService.addCustomCharacterToCampaign(campaignId, characterId))
+                .thenReturn(existingCampaign);
+
+        mockMvc.perform(patch("/campaigns/{id}/add-custom-character/{characterId}", campaignId, characterId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id" ).value(campaignId));
+    }
+
+    @Test
+    void removeCustomCharacterFromCampaign_Success() throws Exception {
+        Long campaignId = 1L;
+        Long characterId = 2L;
+
+        CampaignApiDto expectedResponse = new CampaignApiDto();
+        expectedResponse.setId(campaignId);
+        expectedResponse.setName("Campagne Test");
+
+        when(campaignService.removeCustomCharacterFromCampaign(campaignId, characterId))
+                .thenReturn(expectedResponse);
+
+        mockMvc.perform(patch("/campaigns/{id}/remove-custom-character/{characterId}", campaignId, characterId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(campaignId))
+                .andExpect(jsonPath("$.name").value("Campagne Test"));
+    }
+
+    @Test
+    void removeCustomCharacterFromCampaign_CampaignNotFound() throws Exception {
+        Long nonExistentCampaignId = 999L;
+        Long characterId = 1L;
+
+        when(campaignService.removeCustomCharacterFromCampaign(nonExistentCampaignId, characterId))
+                .thenThrow(new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
+
+        mockMvc.perform(patch("/campaigns/{id}/remove-custom-character/{characterId}", nonExistentCampaignId, characterId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void removeCustomCharacterFromCampaign_CharacterNotFound() throws Exception {
+        Long campaignId = 1L;
+        Long nonExistentCharacterId = 999L;
+
+        when(campaignService.removeCustomCharacterFromCampaign(campaignId, nonExistentCharacterId))
+                .thenThrow(new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+
+        mockMvc.perform(patch("/campaigns/{id}/remove-custom-character/{characterId}", campaignId, nonExistentCharacterId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void removeCustomCharacterFromCampaign_SaveError() throws Exception {
+        Long campaignId = 1L;
+        Long characterId = 2L;
+
+        when(campaignService.removeCustomCharacterFromCampaign(campaignId, characterId))
+                .thenThrow(new CampaignSavingErrorException(ExceptionMessage.REMOVE_CHARACTER_FROM_CAMPAIGN_ERROR.getMessage()));
+
+        mockMvc.perform(patch("/campaigns/{id}/remove-custom-character/{characterId}", campaignId, characterId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.REMOVE_CHARACTER_FROM_CAMPAIGN_ERROR.getMessage()));
+    }
+
+    @Test
+    void removeCustomCharacterFromCampaign_CharacterNotInCampaign() throws Exception {
+        Long campaignId = 1L;
+        Long characterId = 2L;
+
+        CampaignApiDto campaignResponse = new CampaignApiDto();
+        campaignResponse.setId(campaignId);
+        campaignResponse.setName("Campagne Test");
+
+        when(campaignService.removeCustomCharacterFromCampaign(campaignId, characterId))
+                .thenReturn(campaignResponse);
+
+        mockMvc.perform(patch("/campaigns/{id}/remove-custom-character/{characterId}", campaignId, characterId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(campaignId))
+                .andExpect(jsonPath("$.name").value("Campagne Test"));
+    }
+
+    @Test
+    void deleteCampaign_Success() throws Exception {
+        Long campaignId = 1L;
+        doNothing().when(campaignService).deleteCampaign(campaignId);
+
+        mockMvc.perform(delete("/campaigns/{id}", campaignId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void deleteCampaign_DeleteError() throws Exception {
+        Long campaignId = 1L;
+        doThrow(new CampaignSavingErrorException(ExceptionMessage.CAMPAIGN_DELETE_ERROR.getMessage()))
+                .when(campaignService).deleteCampaign(campaignId);
+
+        mockMvc.perform(delete("/campaigns/{id}", campaignId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CAMPAIGN_DELETE_ERROR.getMessage()));
+    }
 
     private String asJsonString(final Object obj) {
         try {
