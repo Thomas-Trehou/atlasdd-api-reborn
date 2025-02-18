@@ -231,7 +231,7 @@ public class CampaignControllerTest {
         Long playerId = 1L;
 
         when(campaignService.addPlayerToCampaign(nonExistentCampaignId, playerId))
-                .thenThrow(new CampaignNotFoundException("Campaign not found"));
+                .thenThrow(new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
 
         mockMvc.perform(patch("/campaigns/{id}/add-player/{playerId}", nonExistentCampaignId, playerId)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -245,7 +245,7 @@ public class CampaignControllerTest {
         Long nonExistentPlayerId = 999L;
 
         when(campaignService.addPlayerToCampaign(campaignId, nonExistentPlayerId))
-                .thenThrow(new UserNotFoundException("User not found"));
+                .thenThrow(new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
 
         mockMvc.perform(patch("/campaigns/{id}/add-player/{playerId}", campaignId, nonExistentPlayerId)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -281,7 +281,7 @@ public class CampaignControllerTest {
         Long playerId = 2L;
 
         when(campaignService.addPlayerToCampaign(campaignId, playerId))
-                .thenThrow(new CampaignSavingErrorException("Error saving campaign"));
+                .thenThrow(new CampaignSavingErrorException(ExceptionMessage.CAMPAIGN_SAVE_ERROR.getMessage()));
 
         mockMvc.perform(patch("/campaigns/{id}/add-player/{playerId}", campaignId, playerId)
                         .contentType(MediaType.APPLICATION_JSON))
