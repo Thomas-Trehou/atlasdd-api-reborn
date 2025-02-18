@@ -10,6 +10,7 @@ import fr.ttl.atlasdd.exception.GlobalExceptionHandler;
 import fr.ttl.atlasdd.exception.campaign.CampaignNotFoundException;
 import fr.ttl.atlasdd.exception.campaign.CampaignSavingErrorException;
 import fr.ttl.atlasdd.exception.character.CharacterNoteNotFoundException;
+import fr.ttl.atlasdd.exception.character.ogl5.notfound.Ogl5CharacterNotFoundException;
 import fr.ttl.atlasdd.exception.user.UserNotFoundException;
 import fr.ttl.atlasdd.service.campaign.CampaignService;
 import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
@@ -376,7 +377,6 @@ public class CampaignControllerTest {
 
     @Test
     void addOgl5CharacterToCampaign_Success() throws Exception {
-        // Arrange
         Long campaignId = 1L;
         Long characterId = 2L;
 
@@ -387,7 +387,6 @@ public class CampaignControllerTest {
         when(campaignService.addOgl5CharacterToCampaign(campaignId, characterId))
                 .thenReturn(expectedResponse);
 
-        // Act & Assert
         mockMvc.perform(patch("/campaigns/{id}/add-ogl5-character/{characterId}", campaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -397,14 +396,12 @@ public class CampaignControllerTest {
 
     @Test
     void addOgl5CharacterToCampaign_CampaignNotFound() throws Exception {
-        // Arrange
         Long nonExistentCampaignId = 999L;
         Long characterId = 1L;
 
         when(campaignService.addOgl5CharacterToCampaign(nonExistentCampaignId, characterId))
                 .thenThrow(new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
 
-        // Act & Assert
         mockMvc.perform(patch("/campaigns/{id}/add-ogl5-character/{characterId}", nonExistentCampaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
@@ -413,14 +410,12 @@ public class CampaignControllerTest {
 
     @Test
     void addOgl5CharacterToCampaign_CharacterNotFound() throws Exception {
-        // Arrange
         Long campaignId = 1L;
         Long nonExistentCharacterId = 999L;
 
         when(campaignService.addOgl5CharacterToCampaign(campaignId, nonExistentCharacterId))
-                .thenThrow(new CharacterNoteNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+                .thenThrow(new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
-        // Act & Assert
         mockMvc.perform(patch("/campaigns/{id}/add-ogl5-character/{characterId}", campaignId, nonExistentCharacterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
@@ -429,14 +424,12 @@ public class CampaignControllerTest {
 
     @Test
     void addOgl5CharacterToCampaign_SaveError() throws Exception {
-        // Arrange
         Long campaignId = 1L;
         Long characterId = 2L;
 
         when(campaignService.addOgl5CharacterToCampaign(campaignId, characterId))
                 .thenThrow(new CampaignSavingErrorException(ExceptionMessage.ADD_CHARACTER_TO_CAMPAIGN_ERROR.getMessage()));
 
-        // Act & Assert
         mockMvc.perform(patch("/campaigns/{id}/add-ogl5-character/{characterId}", campaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
@@ -454,11 +447,90 @@ public class CampaignControllerTest {
         when(campaignService.addOgl5CharacterToCampaign(campaignId, characterId))
                 .thenReturn(existingCampaign);
 
-        // Act & Assert
         mockMvc.perform(patch("/campaigns/{id}/add-ogl5-character/{characterId}", campaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id" ).value(campaignId));
+    }
+
+    @Test
+    void removeOgl5CharacterFromCampaign_Success() throws Exception {
+        Long campaignId = 1L;
+        Long characterId = 2L;
+
+        CampaignApiDto expectedResponse = new CampaignApiDto();
+        expectedResponse.setId(campaignId);
+        expectedResponse.setName("Campagne Test");
+
+        when(campaignService.removeOgl5CharacterFromCampaign(campaignId, characterId))
+                .thenReturn(expectedResponse);
+
+        mockMvc.perform(patch("/campaigns/{id}/remove-ogl5-character/{characterId}", campaignId, characterId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(campaignId))
+                .andExpect(jsonPath("$.name").value("Campagne Test"));
+    }
+
+    @Test
+    void removeOgl5CharacterFromCampaign_CampaignNotFound() throws Exception {
+        Long nonExistentCampaignId = 999L;
+        Long characterId = 1L;
+
+        when(campaignService.removeOgl5CharacterFromCampaign(nonExistentCampaignId, characterId))
+                .thenThrow(new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
+
+        mockMvc.perform(patch("/campaigns/{id}/remove-ogl5-character/{characterId}", nonExistentCampaignId, characterId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void removeOgl5CharacterFromCampaign_CharacterNotFound() throws Exception {
+        Long campaignId = 1L;
+        Long nonExistentCharacterId = 999L;
+
+        when(campaignService.removeOgl5CharacterFromCampaign(campaignId, nonExistentCharacterId))
+                .thenThrow(new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+
+        mockMvc.perform(patch("/campaigns/{id}/remove-ogl5-character/{characterId}", campaignId, nonExistentCharacterId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void removeOgl5CharacterFromCampaign_SaveError() throws Exception {
+        Long campaignId = 1L;
+        Long characterId = 2L;
+
+        when(campaignService.removeOgl5CharacterFromCampaign(campaignId, characterId))
+                .thenThrow(new CampaignSavingErrorException(ExceptionMessage.REMOVE_CHARACTER_FROM_CAMPAIGN_ERROR.getMessage()));
+
+        mockMvc.perform(patch("/campaigns/{id}/remove-ogl5-character/{characterId}", campaignId, characterId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.REMOVE_CHARACTER_FROM_CAMPAIGN_ERROR.getMessage()));
+    }
+
+    @Test
+    void removeOgl5CharacterFromCampaign_CharacterNotInCampaign() throws Exception {
+        Long campaignId = 1L;
+        Long characterId = 2L;
+
+        CampaignApiDto campaignResponse = new CampaignApiDto();
+        campaignResponse.setId(campaignId);
+        campaignResponse.setName("Campagne Test");
+
+        when(campaignService.removeOgl5CharacterFromCampaign(campaignId, characterId))
+                .thenReturn(campaignResponse);
+
+        mockMvc.perform(patch("/campaigns/{id}/remove-ogl5-character/{characterId}", campaignId, characterId)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(campaignId))
+                .andExpect(jsonPath("$.name").value("Campagne Test"));
     }
 
 
