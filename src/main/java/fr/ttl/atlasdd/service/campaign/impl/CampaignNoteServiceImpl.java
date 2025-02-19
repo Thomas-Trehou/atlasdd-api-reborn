@@ -66,6 +66,15 @@ public class CampaignNoteServiceImpl implements CampaignNoteService {
 
     @Override
     public List<CampaignNoteApiDto> getCampaignNotesByCampaignIdAndUserId(Long campaignId, Long userId) {
+
+        if (!campaignRepository.existsById(campaignId)) {
+            throw new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage());
+        }
+
+        if (!userRepository.existsById(userId)) {
+            throw new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage());
+        }
+
        return campaignNoteRepository.findAllByCampaignIdAndOwnerId(campaignId, userId).stream().map(campaignNoteMapper::toApiDto).toList();
     }
 
