@@ -105,7 +105,12 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
 
     @Override
     public List<CustomCharacterSheetApiDto> getCharacterSheetsByUserId(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage());
+        }
+
         List<CustomCharacterSheetSqlDto> characterSheets = customCharacterSheetRepository.findAllByOwner_Id(userId);
+
         return characterSheets.stream().map(customCharacterSheetMapper::toApiDto).collect(Collectors.toList());
     }
 

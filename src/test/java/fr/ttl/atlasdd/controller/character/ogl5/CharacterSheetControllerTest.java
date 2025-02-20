@@ -355,6 +355,179 @@ public class CharacterSheetControllerTest {
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_SAVE_ERROR.getMessage()));
     }
 
+    @Test
+    void getCharacterSheetsById_Success() throws Exception {
+
+        when(characterSheetService.getCharacterSheetById(CHARACTER_SHEET_ID)).thenReturn(characterSheetApiDto);
+
+        mockMvc.perform(get("/ogl5/characters/{id}", CHARACTER_SHEET_ID)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.name").value(NAME))
+                .andExpect(jsonPath("$.level").value(LEVEL))
+                .andExpect(jsonPath("$.experience").value(EXPERIENCE_POINTS))
+                .andExpect(jsonPath("$.armorClass").value(ARMOR_CLASS))
+                .andExpect(jsonPath("$.initiative").value(INITIATIVE))
+                .andExpect(jsonPath("$.inspiration").value(INSPIRATION))
+                .andExpect(jsonPath("$.hitPoints").value(HIT_POINTS))
+                .andExpect(jsonPath("$.maxHitPoints").value(MAX_HIT_POINTS))
+                .andExpect(jsonPath("$.bonusHitPoints").value(BONUS_HIT_POINTS))
+                .andExpect(jsonPath("$.speed").value(SPEED))
+                .andExpect(jsonPath("$.passivePerception").value(PASSIVE_PERCEPTION))
+                .andExpect(jsonPath("$.shield").value(SHIELD_TYPE.toString()))
+                .andExpect(jsonPath("$.twoWeaponsFighting").value(TWO_WEAPONS))
+                .andExpect(jsonPath("$.alignment").value(ALIGNMENT_TYPE.toString()))
+                .andExpect(jsonPath("$.strength").value(STRENGTH))
+                .andExpect(jsonPath("$.dexterity").value(DEXTERITY))
+                .andExpect(jsonPath("$.constitution").value(CONSTITUTION))
+                .andExpect(jsonPath("$.intelligence").value(INTELLIGENCE))
+                .andExpect(jsonPath("$.wisdom").value(WISDOM))
+                .andExpect(jsonPath("$.charisma").value(CHARISMA))
+                .andExpect(jsonPath("$.status").value(STATUS_TYPE.toString()))
+                .andExpect(jsonPath("$.owner").value(USER_LIGHT_API_DTO))
+                .andExpect(jsonPath("$.race").value(RACE_API_DTO))
+                .andExpect(jsonPath("$.background").value(BACKGROUND_API_DTO))
+                .andExpect(jsonPath("$.classe").value(CLASS_API_DTO))
+                .andExpect(jsonPath("$.skills").value(SKILLS_API_DTO))
+                .andExpect(jsonPath("$.preparedSpells").value(SPELLS_API_DTO))
+                .andExpect(jsonPath("$.weapons").value(WEAPONS_API_DTO))
+                .andExpect(jsonPath("$.armor").value(ARMOR_API_DTO));
+    }
+
+    @Test
+    void getCharacterSheetsById_NotFound() throws Exception {
+
+            when(characterSheetService.getCharacterSheetById(CHARACTER_SHEET_ID))
+                    .thenThrow(new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+
+            mockMvc.perform(get("/ogl5/characters/{id}", CHARACTER_SHEET_ID)
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isNotFound())
+                    .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+
+    }
+
+    @Test
+    void getCharacterSheetsByUserId_Success() throws Exception {
+
+        when(characterSheetService.getCharacterSheetsByUserId(USER_ID)).thenReturn(characterSheetApiDtos);
+
+        mockMvc.perform(get("/ogl5/characters/users/{userId}", USER_ID)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$").isEmpty());
+    }
+
+    @Test
+    void getCharacterSheetsByUserId_UserNotFound() throws Exception {
+
+        when(characterSheetService.getCharacterSheetsByUserId(USER_ID))
+                .thenThrow(new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
+
+        mockMvc.perform(get("/ogl5/characters/users/{userId}", USER_ID)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.USER_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void updateCharacterSheet_Success() throws Exception {
+
+        when(characterSheetService.updateCharacterSheet(CHARACTER_SHEET_ID ,characterSheetUpdateRequestApiDto)).thenReturn(characterSheetApiDto);
+
+        mockMvc.perform(patch("/ogl5/characters/{id}", CHARACTER_SHEET_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(characterSheetUpdateRequestApiDto)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.name").value(NAME))
+                .andExpect(jsonPath("$.level").value(LEVEL))
+                .andExpect(jsonPath("$.experience").value(EXPERIENCE_POINTS))
+                .andExpect(jsonPath("$.armorClass").value(ARMOR_CLASS))
+                .andExpect(jsonPath("$.initiative").value(INITIATIVE))
+                .andExpect(jsonPath("$.inspiration").value(INSPIRATION))
+                .andExpect(jsonPath("$.hitPoints").value(HIT_POINTS))
+                .andExpect(jsonPath("$.maxHitPoints").value(MAX_HIT_POINTS))
+                .andExpect(jsonPath("$.bonusHitPoints").value(BONUS_HIT_POINTS))
+                .andExpect(jsonPath("$.speed").value(SPEED))
+                .andExpect(jsonPath("$.passivePerception").value(PASSIVE_PERCEPTION))
+                .andExpect(jsonPath("$.shield").value(SHIELD_TYPE.toString()))
+                .andExpect(jsonPath("$.twoWeaponsFighting").value(TWO_WEAPONS))
+                .andExpect(jsonPath("$.alignment").value(ALIGNMENT_TYPE.toString()))
+                .andExpect(jsonPath("$.strength").value(STRENGTH))
+                .andExpect(jsonPath("$.dexterity").value(DEXTERITY))
+                .andExpect(jsonPath("$.constitution").value(CONSTITUTION))
+                .andExpect(jsonPath("$.intelligence").value(INTELLIGENCE))
+                .andExpect(jsonPath("$.wisdom").value(WISDOM))
+                .andExpect(jsonPath("$.charisma").value(CHARISMA))
+                .andExpect(jsonPath("$.status").value(STATUS_TYPE.toString()))
+                .andExpect(jsonPath("$.owner").value(USER_LIGHT_API_DTO))
+                .andExpect(jsonPath("$.race").value(RACE_API_DTO))
+                .andExpect(jsonPath("$.background").value(BACKGROUND_API_DTO))
+                .andExpect(jsonPath("$.classe").value(CLASS_API_DTO))
+                .andExpect(jsonPath("$.armor").value(ARMOR_API_DTO));
+    }
+
+    @Test
+    void updateCharacterSheet_CharacterNotFound() throws Exception {
+
+        when(characterSheetService.updateCharacterSheet(CHARACTER_SHEET_ID ,characterSheetUpdateRequestApiDto))
+                .thenThrow(new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+
+        mockMvc.perform(patch("/ogl5/characters/{id}", CHARACTER_SHEET_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(characterSheetUpdateRequestApiDto)))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void updateCharacterSheet_SkillsNotFound() throws Exception {
+
+        when(characterSheetService.updateCharacterSheet(CHARACTER_SHEET_ID ,characterSheetUpdateRequestApiDto))
+                .thenThrow(new CharacterSkillNotFoundException(ExceptionMessage.SKILL_RETRIEVE_ERROR.getMessage()));
+
+        mockMvc.perform(patch("/ogl5/characters/{id}", CHARACTER_SHEET_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(characterSheetUpdateRequestApiDto)))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.SKILL_RETRIEVE_ERROR.getMessage()));
+    }
+
+    @Test
+    void updateCharacterSheet_SpellsNotFound() throws Exception {
+
+        when(characterSheetService.updateCharacterSheet(CHARACTER_SHEET_ID ,characterSheetUpdateRequestApiDto))
+                .thenThrow(new CharacterPreparedSpellNotFoundException(ExceptionMessage.SPELL_RETRIEVE_ERROR.getMessage()));
+
+        mockMvc.perform(patch("/ogl5/characters/{id}", CHARACTER_SHEET_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(characterSheetUpdateRequestApiDto)))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.SPELL_RETRIEVE_ERROR.getMessage()));
+    }
+
+    @Test
+    void updateCharacterSheet_SavingError() throws Exception {
+
+        when(characterSheetService.updateCharacterSheet(CHARACTER_SHEET_ID ,characterSheetUpdateRequestApiDto))
+                .thenThrow(new Ogl5CharacterSavingErrorException(ExceptionMessage.CHARACTER_UPDATE_ERROR.getMessage()));
+
+        mockMvc.perform(patch("/ogl5/characters/{id}", CHARACTER_SHEET_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(characterSheetUpdateRequestApiDto)))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_UPDATE_ERROR.getMessage()));
+    }
+
     private String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);
