@@ -528,6 +528,42 @@ public class CharacterSheetControllerTest {
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_UPDATE_ERROR.getMessage()));
     }
 
+    @Test
+    void deleteCharacterSheet_Success() throws Exception {
+
+        doNothing().when(characterSheetService).deleteCharacterSheet(CHARACTER_SHEET_ID);
+
+        mockMvc.perform(delete("/ogl5/characters/{id}", CHARACTER_SHEET_ID)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void deleteCharacterSheet_CharacterNotFound() throws Exception {
+
+        doThrow(new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()))
+                .when(characterSheetService).deleteCharacterSheet(CHARACTER_SHEET_ID);
+
+        mockMvc.perform(delete("/ogl5/characters/{id}", CHARACTER_SHEET_ID)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void deleteCharacterSheet_SavingError() throws Exception {
+
+        doThrow(new Ogl5CharacterSavingErrorException(ExceptionMessage.CHARACTER_DELETE_ERROR.getMessage()))
+                .when(characterSheetService).deleteCharacterSheet(CHARACTER_SHEET_ID);
+
+        mockMvc.perform(delete("/ogl5/characters/{id}", CHARACTER_SHEET_ID)
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_DELETE_ERROR.getMessage()));
+    }
+
     private String asJsonString(final Object obj) {
         try {
             return new ObjectMapper().writeValueAsString(obj);

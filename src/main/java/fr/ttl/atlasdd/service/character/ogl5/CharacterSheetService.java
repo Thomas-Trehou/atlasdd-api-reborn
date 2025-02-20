@@ -17,4 +17,6 @@ public interface CharacterSheetService {
     List<CharacterSheetApiDto> getCharacterSheetsByUserId(Long userId);
 
     CharacterSheetApiDto updateCharacterSheet(Long id, CharacterSheetUpdateRequestApiDto characterSheetUpdateRequestApiDto);
+
+    void deleteCharacterSheet(Long id);
 }
