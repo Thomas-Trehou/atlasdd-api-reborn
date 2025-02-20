@@ -1,11 +1,15 @@
 package fr.ttl.atlasdd.apidto.character.ogl5;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CharacterSheetCreateRequestApiDto {
     private String name;
     private int level;

@@ -148,7 +148,7 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
 
     private RaceSqlDto findRaceById(Long raceId) {
         return raceRepository.findById(raceId)
-                .orElseThrow(() -> new Ogl5ArmorNotFoundException(ExceptionMessage.ARMOR_NOT_FOUND.getMessage()));
+                .orElseThrow(() -> new Ogl5RaceNotFoundException(ExceptionMessage.RACE_NOT_FOUND.getMessage()));
     }
 
     private BackgroundSqlDto findBackgroundById(Long backgroundId) {
