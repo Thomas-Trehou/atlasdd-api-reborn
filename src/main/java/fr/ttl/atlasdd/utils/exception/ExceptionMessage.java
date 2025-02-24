@@ -42,6 +42,7 @@ public enum ExceptionMessage {
     CHARACTER_NOT_FOUND("Personnage non trouvé"),
     CHARACTER_SAVE_ERROR("Erreur lors de la sauvegarde du personnage"),
     CHARACTER_UPDATE_ERROR("Erreur lors de la mise à jour du personnage"),
+    CHARACTER_DELETE_ERROR("Erreur lors de la suppression du personnage"),
     ARMOR_NOT_FOUND("Armure non trouvée"),
     ARMOR_SAVE_ERROR("Erreur lors de la sauvegarde de l'armure"),
     ARMOR_UPDATE_ERROR("Erreur lors de la mise à jour de l'armure"),

@@ -115,6 +115,10 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
 
     @Override
     public List<NoteCharacterApiDto> getNotesByOgl5CharacterId(Long characterId) {
+        if (!ogl5CharacterSheetRepository.existsById(characterId)) {
+            throw new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage());
+        }
+
         return noteCharacterRepository.findAllByOgl5CharacterSheet_Id(characterId).stream()
                 .map(noteCharacterMapper::toApiDto)
                 .collect(Collectors.toList());
@@ -122,6 +126,10 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
 
     @Override
     public List<NoteCharacterApiDto> getNotesByCustomCharacterId(Long characterId) {
+        if (!customCharacterSheetRepository.existsById(characterId)) {
+            throw new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage());
+        }
+
         return noteCharacterRepository.findAllByCustomCharacterSheet_Id(characterId).stream()
                 .map(noteCharacterMapper::toApiDto)
                 .collect(Collectors.toList());

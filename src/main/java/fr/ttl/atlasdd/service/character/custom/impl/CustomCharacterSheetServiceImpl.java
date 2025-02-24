@@ -105,7 +105,12 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
 
     @Override
     public List<CustomCharacterSheetApiDto> getCharacterSheetsByUserId(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            throw new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage());
+        }
+
         List<CustomCharacterSheetSqlDto> characterSheets = customCharacterSheetRepository.findAllByOwner_Id(userId);
+
         return characterSheets.stream().map(customCharacterSheetMapper::toApiDto).collect(Collectors.toList());
     }
 
@@ -132,6 +137,18 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
             return customCharacterSheetMapper.toApiDto(customCharacterSheetRepository.save(characterSheet));
         } catch (Exception e) {
             throw new CustomCharacterSavingErrorException(ExceptionMessage.CHARACTER_UPDATE_ERROR.getMessage());
+        }
+    }
+
+    @Override
+    public void deleteCharacterSheet(Long id) {
+        CustomCharacterSheetSqlDto characterSheet = customCharacterSheetRepository.findById(id)
+                .orElseThrow(() -> new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+
+        try {
+            customCharacterSheetRepository.delete(characterSheet);
+        } catch (Exception e) {
+            throw new CustomCharacterSavingErrorException(ExceptionMessage.CHARACTER_DELETE_ERROR.getMessage());
         }
     }
 

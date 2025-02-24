@@ -6,11 +6,15 @@ import fr.ttl.atlasdd.utils.character.CharacterStatus;
 import fr.ttl.atlasdd.utils.character.ShieldType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CustomCharacterSheetCreateRequestApiDto {
     private String name;
     private int level;

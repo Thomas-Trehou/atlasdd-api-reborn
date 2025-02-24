@@ -140,6 +140,18 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         }
     }
 
+    @Override
+    public void deleteCharacterSheet(Long id) {
+        CharacterSheetSqlDto characterSheet = characterSheetRepository.findById(id)
+                .orElseThrow(() -> new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+
+        characterSheetRepository.delete(characterSheet);
+
+        if(characterSheetRepository.existsById(id)) {
+            throw new Ogl5CharacterSavingErrorException(ExceptionMessage.CHARACTER_DELETE_ERROR.getMessage());
+        }
+    }
+
 
     private UserSqlDto findUserById(Long userId) {
         return userRepository.findById(userId)
@@ -148,7 +160,7 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
 
     private RaceSqlDto findRaceById(Long raceId) {
         return raceRepository.findById(raceId)
-                .orElseThrow(() -> new Ogl5ArmorNotFoundException(ExceptionMessage.ARMOR_NOT_FOUND.getMessage()));
+                .orElseThrow(() -> new Ogl5RaceNotFoundException(ExceptionMessage.RACE_NOT_FOUND.getMessage()));
     }
 
     private BackgroundSqlDto findBackgroundById(Long backgroundId) {

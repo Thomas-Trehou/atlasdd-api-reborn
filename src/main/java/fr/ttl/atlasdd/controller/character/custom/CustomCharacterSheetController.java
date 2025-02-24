@@ -102,4 +102,18 @@ public class CustomCharacterSheetController {
     ) {
         return customCharacterSheetService.updateCharacterSheet(id, customCharacterSheetUpdateRequestApiDto);
     }
+
+    @Operation(summary = "Delete a custom character sheet")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Custom character sheet deleted"),
+            @ApiResponse(responseCode = "404", description = "Custom character sheet not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error at character deletion", content = @Content)
+    })
+    @DeleteMapping("/{id}")
+    public void deleteCustomCharacterSheet(
+            @Parameter(description = "ID of the custom character sheet to delete", required = true)
+            @PathVariable Long id
+    ) {
+        customCharacterSheetService.deleteCharacterSheet(id);
+    }
 }
