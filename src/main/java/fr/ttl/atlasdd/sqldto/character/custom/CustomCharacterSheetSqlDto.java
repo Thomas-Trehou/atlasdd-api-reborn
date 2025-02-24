@@ -58,15 +58,15 @@ public class CustomCharacterSheetSqlDto extends BaseSqlDto {
     @JoinColumn(name = "user_id")
     private UserSqlDto owner;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "race_id")
     private CustomRaceSqlDto race;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "background_id")
     private CustomBackgroundSqlDto background;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "class_id")
     private CustomClassSqlDto classe;
 
@@ -86,7 +86,7 @@ public class CustomCharacterSheetSqlDto extends BaseSqlDto {
     )
     private List<CustomSpellSqlDto> preparedSpells;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
             name = "custom_character_sheets_has_weapons",
             joinColumns = @JoinColumn(name = "character_id"),
@@ -94,11 +94,11 @@ public class CustomCharacterSheetSqlDto extends BaseSqlDto {
     )
     private List<CustomWeaponSqlDto> weapons;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "armor_id")
     private CustomArmorSqlDto armor;
 
-    @OneToMany(mappedBy = "customCharacterSheet")
+    @OneToMany(mappedBy = "customCharacterSheet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NoteCharacterSqlDto> characterNotes;
 
     @ManyToMany(mappedBy = "campaignCustomCharacterSheets")

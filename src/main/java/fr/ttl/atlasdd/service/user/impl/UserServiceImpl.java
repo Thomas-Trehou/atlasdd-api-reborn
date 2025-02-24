@@ -1,5 +1,6 @@
 package fr.ttl.atlasdd.service.user.impl;
 
+import fr.ttl.atlasdd.apidto.campaign.CampaignApiDto;
 import fr.ttl.atlasdd.apidto.user.SignInDto;
 import fr.ttl.atlasdd.apidto.user.UserApiDto;
 import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
@@ -9,7 +10,10 @@ import fr.ttl.atlasdd.mapper.user.UserLightAuthMapper;
 import fr.ttl.atlasdd.mapper.user.UserLightMapper;
 import fr.ttl.atlasdd.mapper.user.UserMapper;
 import fr.ttl.atlasdd.repository.user.UserRepo;
+import fr.ttl.atlasdd.service.campaign.CampaignNoteService;
+import fr.ttl.atlasdd.service.campaign.CampaignService;
 import fr.ttl.atlasdd.service.user.UserService;
+import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
 import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import fr.ttl.atlasdd.utils.user.JwtTokenProvider;
@@ -38,19 +42,25 @@ public class UserServiceImpl implements UserService {
     private final JwtTokenProvider jwtTokenProvider;
     private final UserMapper userMapper;
     private final UserLightAuthMapper userLightAuthMapper;
+    private final CampaignService campaignService;
+    private final CampaignNoteService campaignNoteService;
 
     public UserServiceImpl(
             UserRepo userRepository,
             JavaMailSender javaMailSender,
             JwtTokenProvider jwtTokenProvider,
             UserMapper userMapper,
-            UserLightAuthMapper userLightAuthMapper) {
+            UserLightAuthMapper userLightAuthMapper,
+            CampaignService campaignService,
+            CampaignNoteService campaignNoteService) {
         this.userRepository = userRepository;
         this.javaMailSender = javaMailSender;
         this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
         this.jwtTokenProvider = jwtTokenProvider;
         this.userMapper = userMapper;
         this.userLightAuthMapper = userLightAuthMapper;
+        this.campaignService = campaignService;
+        this.campaignNoteService = campaignNoteService;
     }
 
     @Value("${MAIL_ADDRESS}")
@@ -181,6 +191,32 @@ public class UserServiceImpl implements UserService {
         userLightAuthApiDto.setToken(jwtTokenProvider.generateToken(userLightAuthApiDto));
 
         return userLightAuthApiDto;
+    }
+
+    @Override
+    public void deleteUser(Long id) {
+        UserSqlDto user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
+
+        List<CampaignApiDto> campaigns = campaignService.getCampaignsAsPlayer(id);
+        campaignService.deletePlayerFromCampaigns(campaigns, id);
+        campaignService.deleteCampaignsAsDungeonMaster(id);
+
+        campaignNoteService.deleteCampaignNotesByUserId(id);
+
+        for (UserSqlDto friend : user.getFriends()) {
+            friend.getFriends().remove(user);
+            userRepository.save(friend);
+        }
+
+        user.getFriends().clear();
+        userRepository.save(user);
+
+        try {
+            userRepository.delete(user);
+        } catch (Exception e) {
+            throw new UserSavingErrorException(ExceptionMessage.USER_DELETE_ERROR.getMessage());
+        }
     }
 
 }

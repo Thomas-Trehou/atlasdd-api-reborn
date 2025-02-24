@@ -23,4 +23,6 @@ public interface UserService {
     String verifyToken(String token, HttpSession session);
 
     UserLightAuthApiDto signIn(SignInDto signInDto);
+
+    void deleteUser(Long id);
 }

@@ -25,6 +25,7 @@ public enum ExceptionMessage {
     USER_NOT_FOUND("Utilisateur non trouvé"),
     USER_SAVE_ERROR("Erreur lors de la sauvegarde de l'utilisateur"),
     USER_UPDATE_ERROR("Erreur lors de la mise à jour de l'utilisateur"),
+    USER_DELETE_ERROR("Erreur lors de la suppression de l'utilisateur"),
     USER_EMAIL_ALREADY_USED("Email déjà utilisé"),
     USER_PSEUDO_ALREADY_USED("Pseudo déjà utilisé"),
     USER_EMAIL_OR_PASSWORD_INVALID("Email ou mot de passe incorrect"),

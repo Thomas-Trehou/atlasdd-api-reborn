@@ -16,6 +16,8 @@ public interface CampaignNoteService {
 
     CampaignNoteApiDto updateCampaignNoteById(Long id, CampaignNoteApiDto campaignNoteApiDto);
 
+    void deleteCampaignNotesByUserId(Long userId);
+
     void deleteCampaignNoteById(Long id);
 
 }

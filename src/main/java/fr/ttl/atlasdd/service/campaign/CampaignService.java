@@ -4,6 +4,8 @@ import fr.ttl.atlasdd.apidto.campaign.CampaignApiDto;
 import fr.ttl.atlasdd.apidto.campaign.CampaignCreateRequestApiDto;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface CampaignService {
 
@@ -24,6 +26,12 @@ public interface CampaignService {
     CampaignApiDto addCustomCharacterToCampaign(Long campaignId, Long characterId);
 
     CampaignApiDto removeCustomCharacterFromCampaign(Long campaignId, Long characterId);
+
+    List<CampaignApiDto> getCampaignsAsPlayer(Long playerId);
+
+    void deletePlayerFromCampaigns(List<CampaignApiDto> campaigns, Long playerId);
+
+    void deleteCampaignsAsDungeonMaster(Long dungeonMasterId);
 
     void deleteCampaign(Long id);
 

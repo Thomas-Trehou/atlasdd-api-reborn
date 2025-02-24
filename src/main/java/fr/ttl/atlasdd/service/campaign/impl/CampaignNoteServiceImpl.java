@@ -94,6 +94,15 @@ public class CampaignNoteServiceImpl implements CampaignNoteService {
     }
 
     @Override
+    public void deleteCampaignNotesByUserId(Long id) {
+        try {
+            campaignNoteRepository.deleteAllByOwnerId(id);
+        } catch (Exception e) {
+            throw new CampaignNoteSavingErrorException(ExceptionMessage.CAMPAIGN_NOTE_DELETE_ERROR.getMessage());
+        }
+    }
+
+    @Override
     public void deleteCampaignNoteById(Long id) {
         try {
             campaignNoteRepository.deleteById(id);

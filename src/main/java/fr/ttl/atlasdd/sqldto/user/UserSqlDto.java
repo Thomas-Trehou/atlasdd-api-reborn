@@ -2,6 +2,7 @@ package fr.ttl.atlasdd.sqldto.user;
 
 import fr.ttl.atlasdd.sqldto.BaseSqlDto;
 import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
+import fr.ttl.atlasdd.sqldto.character.custom.CustomCharacterSheetSqlDto;
 import fr.ttl.atlasdd.sqldto.character.ogl5.CharacterSheetSqlDto;
 import fr.ttl.atlasdd.utils.user.UserState;
 import jakarta.persistence.*;
@@ -28,8 +29,11 @@ public class UserSqlDto extends BaseSqlDto {
     @Enumerated(EnumType.STRING)
     private UserState state = UserState.ACTIVE;
 
-    @OneToMany(mappedBy = "owner")
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<CharacterSheetSqlDto> characterSheetList;
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<CustomCharacterSheetSqlDto> customCharacterSheetList;
 
     @ManyToMany
     @JoinTable(
@@ -44,5 +48,11 @@ public class UserSqlDto extends BaseSqlDto {
 
     @OneToMany(mappedBy = "gameMaster")
     private List<CampaignSqlDto> campaignsAsGameMaster;
+
+    @OneToMany(mappedBy = "requestUser", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<FriendInvitationSqlDto> sentFriendInvitations;
+
+    @OneToMany(mappedBy = "receiverUser", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<FriendInvitationSqlDto> receivedFriendInvitations;
 
 }

@@ -98,7 +98,7 @@ public class CharacterSheetSqlDto extends BaseSqlDto {
     @JoinColumn(name = "armor_id")
     private ArmorSqlDto armor;
 
-    @OneToMany(mappedBy = "ogl5CharacterSheet")
+    @OneToMany(mappedBy = "ogl5CharacterSheet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<NoteCharacterSqlDto> characterNotes;
 
     @ManyToMany(mappedBy = "campaignOgl5CharacterSheets")

@@ -112,4 +112,18 @@ public class UserController {
     ) {
         return userService.signIn(signInDto);
     }
+
+    @Operation(summary = "Delete a user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User deleted"),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error at user deletion", content = @Content)
+    })
+    @DeleteMapping("/{id}")
+    public void deleteUser(
+            @Parameter(description = "ID of the user", required = true)
+            @PathVariable Long id
+    ) {
+        userService.deleteUser(id);
+    }
 }

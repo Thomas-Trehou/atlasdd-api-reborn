@@ -52,4 +52,7 @@ public class CampaignSqlDto extends BaseSqlDto {
             inverseJoinColumns = @JoinColumn(name = "custom_character_sheet_id")
     )
     private List<CustomCharacterSheetSqlDto> campaignCustomCharacterSheets;
+
+    @OneToMany(mappedBy = "campaign", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<CampaignNoteSqlDto> campaignNotes;
 }

@@ -20,6 +20,8 @@ import fr.ttl.atlasdd.sqldto.character.ogl5.CharacterSheetSqlDto;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CampaignServiceImpl implements CampaignService {
 
@@ -203,6 +205,54 @@ public class CampaignServiceImpl implements CampaignService {
             return campaignMapper.toApiDto(campaignRepository.save(campaign));
         } catch (Exception e) {
             throw new CampaignSavingErrorException(ExceptionMessage.REMOVE_CHARACTER_FROM_CAMPAIGN_ERROR.getMessage());
+        }
+    }
+
+    @Override
+    public List<CampaignApiDto> getCampaignsAsPlayer(Long playerId) {
+        UserSqlDto player = userRepository.findById(playerId)
+                .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
+
+        List<CampaignSqlDto> campaigns = campaignRepository.findAllByCampaignPlayersId(player.getId());
+
+        return campaigns.stream()
+                .map(campaignMapper::toApiDto)
+                .toList();
+
+    }
+
+    @Override
+    public void deletePlayerFromCampaigns(List<CampaignApiDto> campaigns, Long playerId) {
+        UserSqlDto player = userRepository.findById(playerId)
+                .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
+
+        for (CampaignApiDto campaign : campaigns) {
+            CampaignSqlDto campaignSqlDto = campaignRepository.findById(campaign.getId())
+                    .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
+
+            campaignSqlDto.getCampaignPlayers().remove(player);
+
+            try {
+                campaignRepository.save(campaignSqlDto);
+            } catch (Exception e) {
+                throw new CampaignSavingErrorException(ExceptionMessage.REMOVE_PLAYER_FROM_CAMPAIGN_ERROR.getMessage());
+            }
+        }
+    }
+
+    @Override
+    public void deleteCampaignsAsDungeonMaster(Long dungeonMasterId) {
+        UserSqlDto dungeonMaster = userRepository.findById(dungeonMasterId)
+                .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
+
+        List<CampaignSqlDto> campaigns = campaignRepository.findAllByGameMasterId(dungeonMaster.getId());
+
+        for (CampaignSqlDto campaign : campaigns) {
+            try {
+                campaignRepository.deleteById(campaign.getId());
+            } catch (Exception e) {
+                throw new CampaignSavingErrorException(ExceptionMessage.CAMPAIGN_DELETE_ERROR.getMessage());
+            }
         }
     }
 
