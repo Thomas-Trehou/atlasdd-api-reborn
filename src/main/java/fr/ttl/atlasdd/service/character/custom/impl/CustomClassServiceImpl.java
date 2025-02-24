@@ -7,6 +7,7 @@ import fr.ttl.atlasdd.mapper.character.custom.CustomClassMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomClassRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomClassService;
 import fr.ttl.atlasdd.sqldto.character.custom.CustomClassSqlDto;
+import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,7 +32,7 @@ public class CustomClassServiceImpl implements CustomClassService {
         try {
             return customClassMapper.toApiDto(customClassRepository.save(classSqlDto));
         } catch (Exception e) {
-            throw new CustomClassSavingErrorException("Erreur lors de la sauvegarde de la classe", 500);
+            throw new CustomClassSavingErrorException(ExceptionMessage.CLASS_SAVE_ERROR.getMessage());
         }
     }
 
@@ -39,14 +40,14 @@ public class CustomClassServiceImpl implements CustomClassService {
     public CustomClassApiDto updateClass(CustomClassApiDto customClassApiDto) {
 
         CustomClassSqlDto classSqlDto = customClassRepository.findById(customClassApiDto.getId())
-                .orElseThrow(() -> new CustomClassNotFoundException("Classe non trouvée", 404));
+                .orElseThrow(() -> new CustomClassNotFoundException(ExceptionMessage.CLASS_NOT_FOUND.getMessage()));
 
         customClassMapper.updateSqlDto(customClassApiDto, classSqlDto);
 
         try {
             return customClassMapper.toApiDto(customClassRepository.save(classSqlDto));
         } catch (Exception e) {
-            throw new CustomClassSavingErrorException("Erreur lors de la sauvegarde de la classe", 500);
+            throw new CustomClassSavingErrorException(ExceptionMessage.CLASS_UPDATE_ERROR.getMessage());
         }
     }
 }

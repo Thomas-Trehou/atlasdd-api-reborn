@@ -7,8 +7,8 @@ public class CampaignSavingErrorException extends RuntimeException{
 
     private final int statusCode;
 
-    public CampaignSavingErrorException(String message, int statusCode) {
+    public CampaignSavingErrorException(String message) {
         super(message);
-        this.statusCode = statusCode;
+        this.statusCode = 500;
     }
 }

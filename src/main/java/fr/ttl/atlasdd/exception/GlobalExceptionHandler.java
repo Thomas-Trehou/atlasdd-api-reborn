@@ -1,5 +1,6 @@
 package fr.ttl.atlasdd.exception;
 
+import fr.ttl.atlasdd.apidto.ErrorResponseApiDto;
 import fr.ttl.atlasdd.exception.campaign.CampaignNotFoundException;
 import fr.ttl.atlasdd.exception.campaign.CampaignNoteNotFoundException;
 import fr.ttl.atlasdd.exception.campaign.CampaignNoteSavingErrorException;
@@ -12,10 +13,7 @@ import fr.ttl.atlasdd.exception.character.custom.notfound.*;
 import fr.ttl.atlasdd.exception.character.custom.savingerror.*;
 import fr.ttl.atlasdd.exception.character.ogl5.notfound.*;
 import fr.ttl.atlasdd.exception.character.ogl5.savingerror.Ogl5CharacterSavingErrorException;
-import fr.ttl.atlasdd.exception.user.FriendsInvitationNotFoundException;
-import fr.ttl.atlasdd.exception.user.FriendsInvitationSavingErrorException;
-import fr.ttl.atlasdd.exception.user.UserNotFoundException;
-import fr.ttl.atlasdd.exception.user.UserSavingErrorException;
+import fr.ttl.atlasdd.exception.user.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -24,167 +22,225 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(CustomGeneralException.class)
-    public ResponseEntity<String> handleCustomException(CustomGeneralException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CustomGeneralException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     // Not found exception
 
     @ExceptionHandler(CampaignNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(CampaignNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CampaignNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(UserNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(UserNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CampaignNoteNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(CampaignNoteNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CampaignNoteNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(Ogl5CharacterNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(Ogl5CharacterNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(Ogl5CharacterNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CustomCharacterNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(CustomCharacterNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CustomCharacterNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CustomArmorNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(CustomArmorNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CustomArmorNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CustomBackgroundNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(CustomBackgroundNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CustomBackgroundNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CustomClassNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(CustomClassNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CustomClassNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CustomRaceNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(CustomRaceNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CustomRaceNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CustomWeaponNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(CustomWeaponNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CustomWeaponNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CharacterNoteNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(CharacterNoteNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CharacterNoteNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(FriendsInvitationNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(FriendsInvitationNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(FriendsInvitationNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(Ogl5RaceNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(Ogl5RaceNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(Ogl5RaceNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(Ogl5BackgroundNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(Ogl5BackgroundNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(Ogl5BackgroundNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(Ogl5ClassNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(Ogl5ClassNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(Ogl5ClassNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CharacterSkillNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(CharacterSkillNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CharacterSkillNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CharacterPreparedSpellNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(CharacterPreparedSpellNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CharacterPreparedSpellNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(Ogl5WeaponNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(Ogl5WeaponNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(Ogl5WeaponNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(Ogl5ArmorNotFoundException.class)
-    public ResponseEntity<String> handleCustomException(Ogl5ArmorNotFoundException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(Ogl5ArmorNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     // Saving error exception
 
     @ExceptionHandler(CampaignSavingErrorException.class)
-    public ResponseEntity<String> handleCustomException(CampaignSavingErrorException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CampaignSavingErrorException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(UserSavingErrorException.class)
-    public ResponseEntity<String> handleCustomException(UserSavingErrorException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(UserSavingErrorException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CampaignNoteSavingErrorException.class)
-    public ResponseEntity<String> handleCustomException(CampaignNoteSavingErrorException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CampaignNoteSavingErrorException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(Ogl5CharacterSavingErrorException.class)
-    public ResponseEntity<String> handleCustomException(Ogl5CharacterSavingErrorException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(Ogl5CharacterSavingErrorException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CustomCharacterSavingErrorException.class)
-    public ResponseEntity<String> handleCustomException(CustomCharacterSavingErrorException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CustomCharacterSavingErrorException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CustomArmorSavingErrorException.class)
-    public ResponseEntity<String> handleCustomException(CustomArmorSavingErrorException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CustomArmorSavingErrorException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CustomBackgroundSavingErrorException.class)
-    public ResponseEntity<String> handleCustomException(CustomBackgroundSavingErrorException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CustomBackgroundSavingErrorException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CustomClassSavingErrorException.class)
-    public ResponseEntity<String> handleCustomException(CustomClassSavingErrorException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CustomClassSavingErrorException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CustomRaceSavingErrorException.class)
-    public ResponseEntity<String> handleCustomException(CustomRaceSavingErrorException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CustomRaceSavingErrorException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CustomWeaponSavingErrorException.class)
-    public ResponseEntity<String> handleCustomException(CustomWeaponSavingErrorException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CustomWeaponSavingErrorException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(CharacterNoteSavingErrorException.class)
-    public ResponseEntity<String> handleCustomException(CharacterNoteSavingErrorException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(CharacterNoteSavingErrorException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
     @ExceptionHandler(FriendsInvitationSavingErrorException.class)
-    public ResponseEntity<String> handleCustomException(FriendsInvitationSavingErrorException ex) {
-        return ResponseEntity.status(ex.getStatusCode()).body(ex.getMessage());
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(FriendsInvitationSavingErrorException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
+    }
+
+    // Bad request exception
+
+    @ExceptionHandler(EmailAlreadyUsedException.class)
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(EmailAlreadyUsedException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
+    }
+
+    @ExceptionHandler(PseudoAlreadyUsedException.class)
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(PseudoAlreadyUsedException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
+    }
+
+    @ExceptionHandler(IncorrectEmailOrPasswordException.class)
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(IncorrectEmailOrPasswordException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
+    }
+
+    @ExceptionHandler(EmailNotVerifiedException.class)
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(EmailNotVerifiedException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
 
 }

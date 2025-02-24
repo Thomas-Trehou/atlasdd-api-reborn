@@ -7,7 +7,7 @@ public class CampaignNoteNotFoundException extends RuntimeException{
 
     private final int statusCode;
 
-    public CampaignNoteNotFoundException(String message, int statusCode) {
+    public CampaignNoteNotFoundException(String message) {
         super(message);
         this.statusCode = 404;
     }

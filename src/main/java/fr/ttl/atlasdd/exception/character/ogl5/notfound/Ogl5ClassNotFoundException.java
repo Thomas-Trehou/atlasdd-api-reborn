@@ -7,7 +7,7 @@ public class Ogl5ClassNotFoundException extends RuntimeException{
 
     private final int statusCode;
 
-    public Ogl5ClassNotFoundException(String message, int statusCode) {
+    public Ogl5ClassNotFoundException(String message) {
         super(message);
         this.statusCode = 404;
     }

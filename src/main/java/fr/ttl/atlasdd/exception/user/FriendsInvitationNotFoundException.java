@@ -7,7 +7,7 @@ public class FriendsInvitationNotFoundException extends RuntimeException{
 
     private final int statusCode;
 
-    public FriendsInvitationNotFoundException(String message, int statusCode) {
+    public FriendsInvitationNotFoundException(String message) {
         super(message);
         this.statusCode = 404;
     }

@@ -7,6 +7,7 @@ import fr.ttl.atlasdd.mapper.character.custom.CustomBackgroundMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomBackgroundRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomBackgroundService;
 import fr.ttl.atlasdd.sqldto.character.custom.CustomBackgroundSqlDto;
+import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,7 +32,7 @@ public class CustomBackgroundServiceImpl implements CustomBackgroundService {
         try {
             return customBackgroundMapper.toApiDto(customBackgroundRepository.save(customBackgroundSqlDto));
         } catch (Exception e) {
-            throw new CustomBackgroundSavingErrorException("Erreur lors de la sauvegarde du background", 500);
+            throw new CustomBackgroundSavingErrorException(ExceptionMessage.BACKGROUND_SAVE_ERROR.getMessage());
         }
     }
 
@@ -39,14 +40,14 @@ public class CustomBackgroundServiceImpl implements CustomBackgroundService {
     public CustomBackgroundApiDto updateBackground(CustomBackgroundApiDto customBackgroundApiDto) {
 
         CustomBackgroundSqlDto customBackgroundSqlDto = customBackgroundRepository.findById(customBackgroundApiDto.getId())
-                .orElseThrow(() -> new CustomBackgroundNotFoundException("Background non trouvé", 404));
+                .orElseThrow(() -> new CustomBackgroundNotFoundException(ExceptionMessage.BACKGROUND_NOT_FOUND.getMessage()));
 
         customBackgroundMapper.updateFromApiDto(customBackgroundApiDto, customBackgroundSqlDto);
 
         try {
             return customBackgroundMapper.toApiDto(customBackgroundRepository.save(customBackgroundSqlDto));
         } catch (Exception e) {
-            throw new CustomBackgroundSavingErrorException("Erreur lors de la sauvegarde du background", 500);
+            throw new CustomBackgroundSavingErrorException(ExceptionMessage.BACKGROUND_UPDATE_ERROR.getMessage());
         }
     }
 }

@@ -97,4 +97,18 @@ public class CharacterSheetController {
         return characterSheetService.updateCharacterSheet(id, characterSheetUpdateRequestApiDto);
     }
 
+    @Operation(summary = "Delete an Ogl5 character sheet")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ogl5 character sheet deleted"),
+            @ApiResponse(responseCode = "404", description = "Ogl5 character sheet not found", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error at character sheet deletion", content = @Content)
+    })
+    @DeleteMapping("/{id}")
+    public void deleteCharacterSheet(
+            @Parameter(description = "ID of the Ogl5 character sheet to delete", required = true)
+            @PathVariable Long id
+    ) {
+        characterSheetService.deleteCharacterSheet(id);
+    }
+
 }

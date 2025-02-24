@@ -4,11 +4,15 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.ttl.atlasdd.utils.character.CharacterStatus;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CustomCharacterSheetUpdateRequestApiDto {
 
     private Long id;

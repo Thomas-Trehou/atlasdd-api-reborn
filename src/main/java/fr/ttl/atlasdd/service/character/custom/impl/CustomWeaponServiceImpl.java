@@ -7,6 +7,7 @@ import fr.ttl.atlasdd.mapper.character.custom.CustomWeaponMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomWeaponRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomWeaponService;
 import fr.ttl.atlasdd.sqldto.character.custom.CustomWeaponSqlDto;
+import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -36,7 +37,7 @@ public class CustomWeaponServiceImpl implements CustomWeaponService {
                     .collect(Collectors.toList());
 
         } catch (Exception e) {
-            throw new CustomWeaponSavingErrorException("Erreur lors de la sauvegarde des armes", 500);
+            throw new CustomWeaponSavingErrorException(ExceptionMessage.WEAPON_SAVE_ERROR.getMessage());
         }
 
     }
@@ -48,7 +49,7 @@ public class CustomWeaponServiceImpl implements CustomWeaponService {
             return customWeaponApiDtos.stream()
                     .map(customWeaponApiDto -> {
                         CustomWeaponSqlDto existingWeapon = customWeaponRepository.findById(customWeaponApiDto.getId())
-                                .orElseThrow(() -> new CustomWeaponNotFoundException("Weapon not found: " + customWeaponApiDto.getId(), 404));
+                                .orElseThrow(() -> new CustomWeaponNotFoundException( ExceptionMessage.WEAPON_NOT_FOUND.getMessage() + " " + customWeaponApiDto.getId()));
                         customWeaponMapper.updateSqlDto(customWeaponApiDto, existingWeapon);
                         return customWeaponRepository.save(existingWeapon);
                     })
@@ -56,7 +57,7 @@ public class CustomWeaponServiceImpl implements CustomWeaponService {
                     .collect(Collectors.toList());
 
         } catch (Exception e) {
-            throw new CustomWeaponSavingErrorException("Erreur lors de la sauvegarde des armes", 500);
+            throw new CustomWeaponSavingErrorException(ExceptionMessage.WEAPON_UPDATE_ERROR.getMessage());
         }
 
     }

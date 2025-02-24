@@ -4,14 +4,14 @@ import fr.ttl.atlasdd.apidto.user.SignInDto;
 import fr.ttl.atlasdd.apidto.user.UserApiDto;
 import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
 import fr.ttl.atlasdd.apidto.user.UserLightAuthApiDto;
-import fr.ttl.atlasdd.exception.user.UserNotFoundException;
-import fr.ttl.atlasdd.exception.user.UserSavingErrorException;
+import fr.ttl.atlasdd.exception.user.*;
 import fr.ttl.atlasdd.mapper.user.UserLightAuthMapper;
 import fr.ttl.atlasdd.mapper.user.UserLightMapper;
 import fr.ttl.atlasdd.mapper.user.UserMapper;
 import fr.ttl.atlasdd.repository.user.UserRepo;
 import fr.ttl.atlasdd.service.user.UserService;
 import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
+import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import fr.ttl.atlasdd.utils.user.JwtTokenProvider;
 import fr.ttl.atlasdd.utils.user.UserState;
 import jakarta.servlet.http.HttpSession;
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
     public UserLightApiDto getUserById(Long id) {
         return userRepository.findById(id)
                 .map(UserLightMapper.INSTANCE::toApiDto)
-                .orElseThrow(() -> new UserNotFoundException("Utilisateur non trouvé", 404));
+                .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
     }
 
     @Override
@@ -72,6 +72,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<UserLightApiDto> getFriends(Long userId) {
+
+        Optional<UserSqlDto> userToFind = userRepository.findById(userId);
+
+        if (userToFind.isEmpty()) {
+            throw new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage());
+        }
+
+
         return userRepository.findById(userId)
                 .map(user -> user.getFriends().stream()
                         .map(UserLightMapper.INSTANCE::toApiDto)
@@ -84,7 +92,7 @@ public class UserServiceImpl implements UserService {
         Optional<UserSqlDto> existingUser = userRepository.findByEmail(userApiDto.getEmail());
 
         if (existingUser.isPresent()) {
-            throw new IllegalArgumentException("Email déjà utilisé");
+            throw new EmailAlreadyUsedException(ExceptionMessage.USER_EMAIL_ALREADY_USED.getMessage());
         }
 
         userApiDto.setPassword(bCryptPasswordEncoder.encode(userApiDto.getPassword()));
@@ -95,7 +103,7 @@ public class UserServiceImpl implements UserService {
         UserSqlDto userWithSameSlug = userRepository.findBySlug(userSqlDto.getSlug()).orElse(null);
 
         if (userWithSameSlug != null) {
-            throw new IllegalArgumentException("Pseudo déjà utilisé");
+            throw new PseudoAlreadyUsedException(ExceptionMessage.USER_PSEUDO_ALREADY_USED.getMessage());
         }
 
         userSqlDto.setState(UserState.INACTIVE);
@@ -103,7 +111,7 @@ public class UserServiceImpl implements UserService {
         try {
             userRepository.save(userSqlDto);
         } catch (Exception e) {
-            throw new UserSavingErrorException("Erreur lors de la création de l'utilisateur", 500);
+            throw new UserSavingErrorException(ExceptionMessage.USER_SAVE_ERROR.getMessage());
         }
 
         String token = UUID.randomUUID().toString();
@@ -150,7 +158,7 @@ public class UserServiceImpl implements UserService {
         try {
             userRepository.save(user);
         } catch (Exception e) {
-            throw new UserSavingErrorException("Erreur lors de la vérification de l'utilisateur", 500);
+            throw new UserSavingErrorException(ExceptionMessage.USER_UPDATE_ERROR.getMessage());
         }
 
         return "Compte vérifié avec succès";
@@ -161,11 +169,11 @@ public class UserServiceImpl implements UserService {
         Optional<UserSqlDto> user = userRepository.findByEmail(signInDto.getEmail());
 
         if (user.isEmpty() || !bCryptPasswordEncoder.matches(signInDto.getPassword(), user.get().getPassword())) {
-            throw new IllegalArgumentException("Email ou mot de passe incorrect");
+            throw new IncorrectEmailOrPasswordException(ExceptionMessage.USER_EMAIL_OR_PASSWORD_INVALID.getMessage());
         }
 
         if (user.get().getState() != UserState.ACTIVE) {
-            throw new IllegalArgumentException("Vous devez vérifier votre adresse email");
+            throw new EmailNotVerifiedException(ExceptionMessage.USER_EMAIL_NOT_VERIFIED.getMessage());
         }
 
         UserLightAuthApiDto userLightAuthApiDto = userLightAuthMapper.toApiDto(user.get());

@@ -7,7 +7,7 @@ public class CustomClassNotFoundException extends RuntimeException{
 
     private final int statusCode;
 
-    public CustomClassNotFoundException(String message, int statusCode) {
+    public CustomClassNotFoundException(String message) {
         super(message);
         this.statusCode = 404;
     }

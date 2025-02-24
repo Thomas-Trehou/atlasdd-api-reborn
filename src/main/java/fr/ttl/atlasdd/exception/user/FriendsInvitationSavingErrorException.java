@@ -7,7 +7,7 @@ public class FriendsInvitationSavingErrorException extends RuntimeException{
 
     private final int statusCode;
 
-    public FriendsInvitationSavingErrorException(String message, int statusCode) {
+    public FriendsInvitationSavingErrorException(String message) {
         super(message);
         this.statusCode = 500;
     }

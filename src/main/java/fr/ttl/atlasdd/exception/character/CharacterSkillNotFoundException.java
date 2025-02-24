@@ -7,7 +7,7 @@ public class CharacterSkillNotFoundException extends RuntimeException{
 
     private final int statusCode;
 
-    public CharacterSkillNotFoundException(String message, int statusCode) {
+    public CharacterSkillNotFoundException(String message) {
         super(message);
         this.statusCode = 404;
     }

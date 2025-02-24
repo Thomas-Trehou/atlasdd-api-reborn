@@ -7,6 +7,7 @@ import fr.ttl.atlasdd.mapper.character.custom.CustomArmorMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomArmorRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomArmorService;
 import fr.ttl.atlasdd.sqldto.character.custom.CustomArmorSqlDto;
+import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -31,7 +32,7 @@ public class CustomArmorServiceImpl implements CustomArmorService {
         try {
             return customArmorMapper.toApiDto(customArmorRepository.save(armorSqlDto));
         } catch (Exception e) {
-            throw new CustomArmorSavingErrorException("Erreur lors de la sauvegarde de l'armure", 500);
+            throw new CustomArmorSavingErrorException(ExceptionMessage.ARMOR_SAVE_ERROR.getMessage());
         }
     }
 
@@ -39,14 +40,14 @@ public class CustomArmorServiceImpl implements CustomArmorService {
     public CustomArmorApiDto updateArmor(CustomArmorApiDto armorApiDto) {
 
         CustomArmorSqlDto armorSqlDto = customArmorRepository.findById(armorApiDto.getId())
-                .orElseThrow(() -> new CustomArmorNotFoundException("Armure non trouvée", 404));
+                .orElseThrow(() -> new CustomArmorNotFoundException(ExceptionMessage.ARMOR_NOT_FOUND.getMessage()));
 
         customArmorMapper.updateSqlDto(armorApiDto, armorSqlDto);
 
         try {
             return customArmorMapper.toApiDto(customArmorRepository.save(armorSqlDto));
         } catch (Exception e) {
-            throw new CustomArmorSavingErrorException("Erreur lors de la sauvegarde de l'armure", 500);
+            throw new CustomArmorSavingErrorException(ExceptionMessage.ARMOR_UPDATE_ERROR.getMessage());
         }
     }
 
