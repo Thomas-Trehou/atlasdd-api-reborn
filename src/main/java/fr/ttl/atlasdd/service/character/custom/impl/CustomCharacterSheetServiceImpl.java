@@ -140,6 +140,18 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
         }
     }
 
+    @Override
+    public void deleteCharacterSheet(Long id) {
+        CustomCharacterSheetSqlDto characterSheet = customCharacterSheetRepository.findById(id)
+                .orElseThrow(() -> new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+
+        try {
+            customCharacterSheetRepository.delete(characterSheet);
+        } catch (Exception e) {
+            throw new CustomCharacterSavingErrorException(ExceptionMessage.CHARACTER_DELETE_ERROR.getMessage());
+        }
+    }
+
     private UserSqlDto findUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));

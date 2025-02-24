@@ -386,6 +386,34 @@ public class CustomCharacterSheetControllerTest {
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_UPDATE_ERROR.getMessage()));
     }
 
+    @Test
+    void deleteCustomCharacterSheet_Success() throws Exception {
+        doNothing().when(customCharacterSheetService).deleteCharacterSheet(CHARACTER_SHEET_ID);
+
+        mockMvc.perform(delete("/custom/characters/{id}", CHARACTER_SHEET_ID))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void deleteCustomCharacterSheet_NotFound() throws Exception {
+        doThrow(new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage())).when(customCharacterSheetService).deleteCharacterSheet(CHARACTER_SHEET_ID);
+
+        mockMvc.perform(delete("/custom/characters/{id}", CHARACTER_SHEET_ID))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void deleteCustomCharacterSheet_CharacterDeleteError() throws Exception {
+        doThrow(new CustomCharacterSavingErrorException(ExceptionMessage.CHARACTER_DELETE_ERROR.getMessage())).when(customCharacterSheetService).deleteCharacterSheet(CHARACTER_SHEET_ID);
+
+        mockMvc.perform(delete("/custom/characters/{id}", CHARACTER_SHEET_ID))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_DELETE_ERROR.getMessage()));
+    }
+
 
     private String asJsonString(final Object obj) {
         try {
