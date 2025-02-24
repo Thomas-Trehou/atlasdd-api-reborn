@@ -5,6 +5,7 @@ import fr.ttl.atlasdd.apidto.character.custom.*;
 import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
 import fr.ttl.atlasdd.exception.GlobalExceptionHandler;
 import fr.ttl.atlasdd.exception.character.CharacterSkillNotFoundException;
+import fr.ttl.atlasdd.exception.character.custom.notfound.CustomCharacterNotFoundException;
 import fr.ttl.atlasdd.exception.character.custom.savingerror.*;
 import fr.ttl.atlasdd.exception.user.UserNotFoundException;
 import fr.ttl.atlasdd.service.character.custom.CustomCharacterSheetService;
@@ -211,6 +212,72 @@ public class CustomCharacterSheetControllerTest {
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.ARMOR_SAVE_ERROR.getMessage()));
     }
+
+    @Test
+    void createCustomCharacterSheet_CharacterSaveError() throws Exception {
+        when(customCharacterSheetService.createCharacterSheet(CUSTOM_CHARACTER_SHEET_CREATE_REQUEST_API_DTO)).thenThrow(new CustomCharacterSavingErrorException(ExceptionMessage.CHARACTER_SAVE_ERROR.getMessage()));
+
+        mockMvc.perform(post("/custom/characters")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(CUSTOM_CHARACTER_SHEET_CREATE_REQUEST_API_DTO)))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_SAVE_ERROR.getMessage()));
+    }
+
+    @Test
+    void getCustomCharacterSheet_Success() throws Exception {
+        when(customCharacterSheetService.getCharacterSheetById(CHARACTER_SHEET_ID)).thenReturn(CUSTOM_CHARACTER_SHEET_API_DTO);
+
+        mockMvc.perform(get("/custom/characters/{id}", CHARACTER_SHEET_ID))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(asJsonString(CUSTOM_CHARACTER_SHEET_API_DTO)));
+    }
+
+    @Test
+    void getCustomCharacterSheet_NotFound() throws Exception {
+        when(customCharacterSheetService.getCharacterSheetById(CHARACTER_SHEET_ID)).thenThrow(new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+
+        mockMvc.perform(get("/custom/characters/{id}", CHARACTER_SHEET_ID))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void getCustomCharacterSheetsByUserId_Success() throws Exception {
+        when(customCharacterSheetService.getCharacterSheetsByUserId(USER_ID)).thenReturn(CUSTOM_CHARACTER_SHEET_API_DTO_LIST);
+
+        mockMvc.perform(get("/custom/characters/users/{userId}", USER_ID))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(asJsonString(CUSTOM_CHARACTER_SHEET_API_DTO_LIST)));
+    }
+
+    @Test
+    void getCustomCharacterSheetsByUserId_UserNotFound() throws Exception {
+        when(customCharacterSheetService.getCharacterSheetsByUserId(USER_ID)).thenThrow(new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
+
+        mockMvc.perform(get("/custom/characters/users/{userId}", USER_ID))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.USER_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void updateCustomCharacterSheet_Success() throws Exception {
+        when(customCharacterSheetService.updateCharacterSheet(CHARACTER_SHEET_ID ,CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)).thenReturn(CUSTOM_CHARACTER_SHEET_API_DTO);
+
+        mockMvc.perform(patch("/custom/characters/{id}", CHARACTER_SHEET_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(content().json(asJsonString(CUSTOM_CHARACTER_SHEET_API_DTO)));
+    }
+
+
 
     private String asJsonString(final Object obj) {
         try {
