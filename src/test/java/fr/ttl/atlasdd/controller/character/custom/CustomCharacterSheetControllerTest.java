@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fr.ttl.atlasdd.apidto.character.custom.*;
 import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
 import fr.ttl.atlasdd.exception.GlobalExceptionHandler;
+import fr.ttl.atlasdd.exception.character.CharacterPreparedSpellNotFoundException;
 import fr.ttl.atlasdd.exception.character.CharacterSkillNotFoundException;
 import fr.ttl.atlasdd.exception.character.custom.notfound.CustomCharacterNotFoundException;
 import fr.ttl.atlasdd.exception.character.custom.savingerror.*;
@@ -277,6 +278,113 @@ public class CustomCharacterSheetControllerTest {
                 .andExpect(content().json(asJsonString(CUSTOM_CHARACTER_SHEET_API_DTO)));
     }
 
+    @Test
+    void updateCustomCharacterSheet_CharacterNotFound() throws Exception {
+        when(customCharacterSheetService.updateCharacterSheet(CHARACTER_SHEET_ID ,CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)).thenThrow(new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+
+        mockMvc.perform(patch("/custom/characters/{id}", CHARACTER_SHEET_ID)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(asJsonString(CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
+    }
+
+    @Test
+    void updateCustomCharacterSheet_SkillsNotFound() throws Exception {
+        when(customCharacterSheetService.updateCharacterSheet(CHARACTER_SHEET_ID ,CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)).thenThrow(new CharacterSkillNotFoundException(ExceptionMessage.SKILL_RETRIEVE_ERROR.getMessage()));
+
+        mockMvc.perform(patch("/custom/characters/{id}", CHARACTER_SHEET_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.SKILL_RETRIEVE_ERROR.getMessage()));
+    }
+
+    @Test
+    void updateCustomCharacterSheet_SpellsNotFound() throws Exception {
+        when(customCharacterSheetService.updateCharacterSheet(CHARACTER_SHEET_ID ,CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)).thenThrow(new CharacterPreparedSpellNotFoundException(ExceptionMessage.SPELL_RETRIEVE_ERROR.getMessage()));
+
+        mockMvc.perform(patch("/custom/characters/{id}", CHARACTER_SHEET_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.SPELL_RETRIEVE_ERROR.getMessage()));
+    }
+
+    @Test
+    void updateCustomCharacterSheet_RaceUpdateError() throws Exception {
+        when(customCharacterSheetService.updateCharacterSheet(CHARACTER_SHEET_ID ,CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)).thenThrow(new CustomRaceSavingErrorException(ExceptionMessage.RACE_UPDATE_ERROR.getMessage()));
+
+        mockMvc.perform(patch("/custom/characters/{id}", CHARACTER_SHEET_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.RACE_UPDATE_ERROR.getMessage()));
+    }
+
+    @Test
+    void updateCustomCharacterSheet_BackgroundUpdateError() throws Exception {
+        when(customCharacterSheetService.updateCharacterSheet(CHARACTER_SHEET_ID ,CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)).thenThrow(new CustomBackgroundSavingErrorException(ExceptionMessage.BACKGROUND_UPDATE_ERROR.getMessage()));
+
+        mockMvc.perform(patch("/custom/characters/{id}", CHARACTER_SHEET_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.BACKGROUND_UPDATE_ERROR.getMessage()));
+    }
+
+    @Test
+    void updateCustomCharacterSheet_ClassUpdateError() throws Exception {
+        when(customCharacterSheetService.updateCharacterSheet(CHARACTER_SHEET_ID ,CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)).thenThrow(new CustomClassSavingErrorException(ExceptionMessage.CLASS_UPDATE_ERROR.getMessage()));
+
+        mockMvc.perform(patch("/custom/characters/{id}", CHARACTER_SHEET_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CLASS_UPDATE_ERROR.getMessage()));
+    }
+
+    @Test
+    void updateCustomCharacterSheet_WeaponsUpdateError() throws Exception {
+        when(customCharacterSheetService.updateCharacterSheet(CHARACTER_SHEET_ID ,CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)).thenThrow(new CustomWeaponSavingErrorException(ExceptionMessage.WEAPON_UPDATE_ERROR.getMessage()));
+
+        mockMvc.perform(patch("/custom/characters/{id}", CHARACTER_SHEET_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.WEAPON_UPDATE_ERROR.getMessage()));
+    }
+
+    @Test
+    void updateCustomCharacterSheet_ArmorUpdateError() throws Exception {
+        when(customCharacterSheetService.updateCharacterSheet(CHARACTER_SHEET_ID ,CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)).thenThrow(new CustomArmorSavingErrorException(ExceptionMessage.ARMOR_UPDATE_ERROR.getMessage()));
+
+        mockMvc.perform(patch("/custom/characters/{id}", CHARACTER_SHEET_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.ARMOR_UPDATE_ERROR.getMessage()));
+    }
+
+    @Test
+    void updateCustomCharacterSheet_CharacterUpdateError() throws Exception {
+        when(customCharacterSheetService.updateCharacterSheet(CHARACTER_SHEET_ID ,CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)).thenThrow(new CustomCharacterSavingErrorException(ExceptionMessage.CHARACTER_UPDATE_ERROR.getMessage()));
+
+        mockMvc.perform(patch("/custom/characters/{id}", CHARACTER_SHEET_ID)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(asJsonString(CUSTOM_CHARACTER_SHEET_UPDATE_REQUEST_API_DTO)))
+                .andExpect(status().isInternalServerError())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_UPDATE_ERROR.getMessage()));
+    }
 
 
     private String asJsonString(final Object obj) {
