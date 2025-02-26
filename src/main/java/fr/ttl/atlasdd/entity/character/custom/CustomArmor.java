@@ -1,23 +1,20 @@
-package fr.ttl.atlasdd.sqldto.character.custom;
+package fr.ttl.atlasdd.entity.character.custom;
 
-import fr.ttl.atlasdd.sqldto.BaseSqlDto;
+import fr.ttl.atlasdd.entity.BaseEntity;
 import fr.ttl.atlasdd.utils.character.ArmorCategory;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Table(name = "custom_armors")
-public class CustomArmorSqlDto extends BaseSqlDto {
+public class CustomArmor extends BaseEntity {
 
     private String index;
     private String name;
@@ -38,5 +35,5 @@ public class CustomArmorSqlDto extends BaseSqlDto {
     private String properties;
 
     @OneToMany(mappedBy = "armor")
-    private List<CustomCharacterSheetSqlDto> characterSheet;
+    private List<CustomCharacterSheet> characterSheet;
 }

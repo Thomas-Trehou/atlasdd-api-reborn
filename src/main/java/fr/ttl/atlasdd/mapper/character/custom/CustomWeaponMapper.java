@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.mapper.character.custom;
 
 import fr.ttl.atlasdd.apidto.character.custom.CustomWeaponApiDto;
-import fr.ttl.atlasdd.sqldto.character.custom.CustomWeaponSqlDto;
+import fr.ttl.atlasdd.entity.character.custom.CustomWeapon;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
@@ -11,9 +11,9 @@ public interface CustomWeaponMapper {
 
     CustomWeaponMapper INSTANCE = Mappers.getMapper(CustomWeaponMapper.class);
 
-    CustomWeaponApiDto toApiDto(CustomWeaponSqlDto weaponSqlDto);
+    CustomWeaponApiDto toApiDto(CustomWeapon weaponSqlDto);
 
-    CustomWeaponSqlDto toSqlDto(CustomWeaponApiDto weaponApiDto);
+    CustomWeapon toSqlDto(CustomWeaponApiDto weaponApiDto);
 
-    void updateSqlDto(CustomWeaponApiDto weaponApiDto, @MappingTarget CustomWeaponSqlDto weaponSqlDto);
+    void updateSqlDto(CustomWeaponApiDto weaponApiDto, @MappingTarget CustomWeapon weaponSqlDto);
 }

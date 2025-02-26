@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.mapper.character.ogl5;
 
 import fr.ttl.atlasdd.apidto.character.ogl5.WeaponApiDto;
-import fr.ttl.atlasdd.sqldto.character.ogl5.WeaponSqlDto;
+import fr.ttl.atlasdd.entity.character.ogl5.Ogl5Weapon;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
@@ -11,9 +11,9 @@ public interface WeaponMapper {
 
     WeaponMapper INSTANCE = Mappers.getMapper(WeaponMapper.class);
 
-    WeaponApiDto toApiDto(WeaponSqlDto weaponSqlDto);
+    WeaponApiDto toApiDto(Ogl5Weapon ogl5Weapon);
 
-    WeaponSqlDto toSqlDto(WeaponApiDto weaponApiDto);
+    Ogl5Weapon toSqlDto(WeaponApiDto weaponApiDto);
 
-    void updateSqlDto(WeaponApiDto weaponApiDto, @MappingTarget WeaponSqlDto weaponSqlDto);
+    void updateSqlDto(WeaponApiDto weaponApiDto, @MappingTarget Ogl5Weapon ogl5Weapon);
 }

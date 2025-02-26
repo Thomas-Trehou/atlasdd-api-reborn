@@ -10,9 +10,9 @@ import fr.ttl.atlasdd.repository.user.UserRepo;
 import fr.ttl.atlasdd.repository.campaign.CampaignNoteRepo;
 import fr.ttl.atlasdd.repository.campaign.CampaignRepo;
 import fr.ttl.atlasdd.service.campaign.CampaignNoteService;
-import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
-import fr.ttl.atlasdd.sqldto.campaign.CampaignNoteSqlDto;
-import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
+import fr.ttl.atlasdd.entity.campaign.Campaign;
+import fr.ttl.atlasdd.entity.user.User;
+import fr.ttl.atlasdd.entity.campaign.CampaignNote;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.springframework.stereotype.Service;
 
@@ -40,15 +40,15 @@ public class CampaignNoteServiceImpl implements CampaignNoteService {
 
     @Override
     public CampaignNoteApiDto createCampaignNote(Long campaignId, Long userId, CampaignNoteApiDto campaignNoteApiDto) {
-        CampaignSqlDto campaignSqlDto =  campaignRepository.findById(campaignId)
+        Campaign campaign =  campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
 
-        UserSqlDto owner = userRepository.findById(userId)
+        User owner = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
 
-        CampaignNoteSqlDto newNote = new CampaignNoteSqlDto();
+        CampaignNote newNote = new CampaignNote();
         campaignNoteMapper.updateSqlDto(campaignNoteApiDto, newNote);
-        newNote.setCampaign(campaignSqlDto);
+        newNote.setCampaign(campaign);
         newNote.setOwner(owner);
 
         try {
@@ -80,7 +80,7 @@ public class CampaignNoteServiceImpl implements CampaignNoteService {
 
     @Override
     public CampaignNoteApiDto updateCampaignNoteById(Long id, CampaignNoteApiDto campaignNoteApiDto) {
-        CampaignNoteSqlDto note = campaignNoteRepository.findById(id)
+        CampaignNote note = campaignNoteRepository.findById(id)
                 .orElseThrow(() -> new CampaignNoteNotFoundException(ExceptionMessage.CAMPAIGN_NOTE_NOT_FOUND.getMessage()));
 
         note.setTitle(campaignNoteApiDto.getTitle());

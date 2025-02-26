@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.mapper.character.ogl5;
 
 import fr.ttl.atlasdd.apidto.character.ogl5.CharacterSheetApiDto;
-import fr.ttl.atlasdd.sqldto.character.ogl5.CharacterSheetSqlDto;
+import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSheet;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
@@ -11,9 +11,9 @@ public interface CharacterSheetMapper {
 
     CharacterSheetMapper INSTANCE = Mappers.getMapper(CharacterSheetMapper.class);
 
-    CharacterSheetApiDto toApiDto(CharacterSheetSqlDto characterSheetSqlDto);
+    CharacterSheetApiDto toApiDto(Ogl5CharacterSheet ogl5CharacterSheet);
 
-    CharacterSheetSqlDto toSqlDto(CharacterSheetApiDto characterSheetApiDto);
+    Ogl5CharacterSheet toSqlDto(CharacterSheetApiDto characterSheetApiDto);
 
-    void updateSqlDto(CharacterSheetApiDto characterSheetApiDto, @MappingTarget CharacterSheetSqlDto characterSheetSqlDto);
+    void updateSqlDto(CharacterSheetApiDto characterSheetApiDto, @MappingTarget Ogl5CharacterSheet ogl5CharacterSheet);
 }

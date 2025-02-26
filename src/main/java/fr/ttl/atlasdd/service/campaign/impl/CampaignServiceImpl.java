@@ -2,6 +2,8 @@ package fr.ttl.atlasdd.service.campaign.impl;
 
 import fr.ttl.atlasdd.apidto.campaign.CampaignApiDto;
 import fr.ttl.atlasdd.apidto.campaign.CampaignCreateRequestApiDto;
+import fr.ttl.atlasdd.entity.character.custom.CustomCharacterSheet;
+import fr.ttl.atlasdd.entity.user.User;
 import fr.ttl.atlasdd.exception.campaign.CampaignNotFoundException;
 import fr.ttl.atlasdd.exception.campaign.CampaignSavingErrorException;
 import fr.ttl.atlasdd.exception.character.custom.notfound.CustomCharacterNotFoundException;
@@ -13,10 +15,8 @@ import fr.ttl.atlasdd.repository.campaign.CampaignRepo;
 import fr.ttl.atlasdd.repository.character.custom.CustomCharacterSheetRepo;
 import fr.ttl.atlasdd.repository.character.ogl5.CharacterSheetRepo;
 import fr.ttl.atlasdd.service.campaign.CampaignService;
-import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
-import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
-import fr.ttl.atlasdd.sqldto.character.custom.CustomCharacterSheetSqlDto;
-import fr.ttl.atlasdd.sqldto.character.ogl5.CharacterSheetSqlDto;
+import fr.ttl.atlasdd.entity.campaign.Campaign;
+import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSheet;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.springframework.stereotype.Service;
 
@@ -46,8 +46,8 @@ public class CampaignServiceImpl implements CampaignService {
 
     @Override
     public CampaignApiDto createCampaign(CampaignCreateRequestApiDto campaignCreateRequestApiDto) {
-        CampaignSqlDto newCampaign = new CampaignSqlDto();
-        UserSqlDto gameMaster = userRepository.findById(campaignCreateRequestApiDto.getGameMasterId())
+        Campaign newCampaign = new Campaign();
+        User gameMaster = userRepository.findById(campaignCreateRequestApiDto.getGameMasterId())
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
 
         newCampaign.setName(campaignCreateRequestApiDto.getName());
@@ -70,7 +70,7 @@ public class CampaignServiceImpl implements CampaignService {
 
     @Override
     public CampaignApiDto updateCampaign(Long id, CampaignCreateRequestApiDto campaignCreateRequestApiDto) {
-        CampaignSqlDto campaign = campaignRepository.findById(id)
+        Campaign campaign = campaignRepository.findById(id)
                 .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
 
         campaign.setName(campaignCreateRequestApiDto.getName());
@@ -89,10 +89,10 @@ public class CampaignServiceImpl implements CampaignService {
 
     @Override
     public CampaignApiDto addPlayerToCampaign(Long campaignId, Long playerId) {
-        CampaignSqlDto campaign = campaignRepository.findById(campaignId)
+        Campaign campaign = campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
 
-        UserSqlDto player = userRepository.findById(playerId)
+        User player = userRepository.findById(playerId)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
 
         if (campaign.getCampaignPlayers().contains(player)) {
@@ -110,10 +110,10 @@ public class CampaignServiceImpl implements CampaignService {
 
     @Override
     public CampaignApiDto removePlayerFromCampaign(Long campaignId, Long playerId) {
-        CampaignSqlDto campaign = campaignRepository.findById(campaignId)
+        Campaign campaign = campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
 
-        UserSqlDto player = userRepository.findById(playerId)
+        User player = userRepository.findById(playerId)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
 
         campaign.getCampaignPlayers().remove(player);
@@ -127,10 +127,10 @@ public class CampaignServiceImpl implements CampaignService {
 
     @Override
     public CampaignApiDto addOgl5CharacterToCampaign(Long campaignId, Long characterId) {
-        CampaignSqlDto campaign = campaignRepository.findById(campaignId)
+        Campaign campaign = campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
 
-        CharacterSheetSqlDto character = ogl5CharacterSheetRepository.findById(characterId)
+        Ogl5CharacterSheet character = ogl5CharacterSheetRepository.findById(characterId)
                 .orElseThrow(() -> new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
         if (campaign.getCampaignOgl5CharacterSheets().contains(character)) {
@@ -147,10 +147,10 @@ public class CampaignServiceImpl implements CampaignService {
 
     @Override
     public CampaignApiDto removeOgl5CharacterFromCampaign(Long campaignId, Long characterId) {
-        CampaignSqlDto campaign = campaignRepository.findById(campaignId)
+        Campaign campaign = campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
 
-        CharacterSheetSqlDto character = ogl5CharacterSheetRepository.findById(characterId)
+        Ogl5CharacterSheet character = ogl5CharacterSheetRepository.findById(characterId)
                 .orElseThrow(() -> new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
         if (!campaign.getCampaignOgl5CharacterSheets().contains(character)) {
@@ -168,10 +168,10 @@ public class CampaignServiceImpl implements CampaignService {
 
     @Override
     public CampaignApiDto addCustomCharacterToCampaign(Long campaignId, Long characterId) {
-        CampaignSqlDto campaign = campaignRepository.findById(campaignId)
+        Campaign campaign = campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
 
-        CustomCharacterSheetSqlDto character = customCharacterSheetRepo.findById(characterId)
+        CustomCharacterSheet character = customCharacterSheetRepo.findById(characterId)
                 .orElseThrow(() -> new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
         if (campaign.getCampaignCustomCharacterSheets().contains(character)) {
@@ -189,10 +189,10 @@ public class CampaignServiceImpl implements CampaignService {
 
     @Override
     public CampaignApiDto removeCustomCharacterFromCampaign(Long campaignId, Long characterId) {
-        CampaignSqlDto campaign = campaignRepository.findById(campaignId)
+        Campaign campaign = campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
 
-        CustomCharacterSheetSqlDto character = customCharacterSheetRepo.findById(characterId)
+        CustomCharacterSheet character = customCharacterSheetRepo.findById(characterId)
                 .orElseThrow(() -> new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
         if (!campaign.getCampaignCustomCharacterSheets().contains(character)) {
@@ -210,10 +210,10 @@ public class CampaignServiceImpl implements CampaignService {
 
     @Override
     public List<CampaignApiDto> getCampaignsAsPlayer(Long playerId) {
-        UserSqlDto player = userRepository.findById(playerId)
+        User player = userRepository.findById(playerId)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
 
-        List<CampaignSqlDto> campaigns = campaignRepository.findAllByCampaignPlayersId(player.getId());
+        List<Campaign> campaigns = campaignRepository.findAllByCampaignPlayersId(player.getId());
 
         return campaigns.stream()
                 .map(campaignMapper::toApiDto)
@@ -223,11 +223,11 @@ public class CampaignServiceImpl implements CampaignService {
 
     @Override
     public void deletePlayerFromCampaigns(List<CampaignApiDto> campaigns, Long playerId) {
-        UserSqlDto player = userRepository.findById(playerId)
+        User player = userRepository.findById(playerId)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
 
         for (CampaignApiDto campaign : campaigns) {
-            CampaignSqlDto campaignSqlDto = campaignRepository.findById(campaign.getId())
+            Campaign campaignSqlDto = campaignRepository.findById(campaign.getId())
                     .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
 
             campaignSqlDto.getCampaignPlayers().remove(player);
@@ -242,12 +242,12 @@ public class CampaignServiceImpl implements CampaignService {
 
     @Override
     public void deleteCampaignsAsDungeonMaster(Long dungeonMasterId) {
-        UserSqlDto dungeonMaster = userRepository.findById(dungeonMasterId)
+        User dungeonMaster = userRepository.findById(dungeonMasterId)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
 
-        List<CampaignSqlDto> campaigns = campaignRepository.findAllByGameMasterId(dungeonMaster.getId());
+        List<Campaign> campaigns = campaignRepository.findAllByGameMasterId(dungeonMaster.getId());
 
-        for (CampaignSqlDto campaign : campaigns) {
+        for (Campaign campaign : campaigns) {
             try {
                 campaignRepository.deleteById(campaign.getId());
             } catch (Exception e) {

@@ -1,11 +1,11 @@
 package fr.ttl.atlasdd.repository.campaign;
 
-import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
+import fr.ttl.atlasdd.entity.campaign.Campaign;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface CampaignRepo extends JpaRepository<CampaignSqlDto, Long> {
-    List<CampaignSqlDto> findAllByCampaignPlayersId(Long playerId);
-    List<CampaignSqlDto> findAllByGameMasterId(Long dungeonMasterId);
+public interface CampaignRepo extends JpaRepository<Campaign, Long> {
+    List<Campaign> findAllByCampaignPlayersId(Long playerId);
+    List<Campaign> findAllByGameMasterId(Long dungeonMasterId);
 }

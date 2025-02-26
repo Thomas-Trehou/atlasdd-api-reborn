@@ -1,13 +1,13 @@
 package fr.ttl.atlasdd.repository.character.custom;
 
-import fr.ttl.atlasdd.sqldto.character.custom.CustomCharacterSheetSqlDto;
+import fr.ttl.atlasdd.entity.character.custom.CustomCharacterSheet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface CustomCharacterSheetRepo extends JpaRepository<CustomCharacterSheetSqlDto, Long> {
+public interface CustomCharacterSheetRepo extends JpaRepository<CustomCharacterSheet, Long> {
 
-    List<CustomCharacterSheetSqlDto> findAllByOwner_Id(Long userId);
+    List<CustomCharacterSheet> findAllByOwner_Id(Long userId);
 }

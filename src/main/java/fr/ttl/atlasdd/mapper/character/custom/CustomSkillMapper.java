@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.mapper.character.custom;
 
 import fr.ttl.atlasdd.apidto.character.custom.CustomSkillApiDto;
-import fr.ttl.atlasdd.sqldto.character.custom.CustomSkillSqlDto;
+import fr.ttl.atlasdd.entity.character.custom.CustomSkill;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
@@ -11,9 +11,9 @@ public interface CustomSkillMapper {
 
     CustomSkillMapper INSTANCE = Mappers.getMapper(CustomSkillMapper.class);
 
-    CustomSkillApiDto toApiDto(CustomSkillSqlDto skillSqlDto);
+    CustomSkillApiDto toApiDto(CustomSkill skillSqlDto);
 
-    CustomSkillSqlDto toSqlDto(CustomSkillApiDto skillApiDto);
+    CustomSkill toSqlDto(CustomSkillApiDto skillApiDto);
 
-    void updateFromApiDto(CustomSkillApiDto skillApiDto, @MappingTarget CustomSkillSqlDto skillSqlDto);
+    void updateFromApiDto(CustomSkillApiDto skillApiDto, @MappingTarget CustomSkill skillSqlDto);
 }

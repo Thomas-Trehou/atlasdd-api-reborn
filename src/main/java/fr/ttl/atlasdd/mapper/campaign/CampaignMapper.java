@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.mapper.campaign;
 
 import fr.ttl.atlasdd.apidto.campaign.CampaignApiDto;
-import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
+import fr.ttl.atlasdd.entity.campaign.Campaign;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
@@ -11,9 +11,9 @@ public interface CampaignMapper {
 
     CampaignMapper INSTANCE = Mappers.getMapper(CampaignMapper.class);
 
-    CampaignApiDto toApiDto(CampaignSqlDto campaignSqlDto);
+    CampaignApiDto toApiDto(Campaign campaign);
 
-    CampaignSqlDto toSqlDto(CampaignApiDto campaignApiDto);
+    Campaign toSqlDto(CampaignApiDto campaignApiDto);
 
-    void updateSqlDto(CampaignApiDto campaignApiDto,@MappingTarget CampaignSqlDto campaignSqlDto);
+    void updateSqlDto(CampaignApiDto campaignApiDto,@MappingTarget Campaign campaign);
 }

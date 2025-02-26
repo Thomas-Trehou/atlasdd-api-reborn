@@ -1,32 +1,29 @@
-package fr.ttl.atlasdd.sqldto.character.custom;
+package fr.ttl.atlasdd.entity.character.custom;
 
-import fr.ttl.atlasdd.sqldto.BaseSqlDto;
+import fr.ttl.atlasdd.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Table(name = "custom_weapons")
-public class CustomWeaponSqlDto extends BaseSqlDto {
+public class CustomWeapon extends BaseEntity {
 
     private String index;
     private String name;
-    private String weapon_range;
+    private String weaponRange;
     private String cost;
-    private String damage_dice;
-    private String damage_type;
+    private String damageDice;
+    private String damageType;
 
     @Column(precision = 2, scale = 1)
     private BigDecimal weight;
@@ -34,5 +31,5 @@ public class CustomWeaponSqlDto extends BaseSqlDto {
     private String properties;
 
     @ManyToMany(mappedBy = "weapons")
-    private List<CustomCharacterSheetSqlDto> characterSheets;
+    private List<CustomCharacterSheet> characterSheets;
 }

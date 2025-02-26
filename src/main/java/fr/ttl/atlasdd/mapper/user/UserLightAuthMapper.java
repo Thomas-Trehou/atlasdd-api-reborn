@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.mapper.user;
 
 import fr.ttl.atlasdd.apidto.user.UserLightAuthApiDto;
-import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
+import fr.ttl.atlasdd.entity.user.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -10,7 +10,7 @@ public interface UserLightAuthMapper {
 
     UserLightAuthMapper INSTANCE = Mappers.getMapper(UserLightAuthMapper.class);
 
-    UserLightAuthApiDto toApiDto(UserSqlDto userSqlDto);
+    UserLightAuthApiDto toApiDto(User user);
 
-    UserSqlDto toSqlDto(UserLightAuthApiDto userLightAuthApiDto);
+    User toSqlDto(UserLightAuthApiDto userLightAuthApiDto);
 }

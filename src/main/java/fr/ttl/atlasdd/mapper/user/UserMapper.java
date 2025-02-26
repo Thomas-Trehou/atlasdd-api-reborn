@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.mapper.user;
 
 import fr.ttl.atlasdd.apidto.user.UserApiDto;
-import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
+import fr.ttl.atlasdd.entity.user.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
@@ -11,9 +11,9 @@ public interface UserMapper {
 
     UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
-    UserApiDto toApiDto(UserSqlDto userSqlDto);
+    UserApiDto toApiDto(User user);
 
-    UserSqlDto toSqlDto(UserApiDto userApiDto);
+    User toSqlDto(UserApiDto userApiDto);
 
-    void updateSqlDto(UserApiDto userApiDto, @MappingTarget UserSqlDto userSqlDto);
+    void updateSqlDto(UserApiDto userApiDto, @MappingTarget User user);
 }

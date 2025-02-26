@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.mapper.character.custom;
 
 import fr.ttl.atlasdd.apidto.character.custom.CustomBackgroundApiDto;
-import fr.ttl.atlasdd.sqldto.character.custom.CustomBackgroundSqlDto;
+import fr.ttl.atlasdd.entity.character.custom.CustomBackground;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
@@ -11,9 +11,9 @@ public interface CustomBackgroundMapper {
 
     CustomBackgroundMapper INSTANCE = Mappers.getMapper(CustomBackgroundMapper.class);
 
-    CustomBackgroundApiDto toApiDto(CustomBackgroundSqlDto backgroundSqlDto);
+    CustomBackgroundApiDto toApiDto(CustomBackground backgroundSqlDto);
 
-    CustomBackgroundSqlDto toSqlDto(CustomBackgroundApiDto backgroundApiDto);
+    CustomBackground toSqlDto(CustomBackgroundApiDto backgroundApiDto);
 
-    void updateFromApiDto(CustomBackgroundApiDto backgroundApiDto, @MappingTarget CustomBackgroundSqlDto backgroundSqlDto);
+    void updateFromApiDto(CustomBackgroundApiDto backgroundApiDto, @MappingTarget CustomBackground backgroundSqlDto);
 }

@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.mapper.user;
 
 import fr.ttl.atlasdd.apidto.user.CustomUserDetails;
-import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
+import fr.ttl.atlasdd.entity.user.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
@@ -10,5 +10,5 @@ public interface UserDetailsMapper {
 
     UserDetailsMapper INSTANCE = Mappers.getMapper(UserDetailsMapper.class);
 
-    CustomUserDetails toUserDetails(UserSqlDto userSqlDto);
+    CustomUserDetails toUserDetails(User user);
 }

@@ -1,5 +1,6 @@
 package fr.ttl.atlasdd.service.user.impl;
 
+import fr.ttl.atlasdd.entity.user.User;
 import fr.ttl.atlasdd.exception.user.FriendsInvitationNotFoundException;
 import fr.ttl.atlasdd.exception.user.FriendsInvitationSavingErrorException;
 import fr.ttl.atlasdd.exception.user.UserNotFoundException;
@@ -7,8 +8,7 @@ import fr.ttl.atlasdd.exception.user.UserSavingErrorException;
 import fr.ttl.atlasdd.repository.user.FriendsInvitationRepo;
 import fr.ttl.atlasdd.repository.user.UserRepo;
 import fr.ttl.atlasdd.service.user.FriendsInvitationService;
-import fr.ttl.atlasdd.sqldto.user.FriendInvitationSqlDto;
-import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
+import fr.ttl.atlasdd.entity.user.FriendInvitation;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import fr.ttl.atlasdd.utils.user.InvitationStatus;
 import org.springframework.stereotype.Service;
@@ -27,22 +27,22 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
     @Override
      public void sendInvitation(Long senderId, Long receiverId) {
 
-        UserSqlDto sender = userRepo.findById(senderId)
+        User sender = userRepo.findById(senderId)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
-        UserSqlDto receiver = userRepo.findById(receiverId)
+        User receiver = userRepo.findById(receiverId)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
 
         boolean invitationAlreadyExist =  friendsInvitationRepo.existsByRequestUser_IdAndReceiverUser_Id(senderId, receiverId);
 
         if (!invitationAlreadyExist) {
-            FriendInvitationSqlDto friendInvitationSqlDto = new FriendInvitationSqlDto();
+            FriendInvitation friendInvitation = new FriendInvitation();
 
-            friendInvitationSqlDto.setRequestUser(sender);
-            friendInvitationSqlDto.setReceiverUser(receiver);
-            friendInvitationSqlDto.setStatus(InvitationStatus.PENDING);
+            friendInvitation.setRequestUser(sender);
+            friendInvitation.setReceiverUser(receiver);
+            friendInvitation.setStatus(InvitationStatus.PENDING);
 
             try {
-                friendsInvitationRepo.save(friendInvitationSqlDto);
+                friendsInvitationRepo.save(friendInvitation);
             } catch (Exception e) {
                 throw new FriendsInvitationSavingErrorException(ExceptionMessage.FRIENDS_INVITATION_SAVE_ERROR.getMessage());
             }
@@ -54,14 +54,14 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
 
     @Override
     public void acceptInvitation(Long invitationId, Long receiverId) {
-        FriendInvitationSqlDto friendInvitationSqlDto = friendsInvitationRepo.findByIdAndReceiverUser_Id(invitationId, receiverId);
+        FriendInvitation friendInvitation = friendsInvitationRepo.findByIdAndReceiverUser_Id(invitationId, receiverId);
 
-        if(friendInvitationSqlDto == null) {
+        if(friendInvitation == null) {
             throw new FriendsInvitationNotFoundException(ExceptionMessage.FRIENDS_INVITATION_NOT_FOUND.getMessage());
         }
 
-        UserSqlDto sender = friendInvitationSqlDto.getRequestUser();
-        UserSqlDto receiver = friendInvitationSqlDto.getReceiverUser();
+        User sender = friendInvitation.getRequestUser();
+        User receiver = friendInvitation.getReceiverUser();
 
         sender.getFriends().add(receiver);
         receiver.getFriends().add(sender);
@@ -73,10 +73,10 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
             throw new UserSavingErrorException(ExceptionMessage.USER_SAVE_ERROR.getMessage());
         }
 
-        friendInvitationSqlDto.setStatus(InvitationStatus.ACCEPTED);
+        friendInvitation.setStatus(InvitationStatus.ACCEPTED);
 
         try {
-            friendsInvitationRepo.save(friendInvitationSqlDto);
+            friendsInvitationRepo.save(friendInvitation);
         } catch (Exception e) {
             throw new FriendsInvitationSavingErrorException(ExceptionMessage.FRIENDS_INVITATION_ACCEPT_ERROR.getMessage());
         }
@@ -84,14 +84,14 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
 
     @Override
     public void declineInvitation(Long invitationId, Long receiverId) {
-        FriendInvitationSqlDto friendInvitationSqlDto = friendsInvitationRepo.findByIdAndReceiverUser_Id(invitationId, receiverId);
+        FriendInvitation friendInvitation = friendsInvitationRepo.findByIdAndReceiverUser_Id(invitationId, receiverId);
 
-        if(friendInvitationSqlDto == null) {
+        if(friendInvitation == null) {
             throw new FriendsInvitationNotFoundException(ExceptionMessage.FRIENDS_INVITATION_NOT_FOUND.getMessage());
         }
 
         try {
-            friendsInvitationRepo.delete(friendInvitationSqlDto);
+            friendsInvitationRepo.delete(friendInvitation);
         } catch (Exception e) {
             throw new FriendsInvitationSavingErrorException(ExceptionMessage.FRIENDS_INVITATION_DECLINE_ERROR.getMessage());
         }
@@ -100,14 +100,14 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
 
     @Override
     public void cancelInvitation(Long invitationId, Long senderId) {
-        FriendInvitationSqlDto friendInvitationSqlDto = friendsInvitationRepo.findByIdAndRequestUser_Id(invitationId, senderId);
+        FriendInvitation friendInvitation = friendsInvitationRepo.findByIdAndRequestUser_Id(invitationId, senderId);
 
-        if(friendInvitationSqlDto == null) {
+        if(friendInvitation == null) {
             throw new FriendsInvitationNotFoundException(ExceptionMessage.FRIENDS_INVITATION_NOT_FOUND.getMessage());
         }
 
         try {
-            friendsInvitationRepo.delete(friendInvitationSqlDto);
+            friendsInvitationRepo.delete(friendInvitation);
         } catch (Exception e) {
             throw new FriendsInvitationSavingErrorException(ExceptionMessage.FRIENDS_INVITATION_CANCEL_ERROR.getMessage());
         }
