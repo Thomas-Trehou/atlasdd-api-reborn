@@ -6,7 +6,7 @@ import fr.ttl.atlasdd.exception.character.custom.savingerror.CustomRaceSavingErr
 import fr.ttl.atlasdd.mapper.character.custom.CustomRaceMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomRaceRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomRaceService;
-import fr.ttl.atlasdd.sqldto.character.custom.CustomRaceSqlDto;
+import fr.ttl.atlasdd.entity.character.custom.CustomRace;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class CustomRaceServiceImpl implements CustomRaceService {
     @Override
     public CustomRaceApiDto createRace(CustomRaceApiDto customRaceApiDto) {
 
-        CustomRaceSqlDto raceSqlDto = customRaceMapper.toSqlDto(customRaceApiDto);
+        CustomRace raceSqlDto = customRaceMapper.toSqlDto(customRaceApiDto);
 
         try {
             return customRaceMapper.toApiDto(customRaceRepository.save(raceSqlDto));
@@ -39,7 +39,7 @@ public class CustomRaceServiceImpl implements CustomRaceService {
     @Override
     public CustomRaceApiDto updateRace(CustomRaceApiDto customRaceApiDto) {
 
-        CustomRaceSqlDto raceSqlDto = customRaceRepository.findById(customRaceApiDto.getId())
+        CustomRace raceSqlDto = customRaceRepository.findById(customRaceApiDto.getId())
                 .orElseThrow(() -> new CustomRaceNotFoundException(ExceptionMessage.RACE_NOT_FOUND.getMessage()));
 
         customRaceMapper.updateFromApiDto(customRaceApiDto, raceSqlDto);

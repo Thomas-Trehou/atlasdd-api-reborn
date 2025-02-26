@@ -1,6 +1,6 @@
-package fr.ttl.atlasdd.sqldto.character.custom;
+package fr.ttl.atlasdd.entity.character.custom;
 
-import fr.ttl.atlasdd.sqldto.BaseSqlDto;
+import fr.ttl.atlasdd.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "custom_races")
-public class CustomRaceSqlDto extends BaseSqlDto {
+public class CustomRace extends BaseEntity {
 
     private String name;
     private String speed;
@@ -25,5 +25,5 @@ public class CustomRaceSqlDto extends BaseSqlDto {
     private String traits;
 
     @OneToMany(mappedBy = "race")
-    private List<CustomCharacterSheetSqlDto> characterSheets;
+    private List<CustomCharacterSheet> characterSheets;
 }

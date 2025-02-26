@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.listeners;
 
-import fr.ttl.atlasdd.sqldto.character.ogl5.ClassSqlDto;
-import fr.ttl.atlasdd.sqldto.character.ogl5.SpellSqlDto;
+import fr.ttl.atlasdd.entity.character.ogl5.Ogl5Class;
+import fr.ttl.atlasdd.entity.character.ogl5.Ogl5Spell;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.PostPersist;
@@ -18,9 +18,9 @@ public class SpellEntityListener {
 
     @PostPersist
     @PostUpdate
-    public void updateClassSpells(SpellSqlDto spell) {
-        List<ClassSqlDto> classes = entityManager.createQuery("SELECT c FROM ClassSqlDto c", ClassSqlDto.class).getResultList();
-        for (ClassSqlDto classDto : classes) {
+    public void updateClassSpells(Ogl5Spell spell) {
+        List<Ogl5Class> classes = entityManager.createQuery("SELECT c FROM Ogl5Class c", Ogl5Class.class).getResultList();
+        for (Ogl5Class classDto : classes) {
             if (spell.getClasses().toLowerCase().contains(classDto.getName().toLowerCase())) {
                 classDto.getClassSpells().add(spell);
                 entityManager.merge(classDto);

@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.mapper.character.custom;
 
 import fr.ttl.atlasdd.apidto.character.custom.CustomClassApiDto;
-import fr.ttl.atlasdd.sqldto.character.custom.CustomClassSqlDto;
+import fr.ttl.atlasdd.entity.character.custom.CustomClass;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
@@ -11,9 +11,9 @@ public interface CustomClassMapper {
 
     CustomClassMapper INSTANCE = Mappers.getMapper(CustomClassMapper.class);
 
-    CustomClassApiDto toApiDto(CustomClassSqlDto classSqlDto);
+    CustomClassApiDto toApiDto(CustomClass classSqlDto);
 
-    CustomClassSqlDto toSqlDto(CustomClassApiDto classApiDto);
+    CustomClass toSqlDto(CustomClassApiDto classApiDto);
 
-    void updateSqlDto(CustomClassApiDto classApiDto, @MappingTarget CustomClassSqlDto classSqlDto);
+    void updateSqlDto(CustomClassApiDto classApiDto, @MappingTarget CustomClass classSqlDto);
 }

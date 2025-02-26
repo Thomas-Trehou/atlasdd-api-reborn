@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.mapper.character.ogl5;
 
 import fr.ttl.atlasdd.apidto.character.ogl5.SpellApiDto;
-import fr.ttl.atlasdd.sqldto.character.ogl5.SpellSqlDto;
+import fr.ttl.atlasdd.entity.character.ogl5.Ogl5Spell;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
@@ -11,9 +11,9 @@ public interface SpellMapper {
 
     SpellMapper INSTANCE = Mappers.getMapper(SpellMapper.class);
 
-    SpellApiDto toApiDto(SpellSqlDto spellSqlDto);
+    SpellApiDto toApiDto(Ogl5Spell ogl5Spell);
 
-    SpellSqlDto toSqlDto(SpellApiDto spellApiDto);
+    Ogl5Spell toSqlDto(SpellApiDto spellApiDto);
 
-    void updateSqlDto(SpellApiDto spellApiDto, @MappingTarget SpellSqlDto spellSqlDto);
+    void updateSqlDto(SpellApiDto spellApiDto, @MappingTarget Ogl5Spell ogl5Spell);
 }

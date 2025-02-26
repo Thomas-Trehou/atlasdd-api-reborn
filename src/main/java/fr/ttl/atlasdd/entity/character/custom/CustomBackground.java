@@ -1,6 +1,6 @@
-package fr.ttl.atlasdd.sqldto.character.custom;
+package fr.ttl.atlasdd.entity.character.custom;
 
-import fr.ttl.atlasdd.sqldto.BaseSqlDto;
+import fr.ttl.atlasdd.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.OneToMany;
@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "custom_backgrounds")
-public class CustomBackgroundSqlDto extends BaseSqlDto {
+public class CustomBackground extends BaseEntity {
 
     private String name;
     private String masteredTools;
@@ -29,5 +29,5 @@ public class CustomBackgroundSqlDto extends BaseSqlDto {
     private String backgroundFeature;
 
     @OneToMany(mappedBy = "background")
-    private List<CustomCharacterSheetSqlDto> characterSheets;
+    private List<CustomCharacterSheet> characterSheets;
 }

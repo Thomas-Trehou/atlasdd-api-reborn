@@ -1,12 +1,12 @@
 package fr.ttl.atlasdd.service.character.custom.impl;
 
 import fr.ttl.atlasdd.apidto.character.custom.CustomWeaponApiDto;
+import fr.ttl.atlasdd.entity.character.custom.CustomWeapon;
 import fr.ttl.atlasdd.exception.character.custom.notfound.CustomWeaponNotFoundException;
 import fr.ttl.atlasdd.exception.character.custom.savingerror.CustomWeaponSavingErrorException;
 import fr.ttl.atlasdd.mapper.character.custom.CustomWeaponMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomWeaponRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomWeaponService;
-import fr.ttl.atlasdd.sqldto.character.custom.CustomWeaponSqlDto;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +48,7 @@ public class CustomWeaponServiceImpl implements CustomWeaponService {
         try {
             return customWeaponApiDtos.stream()
                     .map(customWeaponApiDto -> {
-                        CustomWeaponSqlDto existingWeapon = customWeaponRepository.findById(customWeaponApiDto.getId())
+                        CustomWeapon existingWeapon = customWeaponRepository.findById(customWeaponApiDto.getId())
                                 .orElseThrow(() -> new CustomWeaponNotFoundException( ExceptionMessage.WEAPON_NOT_FOUND.getMessage() + " " + customWeaponApiDto.getId()));
                         customWeaponMapper.updateSqlDto(customWeaponApiDto, existingWeapon);
                         return customWeaponRepository.save(existingWeapon);

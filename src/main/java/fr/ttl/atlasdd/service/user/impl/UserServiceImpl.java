@@ -5,6 +5,7 @@ import fr.ttl.atlasdd.apidto.user.SignInDto;
 import fr.ttl.atlasdd.apidto.user.UserApiDto;
 import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
 import fr.ttl.atlasdd.apidto.user.UserLightAuthApiDto;
+import fr.ttl.atlasdd.entity.user.User;
 import fr.ttl.atlasdd.exception.user.*;
 import fr.ttl.atlasdd.mapper.user.UserLightAuthMapper;
 import fr.ttl.atlasdd.mapper.user.UserLightMapper;
@@ -13,8 +14,6 @@ import fr.ttl.atlasdd.repository.user.UserRepo;
 import fr.ttl.atlasdd.service.campaign.CampaignNoteService;
 import fr.ttl.atlasdd.service.campaign.CampaignService;
 import fr.ttl.atlasdd.service.user.UserService;
-import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
-import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import fr.ttl.atlasdd.utils.user.JwtTokenProvider;
 import fr.ttl.atlasdd.utils.user.UserState;
@@ -83,7 +82,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserLightApiDto> getFriends(Long userId) {
 
-        Optional<UserSqlDto> userToFind = userRepository.findById(userId);
+        Optional<User> userToFind = userRepository.findById(userId);
 
         if (userToFind.isEmpty()) {
             throw new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage());
@@ -99,7 +98,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserLightApiDto createUser(UserApiDto userApiDto) {
-        Optional<UserSqlDto> existingUser = userRepository.findByEmail(userApiDto.getEmail());
+        Optional<User> existingUser = userRepository.findByEmail(userApiDto.getEmail());
 
         if (existingUser.isPresent()) {
             throw new EmailAlreadyUsedException(ExceptionMessage.USER_EMAIL_ALREADY_USED.getMessage());
@@ -107,38 +106,38 @@ public class UserServiceImpl implements UserService {
 
         userApiDto.setPassword(bCryptPasswordEncoder.encode(userApiDto.getPassword()));
 
-        UserSqlDto userSqlDto = userMapper.toSqlDto(userApiDto);
-        userSqlDto.setSlug(userApiDto.getPseudo().toLowerCase().replace(" ", "-"));
+        User user = userMapper.toSqlDto(userApiDto);
+        user.setSlug(userApiDto.getPseudo().toLowerCase().replace(" ", "-"));
 
-        UserSqlDto userWithSameSlug = userRepository.findBySlug(userSqlDto.getSlug()).orElse(null);
+        User userWithSameSlug = userRepository.findBySlug(user.getSlug()).orElse(null);
 
         if (userWithSameSlug != null) {
             throw new PseudoAlreadyUsedException(ExceptionMessage.USER_PSEUDO_ALREADY_USED.getMessage());
         }
 
-        userSqlDto.setState(UserState.INACTIVE);
+        user.setState(UserState.INACTIVE);
 
         try {
-            userRepository.save(userSqlDto);
+            userRepository.save(user);
         } catch (Exception e) {
             throw new UserSavingErrorException(ExceptionMessage.USER_SAVE_ERROR.getMessage());
         }
 
         String token = UUID.randomUUID().toString();
-        storeTokenInSession(token, userSqlDto);
-        sendVerificationEmail(userSqlDto, token);
+        storeTokenInSession(token, user);
+        sendVerificationEmail(user, token);
 
-        return UserLightMapper.INSTANCE.toApiDto(userSqlDto);
+        return UserLightMapper.INSTANCE.toApiDto(user);
     }
 
-    private void storeTokenInSession(String token, UserSqlDto user) {
+    private void storeTokenInSession(String token, User user) {
         ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
         HttpSession session = attr.getRequest().getSession(true);
         session.setAttribute("verificationToken", token);
         session.setAttribute("user", user);
     }
 
-    private void sendVerificationEmail(UserSqlDto user, String token) {
+    private void sendVerificationEmail(User user, String token) {
         String url = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path("/utilisateurs/verify")
                 .queryParam("token", token)
@@ -155,7 +154,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public String verifyToken(String token, HttpSession session) {
         String sessionToken = (String) session.getAttribute("verificationToken");
-        UserSqlDto user = (UserSqlDto) session.getAttribute("user");
+        User user = (User) session.getAttribute("user");
 
         if (sessionToken == null || !sessionToken.equals(token)) {
             System.out.println("Token de session: " + sessionToken);
@@ -176,7 +175,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserLightAuthApiDto signIn(SignInDto signInDto) {
-        Optional<UserSqlDto> user = userRepository.findByEmail(signInDto.getEmail());
+        Optional<User> user = userRepository.findByEmail(signInDto.getEmail());
 
         if (user.isEmpty() || !bCryptPasswordEncoder.matches(signInDto.getPassword(), user.get().getPassword())) {
             throw new IncorrectEmailOrPasswordException(ExceptionMessage.USER_EMAIL_OR_PASSWORD_INVALID.getMessage());
@@ -195,7 +194,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long id) {
-        UserSqlDto user = userRepository.findById(id)
+        User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
 
         List<CampaignApiDto> campaigns = campaignService.getCampaignsAsPlayer(id);
@@ -204,7 +203,7 @@ public class UserServiceImpl implements UserService {
 
         campaignNoteService.deleteCampaignNotesByUserId(id);
 
-        for (UserSqlDto friend : user.getFriends()) {
+        for (User friend : user.getFriends()) {
             friend.getFriends().remove(user);
             userRepository.save(friend);
         }

@@ -1,6 +1,6 @@
-package fr.ttl.atlasdd.sqldto.character.ogl5;
+package fr.ttl.atlasdd.entity.character.custom;
 
-import fr.ttl.atlasdd.sqldto.BaseSqlDto;
+import fr.ttl.atlasdd.entity.BaseEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
@@ -18,8 +18,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "ogl5_weapons")
-public class WeaponSqlDto extends BaseSqlDto {
+@Table(name = "custom_weapons")
+public class CustomWeapon extends BaseEntity {
 
     private String index;
     private String name;
@@ -34,5 +34,5 @@ public class WeaponSqlDto extends BaseSqlDto {
     private String properties;
 
     @ManyToMany(mappedBy = "weapons")
-    private List<CharacterSheetSqlDto> characterSheets;
+    private List<CustomCharacterSheet> characterSheets;
 }

@@ -1,9 +1,9 @@
-package fr.ttl.atlasdd.sqldto.user;
+package fr.ttl.atlasdd.entity.user;
 
-import fr.ttl.atlasdd.sqldto.BaseSqlDto;
-import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
-import fr.ttl.atlasdd.sqldto.character.custom.CustomCharacterSheetSqlDto;
-import fr.ttl.atlasdd.sqldto.character.ogl5.CharacterSheetSqlDto;
+import fr.ttl.atlasdd.entity.BaseEntity;
+import fr.ttl.atlasdd.entity.campaign.Campaign;
+import fr.ttl.atlasdd.entity.character.custom.CustomCharacterSheet;
+import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSheet;
 import fr.ttl.atlasdd.utils.user.UserState;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,7 +19,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "users")
-public class UserSqlDto extends BaseSqlDto {
+public class User extends BaseEntity {
 
     private String pseudo;
     private String slug;
@@ -30,10 +30,10 @@ public class UserSqlDto extends BaseSqlDto {
     private UserState state = UserState.ACTIVE;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<CharacterSheetSqlDto> characterSheetList;
+    private List<Ogl5CharacterSheet> characterSheetList;
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<CustomCharacterSheetSqlDto> customCharacterSheetList;
+    private List<CustomCharacterSheet> customCharacterSheetList;
 
     @ManyToMany
     @JoinTable(
@@ -41,18 +41,18 @@ public class UserSqlDto extends BaseSqlDto {
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "friend_id")
     )
-    private List<UserSqlDto> friends;
+    private List<User> friends;
 
     @ManyToMany(mappedBy = "campaignPlayers")
-    private List<CampaignSqlDto> campaignsAsPlayer;
+    private List<Campaign> campaignsAsPlayer;
 
     @OneToMany(mappedBy = "gameMaster")
-    private List<CampaignSqlDto> campaignsAsGameMaster;
+    private List<Campaign> campaignsAsGameMaster;
 
     @OneToMany(mappedBy = "requestUser", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<FriendInvitationSqlDto> sentFriendInvitations;
+    private List<FriendInvitation> sentFriendInvitations;
 
     @OneToMany(mappedBy = "receiverUser", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<FriendInvitationSqlDto> receivedFriendInvitations;
+    private List<FriendInvitation> receivedFriendInvitations;
 
 }

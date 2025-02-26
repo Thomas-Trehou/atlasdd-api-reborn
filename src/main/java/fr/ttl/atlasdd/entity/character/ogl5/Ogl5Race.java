@@ -1,6 +1,6 @@
-package fr.ttl.atlasdd.sqldto.character.ogl5;
+package fr.ttl.atlasdd.entity.character.ogl5;
 
-import fr.ttl.atlasdd.sqldto.BaseSqlDto;
+import fr.ttl.atlasdd.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "ogl5_races")
-public class RaceSqlDto extends BaseSqlDto {
+public class Ogl5Race extends BaseEntity {
 
     private String name;
     private String speed;
@@ -31,7 +31,7 @@ public class RaceSqlDto extends BaseSqlDto {
     private String traits;
 
     @OneToMany(mappedBy = "race")
-    private List<CharacterSheetSqlDto> characterSheets;
+    private List<Ogl5CharacterSheet> characterSheets;
 
     @ManyToMany
     @JoinTable(
@@ -39,5 +39,5 @@ public class RaceSqlDto extends BaseSqlDto {
             joinColumns = @JoinColumn(name = "race_id"),
             inverseJoinColumns = @JoinColumn(name = "spell_id")
     )
-    private List<SpellSqlDto> raceSpells;
+    private List<Ogl5Spell> raceSpells;
 }

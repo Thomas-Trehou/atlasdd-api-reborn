@@ -1,6 +1,6 @@
-package fr.ttl.atlasdd.sqldto.character.ogl5;
+package fr.ttl.atlasdd.entity.character.custom;
 
-import fr.ttl.atlasdd.sqldto.BaseSqlDto;
+import fr.ttl.atlasdd.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,8 +14,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "ogl5_classes")
-public class ClassSqlDto extends BaseSqlDto {
+@Table(name = "custom_classes")
+public class CustomClass extends BaseEntity {
 
     private String name;
     private String hitDice;
@@ -25,13 +25,5 @@ public class ClassSqlDto extends BaseSqlDto {
     private String startingEquipment;
 
     @OneToMany(mappedBy = "classe")
-    private List<CharacterSheetSqlDto> characterSheets;
-
-    @ManyToMany
-    @JoinTable(
-            name = "ogl5_class_has_spells",
-            joinColumns = @JoinColumn(name = "class_id"),
-            inverseJoinColumns = @JoinColumn(name = "spell_id")
-    )
-    private List<SpellSqlDto> classSpells;
+    private List<CustomCharacterSheet> characterSheets;
 }

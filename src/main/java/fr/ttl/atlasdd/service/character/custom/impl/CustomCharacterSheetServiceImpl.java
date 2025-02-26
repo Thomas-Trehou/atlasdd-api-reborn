@@ -3,6 +3,8 @@ package fr.ttl.atlasdd.service.character.custom.impl;
 import fr.ttl.atlasdd.apidto.character.custom.CustomCharacterSheetApiDto;
 import fr.ttl.atlasdd.apidto.character.custom.CustomCharacterSheetCreateRequestApiDto;
 import fr.ttl.atlasdd.apidto.character.custom.CustomCharacterSheetUpdateRequestApiDto;
+import fr.ttl.atlasdd.entity.character.custom.CustomCharacterSheet;
+import fr.ttl.atlasdd.entity.character.custom.CustomSpell;
 import fr.ttl.atlasdd.exception.character.CharacterPreparedSpellNotFoundException;
 import fr.ttl.atlasdd.exception.character.CharacterSkillNotFoundException;
 import fr.ttl.atlasdd.exception.character.custom.notfound.CustomCharacterNotFoundException;
@@ -16,10 +18,8 @@ import fr.ttl.atlasdd.repository.character.custom.CustomCharacterSheetRepo;
 import fr.ttl.atlasdd.repository.character.custom.CustomSkillRepo;
 import fr.ttl.atlasdd.repository.character.custom.CustomSpellRepo;
 import fr.ttl.atlasdd.service.character.custom.*;
-import fr.ttl.atlasdd.sqldto.character.custom.CustomCharacterSheetSqlDto;
-import fr.ttl.atlasdd.sqldto.character.custom.CustomSkillSqlDto;
-import fr.ttl.atlasdd.sqldto.character.custom.CustomSpellSqlDto;
-import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
+import fr.ttl.atlasdd.entity.character.custom.CustomSkill;
+import fr.ttl.atlasdd.entity.user.User;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.springframework.stereotype.Service;
 
@@ -72,9 +72,9 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
 
     @Override
     public CustomCharacterSheetApiDto createCharacterSheet(CustomCharacterSheetCreateRequestApiDto request) {
-        UserSqlDto user = findUserById(request.getUserId());
-        List<CustomSkillSqlDto> skills = findSkillsByIds(request.getSkillIds());
-        List<CustomSpellSqlDto> spells = findSpellsByIds(request.getPreparedSpellIds());
+        User user = findUserById(request.getUserId());
+        List<CustomSkill> skills = findSkillsByIds(request.getSkillIds());
+        List<CustomSpell> spells = findSpellsByIds(request.getPreparedSpellIds());
 
         CustomCharacterSheetApiDto characterSheetApiDto = customCharacterSheetCreateRequestMapper.toApiDto(request);
         characterSheetApiDto.setRace(customRaceService.createRace(characterSheetApiDto.getRace()));
@@ -83,7 +83,7 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
         characterSheetApiDto.setWeapons(customWeaponService.createWeapons(characterSheetApiDto.getWeapons()));
         characterSheetApiDto.setArmor(customArmorService.createArmor(characterSheetApiDto.getArmor()));
 
-        CustomCharacterSheetSqlDto characterSheetSqlDto = customCharacterSheetMapper.toSqlDto(characterSheetApiDto);
+        CustomCharacterSheet characterSheetSqlDto = customCharacterSheetMapper.toSqlDto(characterSheetApiDto);
         characterSheetSqlDto.setOwner(user);
         characterSheetSqlDto.setSkills(skills);
         characterSheetSqlDto.setPreparedSpells(spells);
@@ -97,7 +97,7 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
 
     @Override
     public CustomCharacterSheetApiDto getCharacterSheetById(Long id) {
-        CustomCharacterSheetSqlDto characterSheet = customCharacterSheetRepository.findById(id)
+        CustomCharacterSheet characterSheet = customCharacterSheetRepository.findById(id)
                 .orElseThrow(() -> new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
         return customCharacterSheetMapper.toApiDto(characterSheet);
@@ -109,18 +109,18 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
             throw new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage());
         }
 
-        List<CustomCharacterSheetSqlDto> characterSheets = customCharacterSheetRepository.findAllByOwner_Id(userId);
+        List<CustomCharacterSheet> characterSheets = customCharacterSheetRepository.findAllByOwner_Id(userId);
 
         return characterSheets.stream().map(customCharacterSheetMapper::toApiDto).collect(Collectors.toList());
     }
 
     @Override
     public CustomCharacterSheetApiDto updateCharacterSheet(Long id, CustomCharacterSheetUpdateRequestApiDto request) {
-        CustomCharacterSheetSqlDto characterSheet = customCharacterSheetRepository.findById(id)
+        CustomCharacterSheet characterSheet = customCharacterSheetRepository.findById(id)
                 .orElseThrow(() -> new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
-        List<CustomSkillSqlDto> skills = findSkillsByIds(request.getSkillIds());
-        List<CustomSpellSqlDto> spells = findSpellsByIds(request.getPreparedSpellIds());
+        List<CustomSkill> skills = findSkillsByIds(request.getSkillIds());
+        List<CustomSpell> spells = findSpellsByIds(request.getPreparedSpellIds());
 
         CustomCharacterSheetApiDto characterSheetApiDto = customCharacterSheetUpdateRequestMapper.toApiDto(request);
         characterSheetApiDto.setRace(customRaceService.updateRace(characterSheetApiDto.getRace()));
@@ -142,7 +142,7 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
 
     @Override
     public void deleteCharacterSheet(Long id) {
-        CustomCharacterSheetSqlDto characterSheet = customCharacterSheetRepository.findById(id)
+        CustomCharacterSheet characterSheet = customCharacterSheetRepository.findById(id)
                 .orElseThrow(() -> new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
         try {
@@ -152,12 +152,12 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
         }
     }
 
-    private UserSqlDto findUserById(Long userId) {
+    private User findUserById(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
     }
 
-    private List<CustomSkillSqlDto> findSkillsByIds(List<Long> skillIds) {
+    private List<CustomSkill> findSkillsByIds(List<Long> skillIds) {
         try {
             return customSkillRepository.findAllById(skillIds);
         } catch (Exception e) {
@@ -165,7 +165,7 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
         }
     }
 
-    private List<CustomSpellSqlDto> findSpellsByIds(List<Long> spellIds) {
+    private List<CustomSpell> findSpellsByIds(List<Long> spellIds) {
         try {
             return customSpellRepository.findAllById(spellIds);
         } catch (Exception e) {

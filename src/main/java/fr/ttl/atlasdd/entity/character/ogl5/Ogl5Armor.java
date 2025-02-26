@@ -1,6 +1,6 @@
-package fr.ttl.atlasdd.sqldto.character.ogl5;
+package fr.ttl.atlasdd.entity.character.ogl5;
 
-import fr.ttl.atlasdd.sqldto.BaseSqlDto;
+import fr.ttl.atlasdd.entity.BaseEntity;
 import fr.ttl.atlasdd.utils.character.ArmorCategory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "ogl5_armors")
-public class ArmorSqlDto extends BaseSqlDto {
+public class Ogl5Armor extends BaseEntity {
 
     private String index;
     private String name;
@@ -38,5 +38,5 @@ public class ArmorSqlDto extends BaseSqlDto {
     private String properties;
 
     @OneToMany(mappedBy = "armor")
-    private List<CharacterSheetSqlDto> characterSheet;
+    private List<Ogl5CharacterSheet> characterSheet;
 }

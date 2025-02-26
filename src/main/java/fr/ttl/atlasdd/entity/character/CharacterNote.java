@@ -1,8 +1,8 @@
-package fr.ttl.atlasdd.sqldto.character;
+package fr.ttl.atlasdd.entity.character;
 
-import fr.ttl.atlasdd.sqldto.BaseSqlDto;
-import fr.ttl.atlasdd.sqldto.character.custom.CustomCharacterSheetSqlDto;
-import fr.ttl.atlasdd.sqldto.character.ogl5.CharacterSheetSqlDto;
+import fr.ttl.atlasdd.entity.BaseEntity;
+import fr.ttl.atlasdd.entity.character.custom.CustomCharacterSheet;
+import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSheet;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "CharacterNotes")
-public class NoteCharacterSqlDto extends BaseSqlDto {
+public class CharacterNote extends BaseEntity {
 
     private String title;
 
@@ -24,9 +24,9 @@ public class NoteCharacterSqlDto extends BaseSqlDto {
 
     @ManyToOne
     @JoinColumn(name = "ogl5CharacterSheet_id")
-    private CharacterSheetSqlDto ogl5CharacterSheet;
+    private Ogl5CharacterSheet ogl5CharacterSheet;
 
     @ManyToOne
     @JoinColumn(name = "customCharacterSheet_id")
-    private CustomCharacterSheetSqlDto customCharacterSheet;
+    private CustomCharacterSheet customCharacterSheet;
 }

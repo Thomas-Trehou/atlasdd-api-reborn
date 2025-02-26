@@ -12,9 +12,9 @@ import fr.ttl.atlasdd.repository.character.NoteCharacterRepo;
 import fr.ttl.atlasdd.repository.character.custom.CustomCharacterSheetRepo;
 import fr.ttl.atlasdd.repository.character.ogl5.CharacterSheetRepo;
 import fr.ttl.atlasdd.service.character.NoteCharacterService;
-import fr.ttl.atlasdd.sqldto.character.NoteCharacterSqlDto;
-import fr.ttl.atlasdd.sqldto.character.custom.CustomCharacterSheetSqlDto;
-import fr.ttl.atlasdd.sqldto.character.ogl5.CharacterSheetSqlDto;
+import fr.ttl.atlasdd.entity.character.CharacterNote;
+import fr.ttl.atlasdd.entity.character.custom.CustomCharacterSheet;
+import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSheet;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.springframework.stereotype.Service;
 
@@ -44,49 +44,49 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
     @Override
     public NoteCharacterApiDto createOgl5CharacterNote(Long characterSheetId, NoteCharacterApiDto noteCharacterApiDto) {
 
-        CharacterSheetSqlDto characterSheetSqlDto = ogl5CharacterSheetRepository.findById(characterSheetId)
+        Ogl5CharacterSheet ogl5CharacterSheet = ogl5CharacterSheetRepository.findById(characterSheetId)
                 .orElseThrow(() -> new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
-        NoteCharacterSqlDto noteCharacterSqlDto = noteCharacterMapper.toSqlDto(noteCharacterApiDto);
-        noteCharacterSqlDto.setOgl5CharacterSheet(characterSheetSqlDto);
+        CharacterNote characterNote = noteCharacterMapper.toSqlDto(noteCharacterApiDto);
+        characterNote.setOgl5CharacterSheet(ogl5CharacterSheet);
 
-        NoteCharacterSqlDto savedNoteCharacterSqlDto;
+        CharacterNote savedCharacterNote;
 
         try {
-            savedNoteCharacterSqlDto = noteCharacterRepository.save(noteCharacterSqlDto);
+            savedCharacterNote = noteCharacterRepository.save(characterNote);
         } catch (Exception e) {
             throw new CharacterNoteSavingErrorException(ExceptionMessage.CHARACTER_NOTE_SAVE_ERROR.getMessage());
         }
 
-        characterSheetSqlDto.getCharacterNotes().add(savedNoteCharacterSqlDto);
+        ogl5CharacterSheet.getCharacterNotes().add(savedCharacterNote);
 
         try {
-            ogl5CharacterSheetRepository.save(characterSheetSqlDto);
+            ogl5CharacterSheetRepository.save(ogl5CharacterSheet);
         } catch (Exception e) {
             throw new Ogl5CharacterSavingErrorException(ExceptionMessage.CHARACTER_UPDATE_ERROR.getMessage());
         }
 
-        return noteCharacterMapper.toApiDto(savedNoteCharacterSqlDto);
+        return noteCharacterMapper.toApiDto(savedCharacterNote);
     }
 
     @Override
     public NoteCharacterApiDto createCustomCharacterNote(Long characterSheetId, NoteCharacterApiDto noteCharacterApiDto) {
 
-        CustomCharacterSheetSqlDto characterSheetSqlDto = customCharacterSheetRepository.findById(characterSheetId)
+        CustomCharacterSheet characterSheetSqlDto = customCharacterSheetRepository.findById(characterSheetId)
                 .orElseThrow(() -> new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
-        NoteCharacterSqlDto noteCharacterSqlDto = noteCharacterMapper.toSqlDto(noteCharacterApiDto);
-        noteCharacterSqlDto.setCustomCharacterSheet(characterSheetSqlDto);
+        CharacterNote characterNote = noteCharacterMapper.toSqlDto(noteCharacterApiDto);
+        characterNote.setCustomCharacterSheet(characterSheetSqlDto);
 
-        NoteCharacterSqlDto savedNoteCharacterSqlDto;
+        CharacterNote savedCharacterNote;
 
         try {
-            savedNoteCharacterSqlDto = noteCharacterRepository.save(noteCharacterSqlDto);
+            savedCharacterNote = noteCharacterRepository.save(characterNote);
         } catch (Exception e) {
             throw new CharacterNoteSavingErrorException(ExceptionMessage.CHARACTER_NOTE_SAVE_ERROR.getMessage());
         }
 
-        characterSheetSqlDto.getCharacterNotes().add(savedNoteCharacterSqlDto);
+        characterSheetSqlDto.getCharacterNotes().add(savedCharacterNote);
 
         try {
             customCharacterSheetRepository.save(characterSheetSqlDto);
@@ -94,20 +94,20 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
             throw new CustomCharacterSavingErrorException(ExceptionMessage.CHARACTER_UPDATE_ERROR.getMessage());
         }
 
-        return noteCharacterMapper.toApiDto(savedNoteCharacterSqlDto);
+        return noteCharacterMapper.toApiDto(savedCharacterNote);
     }
 
     @Override
     public NoteCharacterApiDto updateNote(Long noteId, NoteCharacterApiDto noteCharacterApiDto) {
 
-        NoteCharacterSqlDto noteCharacterSqlDto = noteCharacterRepository.findById(noteId)
+        CharacterNote characterNote = noteCharacterRepository.findById(noteId)
                 .orElseThrow(() -> new CharacterNoteNotFoundException(ExceptionMessage.CHARACTER_NOTE_NOT_FOUND.getMessage()));
 
-        noteCharacterSqlDto.setContent(noteCharacterApiDto.getContent());
-        noteCharacterSqlDto.setTitle(noteCharacterApiDto.getTitle());
+        characterNote.setContent(noteCharacterApiDto.getContent());
+        characterNote.setTitle(noteCharacterApiDto.getTitle());
 
         try {
-            return noteCharacterMapper.toApiDto(noteCharacterRepository.save(noteCharacterSqlDto));
+            return noteCharacterMapper.toApiDto(noteCharacterRepository.save(characterNote));
         } catch (Exception e) {
             throw new CharacterNoteSavingErrorException(ExceptionMessage.CHARACTER_NOTE_UPDATE_ERROR.getMessage());
         }

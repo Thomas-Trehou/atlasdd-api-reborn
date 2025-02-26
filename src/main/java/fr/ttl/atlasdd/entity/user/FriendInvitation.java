@@ -1,6 +1,6 @@
-package fr.ttl.atlasdd.sqldto.user;
+package fr.ttl.atlasdd.entity.user;
 
-import fr.ttl.atlasdd.sqldto.BaseSqlDto;
+import fr.ttl.atlasdd.entity.BaseEntity;
 import fr.ttl.atlasdd.utils.user.InvitationStatus;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -14,15 +14,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "friend_invitations")
-public class FriendInvitationSqlDto extends BaseSqlDto {
+public class FriendInvitation extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "request_user_id")
-    private UserSqlDto requestUser;
+    private User requestUser;
 
     @ManyToOne
     @JoinColumn(name = "receiver_user_id")
-    private UserSqlDto receiverUser;
+    private User receiverUser;
 
     @Enumerated(EnumType.STRING)
     private InvitationStatus status;

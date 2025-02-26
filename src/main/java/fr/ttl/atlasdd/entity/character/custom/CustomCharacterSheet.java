@@ -1,9 +1,9 @@
-package fr.ttl.atlasdd.sqldto.character.custom;
+package fr.ttl.atlasdd.entity.character.custom;
 
-import fr.ttl.atlasdd.sqldto.BaseSqlDto;
-import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
-import fr.ttl.atlasdd.sqldto.character.NoteCharacterSqlDto;
-import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
+import fr.ttl.atlasdd.entity.BaseEntity;
+import fr.ttl.atlasdd.entity.campaign.Campaign;
+import fr.ttl.atlasdd.entity.character.CharacterNote;
+import fr.ttl.atlasdd.entity.user.User;
 import fr.ttl.atlasdd.utils.character.Alignment;
 import fr.ttl.atlasdd.utils.character.CharacterStatus;
 import fr.ttl.atlasdd.utils.character.ShieldType;
@@ -21,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "custom_character_sheets")
-public class CustomCharacterSheetSqlDto extends BaseSqlDto {
+public class CustomCharacterSheet extends BaseEntity {
 
     private String name;
     private int level;
@@ -56,19 +56,19 @@ public class CustomCharacterSheetSqlDto extends BaseSqlDto {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserSqlDto owner;
+    private User owner;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "race_id")
-    private CustomRaceSqlDto race;
+    private CustomRace race;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "background_id")
-    private CustomBackgroundSqlDto background;
+    private CustomBackground background;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "class_id")
-    private CustomClassSqlDto classe;
+    private CustomClass classe;
 
     @ManyToMany
     @JoinTable(
@@ -76,7 +76,7 @@ public class CustomCharacterSheetSqlDto extends BaseSqlDto {
             joinColumns = @JoinColumn(name = "character_id"),
             inverseJoinColumns = @JoinColumn(name = "skill_id")
     )
-    private List<CustomSkillSqlDto> skills;
+    private List<CustomSkill> skills;
 
     @ManyToMany
     @JoinTable(
@@ -84,7 +84,7 @@ public class CustomCharacterSheetSqlDto extends BaseSqlDto {
             joinColumns = @JoinColumn(name = "character_id"),
             inverseJoinColumns = @JoinColumn(name = "spell_id")
     )
-    private List<CustomSpellSqlDto> preparedSpells;
+    private List<CustomSpell> preparedSpells;
 
     @ManyToMany(cascade = CascadeType.REMOVE)
     @JoinTable(
@@ -92,16 +92,16 @@ public class CustomCharacterSheetSqlDto extends BaseSqlDto {
             joinColumns = @JoinColumn(name = "character_id"),
             inverseJoinColumns = @JoinColumn(name = "weapon_id")
     )
-    private List<CustomWeaponSqlDto> weapons;
+    private List<CustomWeapon> weapons;
 
     @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "armor_id")
-    private CustomArmorSqlDto armor;
+    private CustomArmor armor;
 
     @OneToMany(mappedBy = "customCharacterSheet", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<NoteCharacterSqlDto> characterNotes;
+    private List<CharacterNote> characterNotes;
 
     @ManyToMany(mappedBy = "campaignCustomCharacterSheets")
-    private List<CampaignSqlDto> campaigns;
+    private List<Campaign> campaigns;
 
 }

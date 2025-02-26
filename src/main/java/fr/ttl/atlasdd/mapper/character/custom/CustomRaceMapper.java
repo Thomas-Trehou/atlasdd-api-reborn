@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.mapper.character.custom;
 
 import fr.ttl.atlasdd.apidto.character.custom.CustomRaceApiDto;
-import fr.ttl.atlasdd.sqldto.character.custom.CustomRaceSqlDto;
+import fr.ttl.atlasdd.entity.character.custom.CustomRace;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.factory.Mappers;
@@ -11,9 +11,9 @@ public interface CustomRaceMapper {
 
     CustomRaceMapper INSTANCE = Mappers.getMapper(CustomRaceMapper.class);
 
-    CustomRaceApiDto toApiDto(CustomRaceSqlDto raceSqlDto);
+    CustomRaceApiDto toApiDto(CustomRace raceSqlDto);
 
-    CustomRaceSqlDto toSqlDto(CustomRaceApiDto raceApiDto);
+    CustomRace toSqlDto(CustomRaceApiDto raceApiDto);
 
-    void updateFromApiDto(CustomRaceApiDto raceApi, @MappingTarget CustomRaceSqlDto raceSql);
+    void updateFromApiDto(CustomRaceApiDto raceApi, @MappingTarget CustomRace raceSql);
 }

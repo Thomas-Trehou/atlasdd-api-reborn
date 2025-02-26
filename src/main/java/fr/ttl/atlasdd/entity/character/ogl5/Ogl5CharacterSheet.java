@@ -1,9 +1,9 @@
-package fr.ttl.atlasdd.sqldto.character.ogl5;
+package fr.ttl.atlasdd.entity.character.ogl5;
 
-import fr.ttl.atlasdd.sqldto.BaseSqlDto;
-import fr.ttl.atlasdd.sqldto.campaign.CampaignSqlDto;
-import fr.ttl.atlasdd.sqldto.character.NoteCharacterSqlDto;
-import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
+import fr.ttl.atlasdd.entity.BaseEntity;
+import fr.ttl.atlasdd.entity.campaign.Campaign;
+import fr.ttl.atlasdd.entity.character.CharacterNote;
+import fr.ttl.atlasdd.entity.user.User;
 import fr.ttl.atlasdd.utils.character.Alignment;
 import fr.ttl.atlasdd.utils.character.CharacterStatus;
 import fr.ttl.atlasdd.utils.character.ShieldType;
@@ -21,7 +21,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "ogl5_character_sheets")
-public class CharacterSheetSqlDto extends BaseSqlDto {
+public class Ogl5CharacterSheet extends BaseEntity {
 
     private String name;
     private int level;
@@ -56,19 +56,19 @@ public class CharacterSheetSqlDto extends BaseSqlDto {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserSqlDto owner;
+    private User owner;
 
     @ManyToOne
     @JoinColumn(name = "race_id")
-    private RaceSqlDto race;
+    private Ogl5Race race;
 
     @ManyToOne
     @JoinColumn(name = "background_id")
-    private BackgroundSqlDto background;
+    private Ogl5Background background;
 
     @ManyToOne
     @JoinColumn(name = "class_id")
-    private ClassSqlDto classe;
+    private Ogl5Class classe;
 
     @ManyToMany
     @JoinTable(
@@ -76,7 +76,7 @@ public class CharacterSheetSqlDto extends BaseSqlDto {
             joinColumns = @JoinColumn(name = "character_id"),
             inverseJoinColumns = @JoinColumn(name = "skill_id")
     )
-    private List<SkillSqlDto> skills;
+    private List<Ogl5Skill> skills;
 
     @ManyToMany
     @JoinTable(
@@ -84,7 +84,7 @@ public class CharacterSheetSqlDto extends BaseSqlDto {
             joinColumns = @JoinColumn(name = "character_id"),
             inverseJoinColumns = @JoinColumn(name = "spell_id")
     )
-    private List<SpellSqlDto> preparedSpells;
+    private List<Ogl5Spell> preparedSpells;
 
     @ManyToMany
     @JoinTable(
@@ -92,16 +92,16 @@ public class CharacterSheetSqlDto extends BaseSqlDto {
             joinColumns = @JoinColumn(name = "character_id"),
             inverseJoinColumns = @JoinColumn(name = "weapon_id")
     )
-    private List<WeaponSqlDto> weapons;
+    private List<Ogl5Weapon> weapons;
 
     @ManyToOne
     @JoinColumn(name = "armor_id")
-    private ArmorSqlDto armor;
+    private Ogl5Armor armor;
 
     @OneToMany(mappedBy = "ogl5CharacterSheet", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<NoteCharacterSqlDto> characterNotes;
+    private List<CharacterNote> characterNotes;
 
     @ManyToMany(mappedBy = "campaignOgl5CharacterSheets")
-    private List<CampaignSqlDto> campaigns;
+    private List<Campaign> campaigns;
 
 }

@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.mapper.character.ogl5;
 
 import fr.ttl.atlasdd.apidto.character.ogl5.CharacterSheetCreateRequestApiDto;
-import fr.ttl.atlasdd.sqldto.character.ogl5.CharacterSheetSqlDto;
+import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSheet;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -23,5 +23,5 @@ public interface CharacterSheetCreateRequestMapper {
     @Mapping(target = "shield", ignore = true)
     @Mapping(target = "alignment", ignore = true)
     @Mapping(target = "status", ignore = true)
-    void updateSqlDto(CharacterSheetCreateRequestApiDto characterSheetCreateRequestApiDto, @MappingTarget CharacterSheetSqlDto characterSheetSqlDto);
+    void updateSqlDto(CharacterSheetCreateRequestApiDto characterSheetCreateRequestApiDto, @MappingTarget Ogl5CharacterSheet ogl5CharacterSheet);
 }

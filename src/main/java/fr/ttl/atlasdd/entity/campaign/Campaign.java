@@ -1,9 +1,9 @@
-package fr.ttl.atlasdd.sqldto.campaign;
+package fr.ttl.atlasdd.entity.campaign;
 
-import fr.ttl.atlasdd.sqldto.BaseSqlDto;
-import fr.ttl.atlasdd.sqldto.user.UserSqlDto;
-import fr.ttl.atlasdd.sqldto.character.custom.CustomCharacterSheetSqlDto;
-import fr.ttl.atlasdd.sqldto.character.ogl5.CharacterSheetSqlDto;
+import fr.ttl.atlasdd.entity.BaseEntity;
+import fr.ttl.atlasdd.entity.character.custom.CustomCharacterSheet;
+import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSheet;
+import fr.ttl.atlasdd.entity.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Table(name = "campaigns")
-public class CampaignSqlDto extends BaseSqlDto {
+public class Campaign extends BaseEntity {
 
     private String name;
 
@@ -27,7 +27,7 @@ public class CampaignSqlDto extends BaseSqlDto {
 
     @ManyToOne
     @JoinColumn(name = "game_master_id")
-    private UserSqlDto gameMaster;
+    private User gameMaster;
 
     @ManyToMany
     @JoinTable(
@@ -35,7 +35,7 @@ public class CampaignSqlDto extends BaseSqlDto {
             joinColumns = @JoinColumn(name = "campaign_id"),
             inverseJoinColumns = @JoinColumn(name = "player_id")
     )
-    private List<UserSqlDto> campaignPlayers;
+    private List<User> campaignPlayers;
 
     @ManyToMany
     @JoinTable(
@@ -43,7 +43,7 @@ public class CampaignSqlDto extends BaseSqlDto {
             joinColumns = @JoinColumn(name = "campaign_id"),
             inverseJoinColumns = @JoinColumn(name = "ogl5_character_sheet_id")
     )
-    private List<CharacterSheetSqlDto> campaignOgl5CharacterSheets;
+    private List<Ogl5CharacterSheet> campaignOgl5CharacterSheets;
 
     @ManyToMany
     @JoinTable(
@@ -51,8 +51,8 @@ public class CampaignSqlDto extends BaseSqlDto {
             joinColumns = @JoinColumn(name = "campaign_id"),
             inverseJoinColumns = @JoinColumn(name = "custom_character_sheet_id")
     )
-    private List<CustomCharacterSheetSqlDto> campaignCustomCharacterSheets;
+    private List<CustomCharacterSheet> campaignCustomCharacterSheets;
 
     @OneToMany(mappedBy = "campaign", cascade = CascadeType.REMOVE, orphanRemoval = true)
-    private List<CampaignNoteSqlDto> campaignNotes;
+    private List<CampaignNote> campaignNotes;
 }

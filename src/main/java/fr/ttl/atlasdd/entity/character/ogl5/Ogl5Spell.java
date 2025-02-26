@@ -1,7 +1,7 @@
-package fr.ttl.atlasdd.sqldto.character.custom;
+package fr.ttl.atlasdd.entity.character.ogl5;
 
 import fr.ttl.atlasdd.listeners.SpellEntityListener;
-import fr.ttl.atlasdd.sqldto.BaseSqlDto;
+import fr.ttl.atlasdd.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,9 +15,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-@Table(name = "custom_spells")
+@Table(name = "ogl5_spells")
 @EntityListeners(SpellEntityListener.class)
-public class CustomSpellSqlDto extends BaseSqlDto {
+public class Ogl5Spell extends BaseEntity {
 
     private String name;
 
@@ -47,6 +47,12 @@ public class CustomSpellSqlDto extends BaseSqlDto {
     private String circles;
     private String patrons;
 
+    @ManyToMany(mappedBy = "raceSpells")
+    private List<Ogl5Race> spellRaces;
+
+    @ManyToMany(mappedBy = "classSpells")
+    private List<Ogl5Class> spellClasses;
+
     @ManyToMany(mappedBy = "preparedSpells")
-    private List<CustomCharacterSheetSqlDto> characterSheets;
+    private List<Ogl5CharacterSheet> characterSheets;
 }

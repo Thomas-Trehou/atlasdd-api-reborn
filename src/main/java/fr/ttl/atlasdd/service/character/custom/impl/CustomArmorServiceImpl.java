@@ -1,12 +1,12 @@
 package fr.ttl.atlasdd.service.character.custom.impl;
 
 import fr.ttl.atlasdd.apidto.character.custom.CustomArmorApiDto;
+import fr.ttl.atlasdd.entity.character.custom.CustomArmor;
 import fr.ttl.atlasdd.exception.character.custom.notfound.CustomArmorNotFoundException;
 import fr.ttl.atlasdd.exception.character.custom.savingerror.CustomArmorSavingErrorException;
 import fr.ttl.atlasdd.mapper.character.custom.CustomArmorMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomArmorRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomArmorService;
-import fr.ttl.atlasdd.sqldto.character.custom.CustomArmorSqlDto;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +27,7 @@ public class CustomArmorServiceImpl implements CustomArmorService {
     @Override
     public CustomArmorApiDto createArmor(CustomArmorApiDto armorApiDto) {
 
-        CustomArmorSqlDto armorSqlDto = customArmorMapper.toSqlDto(armorApiDto);
+        CustomArmor armorSqlDto = customArmorMapper.toSqlDto(armorApiDto);
 
         try {
             return customArmorMapper.toApiDto(customArmorRepository.save(armorSqlDto));
@@ -39,7 +39,7 @@ public class CustomArmorServiceImpl implements CustomArmorService {
     @Override
     public CustomArmorApiDto updateArmor(CustomArmorApiDto armorApiDto) {
 
-        CustomArmorSqlDto armorSqlDto = customArmorRepository.findById(armorApiDto.getId())
+        CustomArmor armorSqlDto = customArmorRepository.findById(armorApiDto.getId())
                 .orElseThrow(() -> new CustomArmorNotFoundException(ExceptionMessage.ARMOR_NOT_FOUND.getMessage()));
 
         customArmorMapper.updateSqlDto(armorApiDto, armorSqlDto);
