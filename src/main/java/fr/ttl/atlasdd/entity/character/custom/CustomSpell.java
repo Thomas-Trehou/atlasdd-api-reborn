@@ -1,6 +1,5 @@
 package fr.ttl.atlasdd.entity.character.custom;
 
-import fr.ttl.atlasdd.listeners.SpellEntityListener;
 import fr.ttl.atlasdd.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;

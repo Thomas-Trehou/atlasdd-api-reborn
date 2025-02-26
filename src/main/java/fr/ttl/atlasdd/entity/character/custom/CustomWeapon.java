@@ -20,10 +20,10 @@ public class CustomWeapon extends BaseEntity {
 
     private String index;
     private String name;
-    private String weapon_range;
+    private String weaponRange;
     private String cost;
-    private String damage_dice;
-    private String damage_type;
+    private String damageDice;
+    private String damageType;
 
     @Column(precision = 2, scale = 1)
     private BigDecimal weight;
