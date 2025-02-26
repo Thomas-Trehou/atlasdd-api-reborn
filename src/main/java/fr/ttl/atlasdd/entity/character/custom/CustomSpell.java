@@ -3,20 +3,16 @@ package fr.ttl.atlasdd.entity.character.custom;
 import fr.ttl.atlasdd.listeners.SpellEntityListener;
 import fr.ttl.atlasdd.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Table(name = "custom_spells")
-@EntityListeners(SpellEntityListener.class)
 public class CustomSpell extends BaseEntity {
 
     private String name;

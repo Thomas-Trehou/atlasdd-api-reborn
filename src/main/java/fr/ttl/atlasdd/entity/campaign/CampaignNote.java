@@ -3,16 +3,13 @@ package fr.ttl.atlasdd.entity.campaign;
 import fr.ttl.atlasdd.entity.BaseEntity;
 import fr.ttl.atlasdd.entity.user.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Table(name = "campaign_notes")
 public class CampaignNote extends BaseEntity {
 

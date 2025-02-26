@@ -5,18 +5,15 @@ import fr.ttl.atlasdd.entity.character.custom.CustomCharacterSheet;
 import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSheet;
 import fr.ttl.atlasdd.entity.user.User;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Table(name = "campaigns")
 public class Campaign extends BaseEntity {
 

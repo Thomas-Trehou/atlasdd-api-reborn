@@ -3,19 +3,16 @@ package fr.ttl.atlasdd.entity.character.ogl5;
 import fr.ttl.atlasdd.entity.BaseEntity;
 import fr.ttl.atlasdd.utils.character.ArmorCategory;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper = true)
 @Table(name = "ogl5_armors")
 public class Ogl5Armor extends BaseEntity {
 
