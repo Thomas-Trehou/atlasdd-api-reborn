@@ -18,6 +18,7 @@ import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import fr.ttl.atlasdd.utils.user.JwtTokenProvider;
 import fr.ttl.atlasdd.utils.user.UserState;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -33,6 +34,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepository;
@@ -43,24 +45,6 @@ public class UserServiceImpl implements UserService {
     private final UserLightAuthMapper userLightAuthMapper;
     private final CampaignService campaignService;
     private final CampaignNoteService campaignNoteService;
-
-    public UserServiceImpl(
-            UserRepo userRepository,
-            JavaMailSender javaMailSender,
-            JwtTokenProvider jwtTokenProvider,
-            UserMapper userMapper,
-            UserLightAuthMapper userLightAuthMapper,
-            CampaignService campaignService,
-            CampaignNoteService campaignNoteService) {
-        this.userRepository = userRepository;
-        this.javaMailSender = javaMailSender;
-        this.bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.userMapper = userMapper;
-        this.userLightAuthMapper = userLightAuthMapper;
-        this.campaignService = campaignService;
-        this.campaignNoteService = campaignNoteService;
-    }
 
     @Value("${MAIL_ADDRESS}")
     private String mailAddress;
@@ -157,8 +141,6 @@ public class UserServiceImpl implements UserService {
         User user = (User) session.getAttribute("user");
 
         if (sessionToken == null || !sessionToken.equals(token)) {
-            System.out.println("Token de session: " + sessionToken);
-            System.out.println("Token fourni: " + token);
             return "Token invalide";
         }
 

@@ -8,21 +8,15 @@ import fr.ttl.atlasdd.mapper.character.custom.CustomArmorMapper;
 import fr.ttl.atlasdd.repository.character.custom.CustomArmorRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomArmorService;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CustomArmorServiceImpl implements CustomArmorService {
 
     private final CustomArmorRepo customArmorRepository;
     private final CustomArmorMapper customArmorMapper;
-
-    public CustomArmorServiceImpl(
-            CustomArmorRepo customArmorRepository,
-            CustomArmorMapper customArmorMapper
-    ) {
-        this.customArmorRepository = customArmorRepository;
-        this.customArmorMapper = customArmorMapper;
-    }
 
     @Override
     public CustomArmorApiDto createArmor(CustomArmorApiDto armorApiDto) {

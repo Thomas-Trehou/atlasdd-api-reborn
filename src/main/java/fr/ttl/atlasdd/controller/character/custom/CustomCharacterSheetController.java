@@ -9,19 +9,17 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/custom/characters")
+@RequiredArgsConstructor
 public class CustomCharacterSheetController {
 
     private final CustomCharacterSheetService customCharacterSheetService;
-
-    public CustomCharacterSheetController(CustomCharacterSheetService customCharacterSheetService) {
-        this.customCharacterSheetService = customCharacterSheetService;
-    }
 
     @Operation(summary = "Create a custom character sheet")
     @ApiResponses(value = {

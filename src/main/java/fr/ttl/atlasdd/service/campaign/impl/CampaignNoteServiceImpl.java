@@ -14,29 +14,19 @@ import fr.ttl.atlasdd.entity.campaign.Campaign;
 import fr.ttl.atlasdd.entity.user.User;
 import fr.ttl.atlasdd.entity.campaign.CampaignNote;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CampaignNoteServiceImpl implements CampaignNoteService {
 
     private final CampaignNoteRepo campaignNoteRepository;
     private final CampaignRepo campaignRepository;
     private final UserRepo userRepository;
     private final CampaignNoteMapper campaignNoteMapper;
-
-    public CampaignNoteServiceImpl(
-            CampaignNoteRepo campaignNoteRepository,
-            CampaignRepo campaignRepository,
-            UserRepo userRepository,
-            CampaignNoteMapper campaignNoteMapper
-    ) {
-        this.campaignNoteRepository = campaignNoteRepository;
-        this.campaignRepository = campaignRepository;
-        this.userRepository = userRepository;
-        this.campaignNoteMapper = campaignNoteMapper;
-    }
 
     @Override
     public CampaignNoteApiDto createCampaignNote(Long campaignId, Long userId, CampaignNoteApiDto campaignNoteApiDto) {

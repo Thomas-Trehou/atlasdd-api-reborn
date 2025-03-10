@@ -16,30 +16,20 @@ import fr.ttl.atlasdd.entity.character.CharacterNote;
 import fr.ttl.atlasdd.entity.character.custom.CustomCharacterSheet;
 import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSheet;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class NoteCharacterServiceImpl implements NoteCharacterService {
 
     private final NoteCharacterRepo noteCharacterRepository;
     private final CharacterSheetRepo ogl5CharacterSheetRepository;
     private final CustomCharacterSheetRepo customCharacterSheetRepository;
     private final NoteCharacterMapper noteCharacterMapper;
-
-    public NoteCharacterServiceImpl(
-            NoteCharacterRepo noteCharacterRepository,
-            CharacterSheetRepo ogl5CharacterSheetRepository,
-            CustomCharacterSheetRepo customCharacterSheetRepository,
-            NoteCharacterMapper noteCharacterMapper
-    ) {
-        this.noteCharacterRepository = noteCharacterRepository;
-        this.ogl5CharacterSheetRepository = ogl5CharacterSheetRepository;
-        this.customCharacterSheetRepository = customCharacterSheetRepository;
-        this.noteCharacterMapper = noteCharacterMapper;
-    }
 
     @Override
     public NoteCharacterApiDto createOgl5CharacterNote(Long characterSheetId, NoteCharacterApiDto noteCharacterApiDto) {

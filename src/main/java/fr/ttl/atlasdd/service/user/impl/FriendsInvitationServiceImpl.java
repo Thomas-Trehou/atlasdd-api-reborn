@@ -11,18 +11,15 @@ import fr.ttl.atlasdd.service.user.FriendsInvitationService;
 import fr.ttl.atlasdd.entity.user.FriendInvitation;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import fr.ttl.atlasdd.utils.user.InvitationStatus;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class FriendsInvitationServiceImpl implements FriendsInvitationService {
 
     private final FriendsInvitationRepo friendsInvitationRepo;
     private final UserRepo userRepo;
-
-    public FriendsInvitationServiceImpl(FriendsInvitationRepo friendsInvitationRepo, UserRepo userRepo) {
-        this.friendsInvitationRepo = friendsInvitationRepo;
-        this.userRepo = userRepo;
-    }
 
     @Override
      public void sendInvitation(Long senderId, Long receiverId) {

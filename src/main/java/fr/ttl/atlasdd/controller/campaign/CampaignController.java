@@ -5,21 +5,18 @@ import fr.ttl.atlasdd.apidto.campaign.CampaignCreateRequestApiDto;
 import fr.ttl.atlasdd.service.campaign.CampaignService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/campaigns")
+@RequiredArgsConstructor
 public class CampaignController {
 
     private final CampaignService campaignService;
-
-    public CampaignController(CampaignService campaignService) {
-        this.campaignService = campaignService;
-    }
 
     @Operation(summary = "Create a campaign")
     @ApiResponses( value = {

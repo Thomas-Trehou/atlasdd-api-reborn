@@ -18,11 +18,13 @@ import fr.ttl.atlasdd.service.campaign.CampaignService;
 import fr.ttl.atlasdd.entity.campaign.Campaign;
 import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSheet;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class CampaignServiceImpl implements CampaignService {
 
     private final CampaignRepo campaignRepository;
@@ -30,19 +32,6 @@ public class CampaignServiceImpl implements CampaignService {
     private final CharacterSheetRepo ogl5CharacterSheetRepository;
     private final CustomCharacterSheetRepo customCharacterSheetRepo;
     private final CampaignMapper campaignMapper;
-
-    public CampaignServiceImpl(
-            CampaignRepo campaignRepository,
-            UserRepo userRepository,
-            CharacterSheetRepo ogl5CharacterSheetRepository,
-            CustomCharacterSheetRepo customCharacterSheetRepo,
-            CampaignMapper campaignMapper) {
-        this.campaignRepository = campaignRepository;
-        this.userRepository = userRepository;
-        this.ogl5CharacterSheetRepository = ogl5CharacterSheetRepository;
-        this.customCharacterSheetRepo = customCharacterSheetRepo;
-        this.campaignMapper = campaignMapper;
-    }
 
     @Override
     public CampaignApiDto createCampaign(CampaignCreateRequestApiDto campaignCreateRequestApiDto) {

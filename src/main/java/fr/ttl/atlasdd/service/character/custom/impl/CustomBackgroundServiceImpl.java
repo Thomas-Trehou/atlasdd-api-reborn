@@ -8,21 +8,15 @@ import fr.ttl.atlasdd.repository.character.custom.CustomBackgroundRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomBackgroundService;
 import fr.ttl.atlasdd.entity.character.custom.CustomBackground;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CustomBackgroundServiceImpl implements CustomBackgroundService {
 
     private final CustomBackgroundRepo customBackgroundRepository;
     private final CustomBackgroundMapper customBackgroundMapper;
-
-    public CustomBackgroundServiceImpl(
-            CustomBackgroundRepo customBackgroundRepository,
-            CustomBackgroundMapper customBackgroundMapper
-    ) {
-        this.customBackgroundRepository = customBackgroundRepository;
-        this.customBackgroundMapper = customBackgroundMapper;
-    }
 
     @Override
     public CustomBackgroundApiDto createBackground(CustomBackgroundApiDto customBackgroundApiDto) {

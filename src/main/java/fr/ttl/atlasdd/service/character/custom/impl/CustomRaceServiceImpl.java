@@ -8,21 +8,15 @@ import fr.ttl.atlasdd.repository.character.custom.CustomRaceRepo;
 import fr.ttl.atlasdd.service.character.custom.CustomRaceService;
 import fr.ttl.atlasdd.entity.character.custom.CustomRace;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class CustomRaceServiceImpl implements CustomRaceService {
 
     private final CustomRaceRepo customRaceRepository;
     private final CustomRaceMapper customRaceMapper;
-
-    public CustomRaceServiceImpl(
-            CustomRaceRepo customRaceRepository,
-            CustomRaceMapper customRaceMapper
-    ) {
-        this.customRaceRepository = customRaceRepository;
-        this.customRaceMapper = customRaceMapper;
-    }
 
     @Override
     public CustomRaceApiDto createRace(CustomRaceApiDto customRaceApiDto) {
