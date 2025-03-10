@@ -1,4 +1,4 @@
-package fr.ttl.atlasdd.apidto.character.ogl5;
+package fr.ttl.atlasdd.apidto.character;
 
 import fr.ttl.atlasdd.apidto.BaseApiDto;
 import lombok.AllArgsConstructor;

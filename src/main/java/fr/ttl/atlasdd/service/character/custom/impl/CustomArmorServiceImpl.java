@@ -1,6 +1,6 @@
 package fr.ttl.atlasdd.service.character.custom.impl;
 
-import fr.ttl.atlasdd.apidto.character.custom.CustomArmorApiDto;
+import fr.ttl.atlasdd.apidto.character.ArmorApiDto;
 import fr.ttl.atlasdd.entity.character.custom.CustomArmor;
 import fr.ttl.atlasdd.exception.character.custom.notfound.CustomArmorNotFoundException;
 import fr.ttl.atlasdd.exception.character.custom.savingerror.CustomArmorSavingErrorException;
@@ -19,7 +19,7 @@ public class CustomArmorServiceImpl implements CustomArmorService {
     private final CustomArmorMapper customArmorMapper;
 
     @Override
-    public CustomArmorApiDto createArmor(CustomArmorApiDto armorApiDto) {
+    public ArmorApiDto createArmor(ArmorApiDto armorApiDto) {
 
         CustomArmor armorSqlDto = customArmorMapper.toEntity(armorApiDto);
 
@@ -31,7 +31,7 @@ public class CustomArmorServiceImpl implements CustomArmorService {
     }
 
     @Override
-    public CustomArmorApiDto updateArmor(CustomArmorApiDto armorApiDto) {
+    public ArmorApiDto updateArmor(ArmorApiDto armorApiDto) {
 
         CustomArmor armorSqlDto = customArmorRepository.findById(armorApiDto.getId())
                 .orElseThrow(() -> new CustomArmorNotFoundException(ExceptionMessage.ARMOR_NOT_FOUND.getMessage()));

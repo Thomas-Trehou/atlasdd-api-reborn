@@ -1,6 +1,7 @@
 package fr.ttl.atlasdd.apidto.character.ogl5;
 
 import fr.ttl.atlasdd.apidto.BaseApiDto;
+import fr.ttl.atlasdd.apidto.character.SpellApiDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

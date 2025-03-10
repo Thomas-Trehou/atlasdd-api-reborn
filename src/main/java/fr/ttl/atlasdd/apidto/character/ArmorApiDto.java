@@ -1,4 +1,4 @@
-package fr.ttl.atlasdd.apidto.character.custom;
+package fr.ttl.atlasdd.apidto.character;
 
 import fr.ttl.atlasdd.apidto.BaseApiDto;
 import fr.ttl.atlasdd.utils.character.ArmorCategory;
@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class CustomArmorApiDto extends BaseApiDto {
+public class ArmorApiDto extends BaseApiDto {
 
     private String index;
     private String name;

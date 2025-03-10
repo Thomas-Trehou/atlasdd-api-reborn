@@ -1,6 +1,7 @@
 package fr.ttl.atlasdd.controller.character.custom;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.ttl.atlasdd.apidto.character.*;
 import fr.ttl.atlasdd.apidto.character.custom.*;
 import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
 import fr.ttl.atlasdd.exception.GlobalExceptionHandler;
@@ -75,22 +76,22 @@ class CustomCharacterSheetControllerTest {
     private final String STATUS = "VIVANT";
     private final Long USER_ID = 1L;
     private final CustomRaceApiDto RACE = new CustomRaceApiDto("Human", "30ft", "Common", "None");
-    private final CustomBackgroundApiDto BACKGROUND = new CustomBackgroundApiDto("Noble", "None", "None", "None");
+    private final BackgroundApiDto BACKGROUND = new BackgroundApiDto("Noble", "None", "None", "None");
     private final CustomClassApiDto CLASS = new CustomClassApiDto("Barbarian", "d12", 12, "None");
     private final List<Long> SKILLS = List.of(3L, 7L, 10L, 15L);
     private final List<Long> SPELLS = List.of(95L, 104L, 370L, 26L);
-    private final List<CustomWeaponApiDto> WEAPONS = List.of(
-            new CustomWeaponApiDto("Sword", "Epée", "CaC", "2PA", "1d8","Slashing", new BigDecimal("1.5"), "None"),
-            new CustomWeaponApiDto("Bow", "Arc", "30ft", "1PA", "1d6","Piercing", new BigDecimal("1.5"), "None")
+    private final List<WeaponApiDto> WEAPONS = List.of(
+            new WeaponApiDto("Sword", "Epée", "CaC", "2PA", "1d8","Slashing", new BigDecimal("1.5"), "None"),
+            new WeaponApiDto("Bow", "Arc", "30ft", "1PA", "1d6","Piercing", new BigDecimal("1.5"), "None")
     );
-    private final CustomArmorApiDto ARMOR = new CustomArmorApiDto("Leather", "Cuir", ArmorCategory.LIGHT, 12, 0, false, new BigDecimal("5.5"), "3PA", "None");
+    private final ArmorApiDto ARMOR = new ArmorApiDto("Leather", "Cuir", ArmorCategory.LIGHT, 12, 0, false, new BigDecimal("5.5"), "3PA", "None");
 
     private final UserLightApiDto USER = new UserLightApiDto();
     private final ShieldType SHIELD_TYPE = ShieldType.NORMAL;
     private final Alignment ALIGNMENT_TYPE = Alignment.LOYAL_BON;
     private final CharacterStatus STATUS_TYPE = CharacterStatus.VIVANT;
-    private final List<CustomSkillApiDto> SKILLS_API_DTO = new ArrayList<>();
-    private final List<CustomSpellApiDto> SPELLS_API_DTO = new ArrayList<>();
+    private final List<SkillApiDto> SKILLS_API_DTO = new ArrayList<>();
+    private final List<SpellApiDto> SPELLS_API_DTO = new ArrayList<>();
 
     private final List<CustomCharacterSheetApiDto> CUSTOM_CHARACTER_SHEET_API_DTO_LIST = Collections.emptyList();
 

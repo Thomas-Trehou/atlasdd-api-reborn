@@ -1,6 +1,9 @@
 package fr.ttl.atlasdd.apidto.character.custom;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import fr.ttl.atlasdd.apidto.character.ArmorApiDto;
+import fr.ttl.atlasdd.apidto.character.BackgroundApiDto;
+import fr.ttl.atlasdd.apidto.character.WeaponApiDto;
 import fr.ttl.atlasdd.utils.character.Alignment;
 import fr.ttl.atlasdd.utils.character.CharacterStatus;
 import fr.ttl.atlasdd.utils.character.ShieldType;
@@ -48,7 +51,7 @@ public class CustomCharacterSheetCreateRequestApiDto {
 
     private Long userId;
     private CustomRaceApiDto race;
-    private CustomBackgroundApiDto background;
+    private BackgroundApiDto background;
     private CustomClassApiDto classe;
 
     @JsonProperty("skillIds")
@@ -57,6 +60,6 @@ public class CustomCharacterSheetCreateRequestApiDto {
     @JsonProperty("preparedSpellIds")
     private List<Long> preparedSpellIds;
 
-    private List<CustomWeaponApiDto> weapons;
-    private CustomArmorApiDto armor;
+    private List<WeaponApiDto> weapons;
+    private ArmorApiDto armor;
 }

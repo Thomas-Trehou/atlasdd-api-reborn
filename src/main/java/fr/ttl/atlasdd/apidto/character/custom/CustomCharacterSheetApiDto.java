@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.apidto.character.custom;
 
 import fr.ttl.atlasdd.apidto.BaseApiDto;
-import fr.ttl.atlasdd.apidto.user.UserApiDto;
+import fr.ttl.atlasdd.apidto.character.*;
 import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
 import fr.ttl.atlasdd.utils.character.Alignment;
 import fr.ttl.atlasdd.utils.character.CharacterStatus;
@@ -53,10 +53,10 @@ public class CustomCharacterSheetApiDto extends BaseApiDto {
 
     private UserLightApiDto owner;
     private CustomRaceApiDto race;
-    private CustomBackgroundApiDto background;
+    private BackgroundApiDto background;
     private CustomClassApiDto classe;
-    private List<CustomSkillApiDto> skills;
-    private List<CustomSpellApiDto> preparedSpells;
-    private List<CustomWeaponApiDto> weapons;
-    private CustomArmorApiDto armor;
+    private List<SkillApiDto> skills;
+    private List<SpellApiDto> preparedSpells;
+    private List<WeaponApiDto> weapons;
+    private ArmorApiDto armor;
 }

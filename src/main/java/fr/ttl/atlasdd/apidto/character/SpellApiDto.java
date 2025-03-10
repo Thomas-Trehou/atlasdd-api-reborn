@@ -1,4 +1,4 @@
-package fr.ttl.atlasdd.apidto.character.custom;
+package fr.ttl.atlasdd.apidto.character;
 
 import fr.ttl.atlasdd.apidto.BaseApiDto;
 import lombok.AllArgsConstructor;
@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class CustomSpellApiDto extends BaseApiDto {
+public class SpellApiDto extends BaseApiDto {
 
     private String name;
     private String description;

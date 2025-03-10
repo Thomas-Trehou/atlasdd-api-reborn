@@ -1,12 +1,12 @@
 package fr.ttl.atlasdd.service.character.custom;
 
-import fr.ttl.atlasdd.apidto.character.custom.CustomArmorApiDto;
+import fr.ttl.atlasdd.apidto.character.ArmorApiDto;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface CustomArmorService {
 
-    CustomArmorApiDto createArmor(CustomArmorApiDto armorApiDto);
+    ArmorApiDto createArmor(ArmorApiDto armorApiDto);
 
-    CustomArmorApiDto updateArmor(CustomArmorApiDto armorApiDto);
+    ArmorApiDto updateArmor(ArmorApiDto armorApiDto);
 }

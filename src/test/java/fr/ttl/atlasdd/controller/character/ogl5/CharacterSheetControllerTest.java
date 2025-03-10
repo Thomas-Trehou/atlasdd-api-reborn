@@ -1,6 +1,7 @@
 package fr.ttl.atlasdd.controller.character.ogl5;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.ttl.atlasdd.apidto.character.*;
 import fr.ttl.atlasdd.apidto.character.ogl5.*;
 import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
 import fr.ttl.atlasdd.exception.GlobalExceptionHandler;

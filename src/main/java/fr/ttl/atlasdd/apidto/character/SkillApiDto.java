@@ -1,4 +1,4 @@
-package fr.ttl.atlasdd.apidto.character.custom;
+package fr.ttl.atlasdd.apidto.character;
 
 import fr.ttl.atlasdd.apidto.BaseApiDto;
 import lombok.AllArgsConstructor;
@@ -10,10 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class CustomBackgroundApiDto extends BaseApiDto {
+public class SkillApiDto extends BaseApiDto {
 
     private String name;
-    private String masteredTools;
-    private String startingEquipment;
-    private String backgroundFeature;
 }
