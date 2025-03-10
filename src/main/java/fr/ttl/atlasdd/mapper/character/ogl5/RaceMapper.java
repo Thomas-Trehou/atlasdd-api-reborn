@@ -10,7 +10,7 @@ public interface RaceMapper {
 
     RaceApiDto toApiDto(Ogl5Race ogl5Race);
 
-    Ogl5Race toSqlDto(RaceApiDto raceApiDto);
+    Ogl5Race toEntity(RaceApiDto raceApiDto);
 
     void updateFromApiDto(RaceApiDto raceApi, @MappingTarget Ogl5Race raceSql);
 }

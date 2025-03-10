@@ -21,7 +21,7 @@ public class CustomArmorServiceImpl implements CustomArmorService {
     @Override
     public CustomArmorApiDto createArmor(CustomArmorApiDto armorApiDto) {
 
-        CustomArmor armorSqlDto = customArmorMapper.toSqlDto(armorApiDto);
+        CustomArmor armorSqlDto = customArmorMapper.toEntity(armorApiDto);
 
         try {
             return customArmorMapper.toApiDto(customArmorRepository.save(armorSqlDto));

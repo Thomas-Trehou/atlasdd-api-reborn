@@ -10,7 +10,7 @@ public interface WeaponMapper {
 
     WeaponApiDto toApiDto(Ogl5Weapon ogl5Weapon);
 
-    Ogl5Weapon toSqlDto(WeaponApiDto weaponApiDto);
+    Ogl5Weapon toEntity(WeaponApiDto weaponApiDto);
 
     void updateSqlDto(WeaponApiDto weaponApiDto, @MappingTarget Ogl5Weapon ogl5Weapon);
 }

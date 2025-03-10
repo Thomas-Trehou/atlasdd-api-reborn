@@ -25,7 +25,7 @@ public class CustomWeaponServiceImpl implements CustomWeaponService {
     public List<CustomWeaponApiDto> createWeapons(List<CustomWeaponApiDto> customWeaponApiDtos) {
         try {
             return customWeaponApiDtos.stream()
-                    .map(customWeaponMapper::toSqlDto)
+                    .map(customWeaponMapper::toEntity)
                     .map(customWeaponRepository::save)
                     .map(customWeaponMapper::toApiDto)
                     .collect(Collectors.toList());

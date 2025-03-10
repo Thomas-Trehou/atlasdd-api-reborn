@@ -9,7 +9,7 @@ import org.mapstruct.MappingTarget;
 public interface UserMapper {
     UserApiDto toApiDto(User user);
 
-    User toSqlDto(UserApiDto userApiDto);
+    User toEntity(UserApiDto userApiDto);
 
     void updateSqlDto(UserApiDto userApiDto, @MappingTarget User user);
 }

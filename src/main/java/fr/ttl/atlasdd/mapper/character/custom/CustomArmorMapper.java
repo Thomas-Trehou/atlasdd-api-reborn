@@ -10,7 +10,7 @@ public interface CustomArmorMapper {
 
     CustomArmorApiDto toApiDto(CustomArmor armorSqlDto);
 
-    CustomArmor toSqlDto(CustomArmorApiDto armorApiDto);
+    CustomArmor toEntity(CustomArmorApiDto armorApiDto);
 
     void updateSqlDto(CustomArmorApiDto armorApiDto, @MappingTarget CustomArmor armorSqlDto);
 }

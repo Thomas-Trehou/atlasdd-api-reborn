@@ -9,5 +9,5 @@ public interface UserLightAuthMapper {
 
     UserLightAuthApiDto toApiDto(User user);
 
-    User toSqlDto(UserLightAuthApiDto userLightAuthApiDto);
+    User toEntity(UserLightAuthApiDto userLightAuthApiDto);
 }

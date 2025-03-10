@@ -10,7 +10,7 @@ public interface UserLightMapper {
 
     UserLightApiDto toApiDto(User user);
 
-    User toSqlDto(UserLightApiDto userLightApiDto);
+    User toEntity(UserLightApiDto userLightApiDto);
 
     void updateSqlDto(UserLightApiDto userLightApiDto, @MappingTarget User user);
 }

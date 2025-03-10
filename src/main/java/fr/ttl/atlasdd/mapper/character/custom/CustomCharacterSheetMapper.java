@@ -10,7 +10,7 @@ public interface CustomCharacterSheetMapper {
 
     CustomCharacterSheetApiDto toApiDto(CustomCharacterSheet characterSheetSqlDto);
 
-    CustomCharacterSheet toSqlDto(CustomCharacterSheetApiDto characterSheetApiDto);
+    CustomCharacterSheet toEntity(CustomCharacterSheetApiDto characterSheetApiDto);
 
     void updateSqlDto(CustomCharacterSheetApiDto characterSheetApiDto, @MappingTarget CustomCharacterSheet characterSheetSqlDto);
 }

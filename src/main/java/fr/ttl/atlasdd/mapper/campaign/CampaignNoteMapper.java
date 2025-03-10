@@ -10,7 +10,7 @@ public interface CampaignNoteMapper {
 
     CampaignNoteApiDto toApiDto(CampaignNote campaignNote);
 
-    CampaignNote toSqlDto(CampaignNoteApiDto campaignNoteApiDto);
+    CampaignNote toEntity(CampaignNoteApiDto campaignNoteApiDto);
 
     void updateSqlDto(CampaignNoteApiDto campaignNoteApiDto,@MappingTarget CampaignNote campaignNote);
 }

@@ -10,7 +10,7 @@ public interface NoteCharacterMapper {
 
     NoteCharacterApiDto toApiDto(CharacterNote characterNote);
 
-    CharacterNote toSqlDto(NoteCharacterApiDto noteCharacterApiDto);
+    CharacterNote toEntity(NoteCharacterApiDto noteCharacterApiDto);
 
     void updateSqlDto(NoteCharacterApiDto noteCharacterApiDto, @MappingTarget CharacterNote characterNote);
 }

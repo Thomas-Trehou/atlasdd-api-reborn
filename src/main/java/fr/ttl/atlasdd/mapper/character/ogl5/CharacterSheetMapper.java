@@ -10,7 +10,7 @@ public interface CharacterSheetMapper {
 
     CharacterSheetApiDto toApiDto(Ogl5CharacterSheet ogl5CharacterSheet);
 
-    Ogl5CharacterSheet toSqlDto(CharacterSheetApiDto characterSheetApiDto);
+    Ogl5CharacterSheet toEntity(CharacterSheetApiDto characterSheetApiDto);
 
     void updateSqlDto(CharacterSheetApiDto characterSheetApiDto, @MappingTarget Ogl5CharacterSheet ogl5CharacterSheet);
 }

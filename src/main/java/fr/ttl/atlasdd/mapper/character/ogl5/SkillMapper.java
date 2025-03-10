@@ -10,7 +10,7 @@ public interface SkillMapper {
 
     SkillApiDto toApiDto(Ogl5Skill ogl5Skill);
 
-    Ogl5Skill toSqlDto(SkillApiDto skillApiDto);
+    Ogl5Skill toEntity(SkillApiDto skillApiDto);
 
     void updateFromApiDto(SkillApiDto skillApiDto, @MappingTarget Ogl5Skill ogl5Skill);
 }

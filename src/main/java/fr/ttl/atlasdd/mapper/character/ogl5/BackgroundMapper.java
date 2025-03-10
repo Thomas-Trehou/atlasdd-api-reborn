@@ -10,7 +10,7 @@ public interface BackgroundMapper {
 
     BackgroundApiDto toApiDto(Ogl5Background ogl5Background);
 
-    Ogl5Background toSqlDto(BackgroundApiDto backgroundApiDto);
+    Ogl5Background toEntity(BackgroundApiDto backgroundApiDto);
 
     void updateFromApiDto(BackgroundApiDto backgroundApiDto, @MappingTarget Ogl5Background ogl5Background);
 }

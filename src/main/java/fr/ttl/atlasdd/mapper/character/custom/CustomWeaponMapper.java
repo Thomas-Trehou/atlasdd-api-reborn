@@ -10,7 +10,7 @@ public interface CustomWeaponMapper {
 
     CustomWeaponApiDto toApiDto(CustomWeapon weaponSqlDto);
 
-    CustomWeapon toSqlDto(CustomWeaponApiDto weaponApiDto);
+    CustomWeapon toEntity(CustomWeaponApiDto weaponApiDto);
 
     void updateSqlDto(CustomWeaponApiDto weaponApiDto, @MappingTarget CustomWeapon weaponSqlDto);
 }

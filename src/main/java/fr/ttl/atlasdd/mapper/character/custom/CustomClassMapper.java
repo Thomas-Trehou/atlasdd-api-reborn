@@ -10,7 +10,7 @@ public interface CustomClassMapper {
 
     CustomClassApiDto toApiDto(CustomClass classSqlDto);
 
-    CustomClass toSqlDto(CustomClassApiDto classApiDto);
+    CustomClass toEntity(CustomClassApiDto classApiDto);
 
     void updateSqlDto(CustomClassApiDto classApiDto, @MappingTarget CustomClass classSqlDto);
 }

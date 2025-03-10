@@ -10,7 +10,7 @@ public interface SpellMapper {
 
     SpellApiDto toApiDto(Ogl5Spell ogl5Spell);
 
-    Ogl5Spell toSqlDto(SpellApiDto spellApiDto);
+    Ogl5Spell toEntity(SpellApiDto spellApiDto);
 
     void updateSqlDto(SpellApiDto spellApiDto, @MappingTarget Ogl5Spell ogl5Spell);
 }

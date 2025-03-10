@@ -21,7 +21,7 @@ public class CustomRaceServiceImpl implements CustomRaceService {
     @Override
     public CustomRaceApiDto createRace(CustomRaceApiDto customRaceApiDto) {
 
-        CustomRace raceSqlDto = customRaceMapper.toSqlDto(customRaceApiDto);
+        CustomRace raceSqlDto = customRaceMapper.toEntity(customRaceApiDto);
 
         try {
             return customRaceMapper.toApiDto(customRaceRepository.save(raceSqlDto));

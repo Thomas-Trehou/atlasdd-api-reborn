@@ -10,7 +10,7 @@ public interface CustomBackgroundMapper {
 
     CustomBackgroundApiDto toApiDto(CustomBackground backgroundSqlDto);
 
-    CustomBackground toSqlDto(CustomBackgroundApiDto backgroundApiDto);
+    CustomBackground toEntity(CustomBackgroundApiDto backgroundApiDto);
 
     void updateFromApiDto(CustomBackgroundApiDto backgroundApiDto, @MappingTarget CustomBackground backgroundSqlDto);
 }

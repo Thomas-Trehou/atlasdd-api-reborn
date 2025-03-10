@@ -10,7 +10,7 @@ public interface ArmorMapper {
 
     ArmorApiDto toApiDto(Ogl5Armor ogl5Armor);
 
-    Ogl5Armor toSqlDto(ArmorApiDto armorApiDto);
+    Ogl5Armor toEntity(ArmorApiDto armorApiDto);
 
     void updateSqlDto(ArmorApiDto armorApiDto, @MappingTarget Ogl5Armor ogl5Armor);
 }

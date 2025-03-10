@@ -57,7 +57,7 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
         characterSheetApiDto.setWeapons(customWeaponService.createWeapons(characterSheetApiDto.getWeapons()));
         characterSheetApiDto.setArmor(customArmorService.createArmor(characterSheetApiDto.getArmor()));
 
-        CustomCharacterSheet characterSheetSqlDto = customCharacterSheetMapper.toSqlDto(characterSheetApiDto);
+        CustomCharacterSheet characterSheetSqlDto = customCharacterSheetMapper.toEntity(characterSheetApiDto);
         characterSheetSqlDto.setOwner(user);
         characterSheetSqlDto.setSkills(skills);
         characterSheetSqlDto.setPreparedSpells(spells);

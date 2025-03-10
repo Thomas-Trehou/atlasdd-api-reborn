@@ -10,7 +10,7 @@ public interface CustomSkillMapper {
 
     CustomSkillApiDto toApiDto(CustomSkill skillSqlDto);
 
-    CustomSkill toSqlDto(CustomSkillApiDto skillApiDto);
+    CustomSkill toEntity(CustomSkillApiDto skillApiDto);
 
     void updateFromApiDto(CustomSkillApiDto skillApiDto, @MappingTarget CustomSkill skillSqlDto);
 }

@@ -37,7 +37,7 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
         Ogl5CharacterSheet ogl5CharacterSheet = ogl5CharacterSheetRepository.findById(characterSheetId)
                 .orElseThrow(() -> new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
-        CharacterNote characterNote = noteCharacterMapper.toSqlDto(noteCharacterApiDto);
+        CharacterNote characterNote = noteCharacterMapper.toEntity(noteCharacterApiDto);
         characterNote.setOgl5CharacterSheet(ogl5CharacterSheet);
 
         CharacterNote savedCharacterNote;
@@ -65,7 +65,7 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
         CustomCharacterSheet characterSheetSqlDto = customCharacterSheetRepository.findById(characterSheetId)
                 .orElseThrow(() -> new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
-        CharacterNote characterNote = noteCharacterMapper.toSqlDto(noteCharacterApiDto);
+        CharacterNote characterNote = noteCharacterMapper.toEntity(noteCharacterApiDto);
         characterNote.setCustomCharacterSheet(characterSheetSqlDto);
 
         CharacterNote savedCharacterNote;

@@ -10,7 +10,7 @@ public interface CustomRaceMapper {
 
     CustomRaceApiDto toApiDto(CustomRace raceSqlDto);
 
-    CustomRace toSqlDto(CustomRaceApiDto raceApiDto);
+    CustomRace toEntity(CustomRaceApiDto raceApiDto);
 
     void updateFromApiDto(CustomRaceApiDto raceApi, @MappingTarget CustomRace raceSql);
 }

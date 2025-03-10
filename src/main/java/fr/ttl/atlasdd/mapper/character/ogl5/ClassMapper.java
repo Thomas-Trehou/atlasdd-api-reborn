@@ -10,7 +10,7 @@ public interface ClassMapper {
 
     ClassApiDto toApiDto(Ogl5Class ogl5Class);
 
-    Ogl5Class toSqlDto(ClassApiDto classApiDto);
+    Ogl5Class toEntity(ClassApiDto classApiDto);
 
     void updateSqlDto(ClassApiDto classApiDto, @MappingTarget Ogl5Class ogl5Class);
 }

@@ -10,7 +10,7 @@ public interface CustomSpellMapper {
 
     CustomSpellApiDto toApiDto(CustomSpell spellSqlDto);
 
-    CustomSpell toSqlDto(CustomSpellApiDto spellApiDto);
+    CustomSpell toEntity(CustomSpellApiDto spellApiDto);
 
     void updateSqlDto(CustomSpellApiDto spellApiDto, @MappingTarget CustomSpell spellSqlDto);
 }

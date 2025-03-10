@@ -88,7 +88,7 @@ public class UserServiceImpl implements UserService {
 
         userApiDto.setPassword(bCryptPasswordEncoder.encode(userApiDto.getPassword()));
 
-        User user = userMapper.toSqlDto(userApiDto);
+        User user = userMapper.toEntity(userApiDto);
         user.setSlug(userApiDto.getPseudo().toLowerCase().replace(" ", "-"));
 
         User userWithSameSlug = userRepository.findBySlug(user.getSlug()).orElse(null);
