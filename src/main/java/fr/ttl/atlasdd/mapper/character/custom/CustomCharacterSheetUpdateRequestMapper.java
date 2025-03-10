@@ -8,6 +8,9 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface CustomCharacterSheetUpdateRequestMapper {
 
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "owner", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "skills", ignore = true)
     @Mapping(target = "preparedSpells", ignore = true)
     CustomCharacterSheetApiDto toApiDto(CustomCharacterSheetUpdateRequestApiDto characterSheetUpdateRequestApiDto);

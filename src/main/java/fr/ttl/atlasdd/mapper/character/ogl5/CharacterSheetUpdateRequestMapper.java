@@ -9,6 +9,10 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface CharacterSheetUpdateRequestMapper {
 
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "characterNotes", ignore = true)
+    @Mapping(target = "campaigns", ignore = true)
     @Mapping(target = "owner", ignore = true)
     @Mapping(target = "race", ignore = true)
     @Mapping(target = "background", ignore = true)
