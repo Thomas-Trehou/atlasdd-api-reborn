@@ -32,7 +32,7 @@ import java.util.List;
 
 
 
-public class UserControllerTest {
+class UserControllerTest {
 
     private MockMvc mockMvc;
 
