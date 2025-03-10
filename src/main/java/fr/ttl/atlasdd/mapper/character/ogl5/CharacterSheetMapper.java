@@ -4,12 +4,9 @@ import fr.ttl.atlasdd.apidto.character.ogl5.CharacterSheetApiDto;
 import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSheet;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface CharacterSheetMapper {
-
-    CharacterSheetMapper INSTANCE = Mappers.getMapper(CharacterSheetMapper.class);
 
     CharacterSheetApiDto toApiDto(Ogl5CharacterSheet ogl5CharacterSheet);
 

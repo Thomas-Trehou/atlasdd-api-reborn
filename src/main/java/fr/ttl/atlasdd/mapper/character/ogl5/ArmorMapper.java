@@ -4,12 +4,9 @@ import fr.ttl.atlasdd.apidto.character.ogl5.ArmorApiDto;
 import fr.ttl.atlasdd.entity.character.ogl5.Ogl5Armor;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface ArmorMapper {
-
-    ArmorMapper INSTANCE = Mappers.getMapper(ArmorMapper.class);
 
     ArmorApiDto toApiDto(Ogl5Armor ogl5Armor);
 

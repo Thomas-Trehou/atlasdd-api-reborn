@@ -4,12 +4,9 @@ import fr.ttl.atlasdd.apidto.character.ogl5.ClassApiDto;
 import fr.ttl.atlasdd.entity.character.ogl5.Ogl5Class;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface ClassMapper {
-
-    ClassMapper INSTANCE = Mappers.getMapper(ClassMapper.class);
 
     ClassApiDto toApiDto(Ogl5Class ogl5Class);
 
