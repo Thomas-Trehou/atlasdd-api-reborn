@@ -3,17 +3,17 @@ package fr.ttl.atlasdd.mapper.character.custom;
 import fr.ttl.atlasdd.apidto.character.custom.CustomRaceApiDto;
 import fr.ttl.atlasdd.entity.character.custom.CustomRace;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface CustomRaceMapper {
 
-    CustomRaceMapper INSTANCE = Mappers.getMapper(CustomRaceMapper.class);
-
     CustomRaceApiDto toApiDto(CustomRace raceSqlDto);
 
-    CustomRace toSqlDto(CustomRaceApiDto raceApiDto);
+    @Mapping(target = "characterSheets", ignore = true)
+    CustomRace toEntity(CustomRaceApiDto raceApiDto);
 
+    @Mapping(target = "characterSheets", ignore = true)
     void updateFromApiDto(CustomRaceApiDto raceApi, @MappingTarget CustomRace raceSql);
 }

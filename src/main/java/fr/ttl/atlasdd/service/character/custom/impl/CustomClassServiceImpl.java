@@ -21,7 +21,7 @@ public class CustomClassServiceImpl implements CustomClassService {
     @Override
     public CustomClassApiDto createClass(CustomClassApiDto customClassApiDto) {
 
-        CustomClass classSqlDto = customClassMapper.toSqlDto(customClassApiDto);
+        CustomClass classSqlDto = customClassMapper.toEntity(customClassApiDto);
 
         try {
             return customClassMapper.toApiDto(customClassRepository.save(classSqlDto));

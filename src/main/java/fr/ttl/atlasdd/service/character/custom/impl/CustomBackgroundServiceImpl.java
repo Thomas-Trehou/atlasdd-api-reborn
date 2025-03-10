@@ -21,7 +21,7 @@ public class CustomBackgroundServiceImpl implements CustomBackgroundService {
     @Override
     public CustomBackgroundApiDto createBackground(CustomBackgroundApiDto customBackgroundApiDto) {
 
-        CustomBackground customBackground = customBackgroundMapper.toSqlDto(customBackgroundApiDto);
+        CustomBackground customBackground = customBackgroundMapper.toEntity(customBackgroundApiDto);
 
         try {
             return customBackgroundMapper.toApiDto(customBackgroundRepository.save(customBackground));

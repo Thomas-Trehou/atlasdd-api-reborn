@@ -5,13 +5,14 @@ import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSheet;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface CharacterSheetUpdateRequestMapper {
 
-    CharacterSheetUpdateRequestMapper INSTANCE = Mappers.getMapper(CharacterSheetUpdateRequestMapper.class);
-
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "characterNotes", ignore = true)
+    @Mapping(target = "campaigns", ignore = true)
     @Mapping(target = "owner", ignore = true)
     @Mapping(target = "race", ignore = true)
     @Mapping(target = "background", ignore = true)

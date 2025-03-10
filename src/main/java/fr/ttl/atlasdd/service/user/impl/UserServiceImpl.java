@@ -45,6 +45,7 @@ public class UserServiceImpl implements UserService {
     private final UserLightAuthMapper userLightAuthMapper;
     private final CampaignService campaignService;
     private final CampaignNoteService campaignNoteService;
+    private final UserLightMapper userLightMapper;
 
     @Value("${MAIL_ADDRESS}")
     private String mailAddress;
@@ -52,14 +53,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserLightApiDto getUserById(Long id) {
         return userRepository.findById(id)
-                .map(UserLightMapper.INSTANCE::toApiDto)
+                .map(userLightMapper::toApiDto)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
     }
 
     @Override
     public UserLightApiDto getUserBySlug(String slug) {
         return userRepository.findBySlug(slug)
-                .map(UserLightMapper.INSTANCE::toApiDto)
+                .map(userLightMapper::toApiDto)
                 .orElse(null);
     }
 
@@ -72,12 +73,9 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage());
         }
 
-
-        return userRepository.findById(userId)
-                .map(user -> user.getFriends().stream()
-                        .map(UserLightMapper.INSTANCE::toApiDto)
-                        .collect(Collectors.toList()))
-                .orElse(null);
+        return userToFind.get().getFriends().stream()
+                .map(userLightMapper::toApiDto)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -90,7 +88,7 @@ public class UserServiceImpl implements UserService {
 
         userApiDto.setPassword(bCryptPasswordEncoder.encode(userApiDto.getPassword()));
 
-        User user = userMapper.toSqlDto(userApiDto);
+        User user = userMapper.toEntity(userApiDto);
         user.setSlug(userApiDto.getPseudo().toLowerCase().replace(" ", "-"));
 
         User userWithSameSlug = userRepository.findBySlug(user.getSlug()).orElse(null);
@@ -111,7 +109,7 @@ public class UserServiceImpl implements UserService {
         storeTokenInSession(token, user);
         sendVerificationEmail(user, token);
 
-        return UserLightMapper.INSTANCE.toApiDto(user);
+        return userLightMapper.toApiDto(user);
     }
 
     private void storeTokenInSession(String token, User user) {

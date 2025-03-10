@@ -3,17 +3,19 @@ package fr.ttl.atlasdd.mapper.campaign;
 import fr.ttl.atlasdd.apidto.campaign.CampaignNoteApiDto;
 import fr.ttl.atlasdd.entity.campaign.CampaignNote;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
-import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring")
 public interface CampaignNoteMapper {
 
-    CampaignNoteMapper INSTANCE = Mappers.getMapper(CampaignNoteMapper.class);
-
     CampaignNoteApiDto toApiDto(CampaignNote campaignNote);
 
-    CampaignNote toSqlDto(CampaignNoteApiDto campaignNoteApiDto);
+    @Mapping(target = "owner", ignore = true)
+    @Mapping(target = "campaign", ignore = true)
+    CampaignNote toEntity(CampaignNoteApiDto campaignNoteApiDto);
 
-    void updateSqlDto(CampaignNoteApiDto campaignNoteApiDto,@MappingTarget CampaignNote campaignNote);
+    @Mapping(target = "owner", ignore = true)
+    @Mapping(target = "campaign", ignore = true)
+    void updateSqlDto(CampaignNoteApiDto campaignNoteApiDto, @MappingTarget CampaignNote campaignNote);
 }
