@@ -9,19 +9,17 @@ import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/ogl5/characters")
+@RequiredArgsConstructor
 public class CharacterSheetController {
 
     private final CharacterSheetService characterSheetService;
-
-    public CharacterSheetController(CharacterSheetService characterSheetService) {
-        this.characterSheetService = characterSheetService;
-    }
 
     @Operation(summary = "Create an Ogl5 character sheet")
     @ApiResponses(value = {

@@ -20,6 +20,7 @@ import fr.ttl.atlasdd.utils.character.Alignment;
 import fr.ttl.atlasdd.utils.character.CharacterStatus;
 import fr.ttl.atlasdd.utils.character.ShieldType;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CharacterSheetServiceImpl implements CharacterSheetService {
 
     private final UserRepo userRepository;
@@ -41,34 +43,6 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
     private final CharacterSheetMapper characterSheetMapper;
     private final CharacterSheetCreateRequestMapper characterSheetCreateRequestMapper;
     private final CharacterSheetUpdateRequestMapper characterSheetUpdateRequestMapper;
-
-    public CharacterSheetServiceImpl(
-            UserRepo userRepository,
-            RaceRepo raceRepository,
-            BackgroundRepo backgroundRepository,
-            ClassRepo classRepository,
-            SkillRepo skillRepository,
-            SpellRepo spellRepository,
-            WeaponRepo weaponRepository,
-            ArmorRepo armorRepository,
-            CharacterSheetRepo characterSheetRepository,
-            CharacterSheetMapper characterSheetMapper,
-            CharacterSheetCreateRequestMapper characterSheetCreateRequestMapper,
-            CharacterSheetUpdateRequestMapper characterSheetUpdateRequestMapper
-    ) {
-        this.userRepository = userRepository;
-        this.raceRepository = raceRepository;
-        this.backgroundRepository = backgroundRepository;
-        this.classRepository = classRepository;
-        this.skillRepository = skillRepository;
-        this.spellRepository = spellRepository;
-        this.weaponRepository = weaponRepository;
-        this.armorRepository = armorRepository;
-        this.characterSheetRepository = characterSheetRepository;
-        this.characterSheetMapper = characterSheetMapper;
-        this.characterSheetCreateRequestMapper = characterSheetCreateRequestMapper;
-        this.characterSheetUpdateRequestMapper = characterSheetUpdateRequestMapper;
-    }
 
     @Override
     public CharacterSheetApiDto createCharacterSheet(CharacterSheetCreateRequestApiDto request) {

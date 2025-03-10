@@ -21,12 +21,14 @@ import fr.ttl.atlasdd.service.character.custom.*;
 import fr.ttl.atlasdd.entity.character.custom.CustomSkill;
 import fr.ttl.atlasdd.entity.user.User;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetService {
 
     private final UserRepo userRepository;
@@ -41,34 +43,6 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
     private final CustomCharacterSheetMapper customCharacterSheetMapper;
     private final CustomCharacterSheetCreateRequestMapper customCharacterSheetCreateRequestMapper;
     private final CustomCharacterSheetUpdateRequestMapper customCharacterSheetUpdateRequestMapper;
-
-    public CustomCharacterSheetServiceImpl(
-            UserRepo userRepository,
-            CustomRaceService customRaceService,
-            CustomBackgroundService customBackgroundService,
-            CustomClassService customClassService,
-            CustomSkillRepo customSkillRepository,
-            CustomSpellRepo customSpellRepository,
-            CustomWeaponService customWeaponService,
-            CustomArmorService customArmorService,
-            CustomCharacterSheetRepo customCharacterSheetRepository,
-            CustomCharacterSheetMapper customCharacterSheetMapper,
-            CustomCharacterSheetCreateRequestMapper customCharacterSheetCreateRequestMapper,
-            CustomCharacterSheetUpdateRequestMapper customCharacterSheetUpdateRequestMapper
-    ) {
-        this.userRepository = userRepository;
-        this.customRaceService = customRaceService;
-        this.customBackgroundService = customBackgroundService;
-        this.customClassService = customClassService;
-        this.customSkillRepository = customSkillRepository;
-        this.customSpellRepository = customSpellRepository;
-        this.customWeaponService = customWeaponService;
-        this.customArmorService = customArmorService;
-        this.customCharacterSheetRepository = customCharacterSheetRepository;
-        this.customCharacterSheetMapper = customCharacterSheetMapper;
-        this.customCharacterSheetCreateRequestMapper = customCharacterSheetCreateRequestMapper;
-        this.customCharacterSheetUpdateRequestMapper = customCharacterSheetUpdateRequestMapper;
-    }
 
     @Override
     public CustomCharacterSheetApiDto createCharacterSheet(CustomCharacterSheetCreateRequestApiDto request) {
