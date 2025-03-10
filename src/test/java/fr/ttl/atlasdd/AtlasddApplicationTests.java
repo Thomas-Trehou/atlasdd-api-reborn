@@ -11,9 +11,9 @@ import org.springframework.test.context.TestPropertySource;
 @ActiveProfiles("test")
 @TestPropertySource(locations = "classpath:application-test.properties")
 @ContextConfiguration(classes = {MockConfig.class})
-public class AtlasddApplicationTests {
+class AtlasddApplicationTests {
 
     @Test
-    public void contextLoads() {
+    void contextLoads() {
     }
 }
