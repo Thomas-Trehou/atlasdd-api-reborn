@@ -13,6 +13,8 @@ public interface CampaignService {
 
     CampaignApiDto getCampaignById(Long id);
 
+    List<CampaignApiDto> getAllByUserId(Long userId);
+
     CampaignApiDto updateCampaign(Long id, CampaignCreateRequestApiDto campaignCreateRequestApiDto);
 
     CampaignApiDto addPlayerToCampaign(Long campaignId, Long playerId);

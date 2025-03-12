@@ -58,6 +58,19 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Override
+    public List<CampaignApiDto> getAllByUserId(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
+        try {
+            return campaignRepository.findAllByGameMasterIdOrPlayerId(user.getId()).stream()
+                    .map(campaignMapper::toApiDto)
+                    .toList();
+        } catch (Exception e) {
+            throw new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_RETRIEVE_ERROR.getMessage());
+        }
+    }
+
+    @Override
     public CampaignApiDto updateCampaign(Long id, CampaignCreateRequestApiDto campaignCreateRequestApiDto) {
         Campaign campaign = campaignRepository.findById(id)
                 .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
