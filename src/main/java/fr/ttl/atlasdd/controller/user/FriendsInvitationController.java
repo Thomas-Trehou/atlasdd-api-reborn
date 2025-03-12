@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/friends-invitations")
 @RequiredArgsConstructor
-public class FriendsInvitatationController {
+public class FriendsInvitationController {
 
     private final FriendsInvitationService friendsInvitationService;
 

@@ -23,7 +23,7 @@ class FriendsInvitationControllerTest {
     private FriendsInvitationService friendsInvitationService;
 
     @InjectMocks
-    private FriendsInvitatationController friendsInvitationController;
+    private FriendsInvitationController friendsInvitationController;
 
     @BeforeEach
     void setUp() {
