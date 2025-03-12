@@ -5,10 +5,7 @@ import fr.ttl.atlasdd.exception.campaign.CampaignNotFoundException;
 import fr.ttl.atlasdd.exception.campaign.CampaignNoteNotFoundException;
 import fr.ttl.atlasdd.exception.campaign.CampaignNoteSavingErrorException;
 import fr.ttl.atlasdd.exception.campaign.CampaignSavingErrorException;
-import fr.ttl.atlasdd.exception.character.CharacterNoteNotFoundException;
-import fr.ttl.atlasdd.exception.character.CharacterNoteSavingErrorException;
-import fr.ttl.atlasdd.exception.character.CharacterPreparedSpellNotFoundException;
-import fr.ttl.atlasdd.exception.character.CharacterSkillNotFoundException;
+import fr.ttl.atlasdd.exception.character.*;
 import fr.ttl.atlasdd.exception.character.custom.notfound.*;
 import fr.ttl.atlasdd.exception.character.custom.savingerror.*;
 import fr.ttl.atlasdd.exception.character.ogl5.notfound.*;
@@ -139,6 +136,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Ogl5ArmorNotFoundException.class)
     public ResponseEntity<ErrorResponseApiDto> handleCustomException(Ogl5ArmorNotFoundException ex) {
+        ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
+        return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
+    }
+
+    @ExceptionHandler(OptionNotFoundException.class)
+    public ResponseEntity<ErrorResponseApiDto> handleCustomException(OptionNotFoundException ex) {
         ErrorResponseApiDto errorResponseApiDto = new ErrorResponseApiDto(ex.getMessage());
         return ResponseEntity.status(ex.getStatusCode()).body(errorResponseApiDto);
     }
