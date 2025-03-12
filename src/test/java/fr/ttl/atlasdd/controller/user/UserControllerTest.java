@@ -101,7 +101,7 @@ class UserControllerTest {
         mockMvc.perform(post("/users/signup")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(requestDto)))
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isConflict())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.USER_EMAIL_ALREADY_USED.getMessage()));
     }
