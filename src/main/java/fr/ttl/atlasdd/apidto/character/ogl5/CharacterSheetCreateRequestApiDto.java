@@ -1,7 +1,12 @@
 package fr.ttl.atlasdd.apidto.character.ogl5;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.validation.constraints.NotNull;
+import fr.ttl.atlasdd.utils.character.Alignment;
+import fr.ttl.atlasdd.utils.character.CharacterStatus;
+import fr.ttl.atlasdd.utils.character.ShieldType;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,66 +18,87 @@ import java.util.List;
 @NoArgsConstructor
 public class CharacterSheetCreateRequestApiDto {
 
-    @NotNull
+    @NotBlank(message = "Le nom ne peut pas être vide")
+    @Size(min = 2, max = 50, message = "Le nom doit contenir entre 2 et 50 caractères")
     private String name;
 
     @NotNull
+    @Min(1) @Max(20)
     private int level;
 
+    @NotNull
+    @PositiveOrZero
     private int experience;
 
     @NotNull
+    @Min(1)
     private int armorClass;
 
     @NotNull
+    @PositiveOrZero
     private int initiative;
 
     @NotNull
+    @PositiveOrZero
     private int inspiration;
 
     @NotNull
+    @PositiveOrZero
     private int hitPoints;
 
     @NotNull
+    @Min(1)
     private int maxHitPoints;
 
+    @PositiveOrZero
     private int bonusHitPoints;
 
     @NotNull
+    @Positive
     private int speed;
 
     @NotNull
+    @PositiveOrZero
     private int passivePerception;
 
     @NotNull
-    private String shield;
+    @Enumerated(EnumType.STRING)
+    private ShieldType shield;
 
     @NotNull
     private boolean twoWeaponsFighting;
 
     @NotNull
-    private String alignment;
+    @Enumerated(EnumType.STRING)
+    private Alignment alignment;
 
     @NotNull
+    @Min(1) @Max(30)
     private int strength;
 
     @NotNull
+    @Min(1) @Max(30)
     private int dexterity;
 
     @NotNull
+    @Min(1) @Max(30)
     private int constitution;
 
     @NotNull
+    @Min(1) @Max(30)
     private int intelligence;
 
     @NotNull
+    @Min(1) @Max(30)
     private int wisdom;
 
     @NotNull
+    @Min(1) @Max(30)
     private int charisma;
 
     @NotNull
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private CharacterStatus status;
 
     @NotNull
     private Long userId;
@@ -87,6 +113,7 @@ public class CharacterSheetCreateRequestApiDto {
     private Long classId;
 
     @NotNull
+    @NotEmpty(message = "Au moins une compétence doit être sélectionnée")
     @JsonProperty("skillIds")
     private List<Long> skillIds;
 
@@ -94,6 +121,7 @@ public class CharacterSheetCreateRequestApiDto {
     private List<Long> preparedSpellIds;
 
     @NotNull
+    @NotEmpty(message = "Au moins une arme doit être équipée")
     @JsonProperty("weaponIds")
     private List<Long> weaponIds;
 

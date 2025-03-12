@@ -9,47 +9,64 @@ import fr.ttl.atlasdd.utils.character.CharacterStatus;
 import fr.ttl.atlasdd.utils.character.ShieldType;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import jakarta.validation.constraints.*;
 import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CustomCharacterSheetCreateRequestApiDto {
 
-    @NotNull
+    @NotBlank(message = "Le nom ne peut pas être vide")
+    @Size(min = 2, max = 50, message = "Le nom doit contenir entre 2 et 50 caractères")
     private String name;
 
     @NotNull
+    @Min(1) @Max(20)
     private int level;
 
+    @PositiveOrZero
     private int experience;
 
     @NotNull
+    @Min(1)
     private int armorClass;
 
     @NotNull
+    @PositiveOrZero
     private int initiative;
 
     @NotNull
+    @PositiveOrZero
     private int inspiration;
 
     @NotNull
+    @PositiveOrZero
     private int hitPoints;
 
     @NotNull
+    @Min(1)
     private int maxHitPoints;
 
+    @PositiveOrZero
     private int bonusHitPoints;
 
     @NotNull
+    @Positive
     private int speed;
 
     @NotNull
+    @PositiveOrZero
     private int passivePerception;
 
     @NotNull
@@ -64,21 +81,27 @@ public class CustomCharacterSheetCreateRequestApiDto {
     private Alignment alignment;
 
     @NotNull
+    @Min(1) @Max(30)
     private int strength;
 
     @NotNull
+    @Min(1) @Max(30)
     private int dexterity;
 
     @NotNull
+    @Min(1) @Max(30)
     private int constitution;
 
     @NotNull
+    @Min(1) @Max(30)
     private int intelligence;
 
     @NotNull
+    @Min(1) @Max(30)
     private int wisdom;
 
     @NotNull
+    @Min(1) @Max(30)
     private int charisma;
 
     @NotNull
@@ -89,15 +112,19 @@ public class CustomCharacterSheetCreateRequestApiDto {
     private Long userId;
 
     @NotNull
+    @Valid
     private CustomRaceApiDto race;
 
     @NotNull
+    @Valid
     private BackgroundApiDto background;
 
     @NotNull
+    @Valid
     private CustomClassApiDto classe;
 
     @NotNull
+    @NotEmpty(message = "Au moins une compétence doit être sélectionnée")
     @JsonProperty("skillIds")
     private List<Long> skillIds;
 
@@ -105,8 +132,11 @@ public class CustomCharacterSheetCreateRequestApiDto {
     private List<Long> preparedSpellIds;
 
     @NotNull
+    @NotEmpty(message = "Au moins une arme doit être équipée")
+    @Valid
     private List<WeaponApiDto> weapons;
 
     @NotNull
+    @Valid
     private ArmorApiDto armor;
 }
