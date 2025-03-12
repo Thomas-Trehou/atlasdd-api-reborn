@@ -1,6 +1,6 @@
 package fr.ttl.atlasdd.mapper.character.ogl5;
 
-import fr.ttl.atlasdd.apidto.character.ogl5.ArmorApiDto;
+import fr.ttl.atlasdd.apidto.character.ArmorApiDto;
 import fr.ttl.atlasdd.entity.character.ogl5.Ogl5Armor;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

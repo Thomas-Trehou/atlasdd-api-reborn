@@ -1,6 +1,6 @@
 package fr.ttl.atlasdd.mapper.character.ogl5;
 
-import fr.ttl.atlasdd.apidto.character.ogl5.BackgroundApiDto;
+import fr.ttl.atlasdd.apidto.character.BackgroundApiDto;
 import fr.ttl.atlasdd.entity.character.ogl5.Ogl5Background;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

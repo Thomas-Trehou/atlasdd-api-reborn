@@ -1,7 +1,7 @@
 package fr.ttl.atlasdd.apidto.character.ogl5;
 
 import fr.ttl.atlasdd.apidto.BaseApiDto;
-import fr.ttl.atlasdd.apidto.user.UserApiDto;
+import fr.ttl.atlasdd.apidto.character.*;
 import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
 import fr.ttl.atlasdd.utils.character.Alignment;
 import fr.ttl.atlasdd.utils.character.CharacterStatus;

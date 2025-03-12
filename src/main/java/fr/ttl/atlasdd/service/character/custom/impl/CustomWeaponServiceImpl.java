@@ -1,6 +1,6 @@
 package fr.ttl.atlasdd.service.character.custom.impl;
 
-import fr.ttl.atlasdd.apidto.character.custom.CustomWeaponApiDto;
+import fr.ttl.atlasdd.apidto.character.WeaponApiDto;
 import fr.ttl.atlasdd.entity.character.custom.CustomWeapon;
 import fr.ttl.atlasdd.exception.character.custom.notfound.CustomWeaponNotFoundException;
 import fr.ttl.atlasdd.exception.character.custom.savingerror.CustomWeaponSavingErrorException;
@@ -22,7 +22,7 @@ public class CustomWeaponServiceImpl implements CustomWeaponService {
     private final CustomWeaponMapper customWeaponMapper;
 
     @Override
-    public List<CustomWeaponApiDto> createWeapons(List<CustomWeaponApiDto> customWeaponApiDtos) {
+    public List<WeaponApiDto> createWeapons(List<WeaponApiDto> customWeaponApiDtos) {
         try {
             return customWeaponApiDtos.stream()
                     .map(customWeaponMapper::toEntity)
@@ -37,7 +37,7 @@ public class CustomWeaponServiceImpl implements CustomWeaponService {
     }
 
     @Override
-    public List<CustomWeaponApiDto> updateWeapons(List<CustomWeaponApiDto> customWeaponApiDtos) {
+    public List<WeaponApiDto> updateWeapons(List<WeaponApiDto> customWeaponApiDtos) {
 
         try {
             return customWeaponApiDtos.stream()

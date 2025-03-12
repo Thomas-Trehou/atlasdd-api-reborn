@@ -16,9 +16,6 @@ import fr.ttl.atlasdd.repository.character.ogl5.*;
 import fr.ttl.atlasdd.repository.user.UserRepo;
 import fr.ttl.atlasdd.service.character.ogl5.CharacterSheetService;
 import fr.ttl.atlasdd.entity.character.ogl5.*;
-import fr.ttl.atlasdd.utils.character.Alignment;
-import fr.ttl.atlasdd.utils.character.CharacterStatus;
-import fr.ttl.atlasdd.utils.character.ShieldType;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -57,9 +54,9 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
 
         Ogl5CharacterSheet characterSheet = new Ogl5CharacterSheet();
         characterSheetCreateRequestMapper.updateSqlDto(request, characterSheet);
-        characterSheet.setShield(ShieldType.valueOf(request.getShield()));
-        characterSheet.setAlignment(Alignment.valueOf(request.getAlignment()));
-        characterSheet.setStatus(CharacterStatus.valueOf(request.getStatus()));
+        characterSheet.setShield(request.getShield());
+        characterSheet.setAlignment(request.getAlignment());
+        characterSheet.setStatus(request.getStatus());
         characterSheet.setOwner(user);
         characterSheet.setRace(race);
         characterSheet.setBackground(background);
@@ -100,9 +97,9 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         List<Ogl5Spell> spells = findSpellsByIds(request.getPreparedSpellIds());
 
         characterSheetUpdateRequestMapper.updateSqlDto(request, characterSheet);
-        characterSheet.setShield(ShieldType.valueOf(request.getShield()));
-        characterSheet.setAlignment(Alignment.valueOf(request.getAlignment()));
-        characterSheet.setStatus(CharacterStatus.valueOf(request.getStatus()));
+        characterSheet.setShield(request.getShield());
+        characterSheet.setAlignment(request.getAlignment());
+        characterSheet.setStatus(request.getStatus());
         characterSheet.setSkills(skills);
         characterSheet.setPreparedSpells(spells);
         characterSheet.setUpdatedAt(LocalDateTime.now());

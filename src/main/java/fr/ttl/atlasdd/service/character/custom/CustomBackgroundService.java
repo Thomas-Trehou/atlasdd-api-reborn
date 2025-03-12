@@ -1,12 +1,12 @@
 package fr.ttl.atlasdd.service.character.custom;
 
-import fr.ttl.atlasdd.apidto.character.custom.CustomBackgroundApiDto;
+import fr.ttl.atlasdd.apidto.character.BackgroundApiDto;
 import org.springframework.stereotype.Service;
 
 @Service
 public interface CustomBackgroundService {
 
-    CustomBackgroundApiDto createBackground(CustomBackgroundApiDto backgroundApiDto);
+    BackgroundApiDto createBackground(BackgroundApiDto backgroundApiDto);
 
-    CustomBackgroundApiDto updateBackground(CustomBackgroundApiDto backgroundApiDto);
+    BackgroundApiDto updateBackground(BackgroundApiDto backgroundApiDto);
 }

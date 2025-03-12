@@ -1,6 +1,7 @@
 package fr.ttl.atlasdd.controller.character.ogl5;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import fr.ttl.atlasdd.apidto.character.*;
 import fr.ttl.atlasdd.apidto.character.ogl5.*;
 import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
 import fr.ttl.atlasdd.exception.GlobalExceptionHandler;
@@ -61,16 +62,16 @@ class CharacterSheetControllerTest {
     private final int BONUS_HIT_POINTS = 3;
     private final int SPEED = 9;
     private final int PASSIVE_PERCEPTION = 14;
-    private final String SHIELD = "NORMAL";
+    private final ShieldType SHIELD = ShieldType.NORMAL;
     private final boolean TWO_WEAPONS = false;
-    private final String ALIGNMENT = "LOYAL_BON";
+    private final Alignment ALIGNMENT = Alignment.LOYAL_BON;
     private final int STRENGTH = 14;
     private final int DEXTERITY = 16;
     private final int CONSTITUTION = 16;
     private final int INTELLIGENCE = 10;
     private final int WISDOM = 8;
     private final int CHARISMA = 14;
-    private final String STATUS = "VIVANT";
+    private final CharacterStatus STATUS = CharacterStatus.VIVANT;
     private final Long USER_ID = 1L;
     private final Long RACE_ID = 1L;
     private final Long BACKGROUND_ID = 1L;

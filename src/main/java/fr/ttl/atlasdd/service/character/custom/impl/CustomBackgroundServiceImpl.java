@@ -1,6 +1,6 @@
 package fr.ttl.atlasdd.service.character.custom.impl;
 
-import fr.ttl.atlasdd.apidto.character.custom.CustomBackgroundApiDto;
+import fr.ttl.atlasdd.apidto.character.BackgroundApiDto;
 import fr.ttl.atlasdd.exception.character.custom.notfound.CustomBackgroundNotFoundException;
 import fr.ttl.atlasdd.exception.character.custom.savingerror.CustomBackgroundSavingErrorException;
 import fr.ttl.atlasdd.mapper.character.custom.CustomBackgroundMapper;
@@ -19,7 +19,7 @@ public class CustomBackgroundServiceImpl implements CustomBackgroundService {
     private final CustomBackgroundMapper customBackgroundMapper;
 
     @Override
-    public CustomBackgroundApiDto createBackground(CustomBackgroundApiDto customBackgroundApiDto) {
+    public BackgroundApiDto createBackground(BackgroundApiDto customBackgroundApiDto) {
 
         CustomBackground customBackground = customBackgroundMapper.toEntity(customBackgroundApiDto);
 
@@ -31,7 +31,7 @@ public class CustomBackgroundServiceImpl implements CustomBackgroundService {
     }
 
     @Override
-    public CustomBackgroundApiDto updateBackground(CustomBackgroundApiDto customBackgroundApiDto) {
+    public BackgroundApiDto updateBackground(BackgroundApiDto customBackgroundApiDto) {
 
         CustomBackground customBackground = customBackgroundRepository.findById(customBackgroundApiDto.getId())
                 .orElseThrow(() -> new CustomBackgroundNotFoundException(ExceptionMessage.BACKGROUND_NOT_FOUND.getMessage()));
