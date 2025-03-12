@@ -9,6 +9,6 @@ public class EmailAlreadyUsedException extends RuntimeException {
 
     public EmailAlreadyUsedException(String message) {
         super(message);
-        this.statusCode = 400;
+        this.statusCode = 409;
     }
 }
