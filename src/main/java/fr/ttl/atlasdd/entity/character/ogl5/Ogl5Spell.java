@@ -1,6 +1,5 @@
 package fr.ttl.atlasdd.entity.character.ogl5;
 
-import fr.ttl.atlasdd.listeners.SpellEntityListener;
 import fr.ttl.atlasdd.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
@@ -13,7 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "ogl5_spells")
-@EntityListeners(SpellEntityListener.class)
 public class Ogl5Spell extends BaseEntity {
 
     private String name;
