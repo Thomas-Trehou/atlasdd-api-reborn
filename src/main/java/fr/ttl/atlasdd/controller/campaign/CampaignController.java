@@ -11,6 +11,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/campaigns")
 @RequiredArgsConstructor
@@ -43,6 +45,19 @@ public class CampaignController {
             @PathVariable Long id
     ) {
         return campaignService.getCampaignById(id);
+    }
+
+    @Operation(summary = "Get all campaign by userId")
+    @ApiResponses( value = {
+            @ApiResponse(responseCode = "200", description = "Campaigns found, returns the campaigns"),
+            @ApiResponse(responseCode = "404", description = "Error when trying to retrieve campaigns", content = {})
+    })
+    @GetMapping("/users/{userId}")
+    public List<CampaignApiDto> getCampaignsByUserId(
+            @Parameter(description = "ID of the user", required = true)
+            @PathVariable Long userId
+    ) {
+        return campaignService.getAllByUserId(userId);
     }
 
     @Operation(summary = "Update a campaign")

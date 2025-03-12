@@ -20,6 +20,7 @@ public enum ExceptionMessage {
     CAMPAIGN_NOTE_SAVE_ERROR("Erreur lors de la sauvegarde de la note de campagne"),
     CAMPAIGN_NOTE_UPDATE_ERROR("Erreur lors de la mise à jour de la note de campagne"),
     CAMPAIGN_NOTE_DELETE_ERROR("Erreur lors de la suppression de la note de campagne"),
+    CAMPAIGN_RETRIEVE_ERROR("Erreur lors de la récupération des campagnes"),
 
     // User
     USER_NOT_FOUND("Utilisateur non trouvé"),
