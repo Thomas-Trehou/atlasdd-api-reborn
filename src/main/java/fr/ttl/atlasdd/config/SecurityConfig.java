@@ -39,6 +39,7 @@ public class SecurityConfig {
                                 "/users/signup",
                                 "/users/verify",
                                 "/users/signin",
+                                "/character-creation-options/spells",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**").permitAll() // Public routes
                         .anyRequest().authenticated() // Secure all other routes
