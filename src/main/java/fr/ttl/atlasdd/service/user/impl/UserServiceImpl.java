@@ -51,6 +51,14 @@ public class UserServiceImpl implements UserService {
     private String mailAddress;
 
     @Override
+    public UserLightApiDto getCurrentUser(String token) {
+        String userMail = jwtTokenProvider.getMailFromToken(token.replace("Bearer ", ""));
+        return userRepository.findByEmail(userMail)
+                .map(userLightMapper::toApiDto)
+                .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
+    }
+
+    @Override
     public UserLightApiDto getUserById(Long id) {
         return userRepository.findById(id)
                 .map(userLightMapper::toApiDto)

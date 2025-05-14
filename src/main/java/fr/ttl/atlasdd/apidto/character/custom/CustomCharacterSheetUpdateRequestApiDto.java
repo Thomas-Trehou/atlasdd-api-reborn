@@ -103,6 +103,30 @@ public class CustomCharacterSheetUpdateRequestApiDto {
     private int charisma;
 
     @NotNull
+    @Min(0) @Max(30)
+    private int strengthSavingThrowBonus;
+
+    @NotNull
+    @Min(0) @Max(30)
+    private int dexteritySavingThrowBonus;
+
+    @NotNull
+    @Min(0) @Max(30)
+    private int constitutionSavingThrowBonus;
+
+    @NotNull
+    @Min(0) @Max(30)
+    private int intelligenceSavingThrowBonus;
+
+    @NotNull
+    @Min(0) @Max(30)
+    private int wisdomSavingThrowBonus;
+
+    @NotNull
+    @Min(0) @Max(30)
+    private int charismaSavingThrowBonus;
+
+    @NotNull
     @Enumerated(EnumType.STRING)
     private CharacterStatus status;
 

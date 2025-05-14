@@ -71,6 +71,12 @@ class CharacterSheetControllerTest {
     private final int INTELLIGENCE = 10;
     private final int WISDOM = 8;
     private final int CHARISMA = 14;
+    private final int STRENGTH_ST = 2;
+    private final int DEXTERITY_ST = 3;
+    private final int CONSTITUTION_ST = 3;
+    private final int INTELLIGENCE_ST = 0;
+    private final int WISDOM_ST = -1;
+    private final int CHARISMA_ST = 2;
     private final CharacterStatus STATUS = CharacterStatus.VIVANT;
     private final Long USER_ID = 1L;
     private final Long RACE_ID = 1L;
@@ -116,6 +122,12 @@ class CharacterSheetControllerTest {
             INTELLIGENCE,
             WISDOM,
             CHARISMA,
+            STRENGTH_ST,
+            DEXTERITY_ST,
+            CONSTITUTION_ST,
+            INTELLIGENCE_ST,
+            WISDOM_ST,
+            CHARISMA_ST,
             STATUS,
             USER_ID,
             RACE_ID,
@@ -149,6 +161,12 @@ class CharacterSheetControllerTest {
             INTELLIGENCE,
             WISDOM,
             CHARISMA,
+            STRENGTH_ST,
+            DEXTERITY_ST,
+            CONSTITUTION_ST,
+            INTELLIGENCE_ST,
+            WISDOM_ST,
+            CHARISMA_ST,
             STATUS,
             USER_ID,
             RACE_ID,
@@ -181,6 +199,12 @@ class CharacterSheetControllerTest {
             INTELLIGENCE,
             WISDOM,
             CHARISMA,
+            STRENGTH_ST,
+            DEXTERITY_ST,
+            CONSTITUTION_ST,
+            INTELLIGENCE_ST,
+            WISDOM_ST,
+            CHARISMA_ST,
             STATUS_TYPE,
             USER_LIGHT_API_DTO,
             RACE_API_DTO,

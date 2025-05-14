@@ -47,6 +47,13 @@ public class Ogl5CharacterSheet extends BaseEntity {
     private int wisdom;
     private int charisma;
 
+    private int strengthSavingThrowBonus = 0;
+    private int dexteritySavingThrowBonus = 0;
+    private int constitutionSavingThrowBonus = 0;
+    private int intelligenceSavingThrowBonus = 0;
+    private int wisdomSavingThrowBonus = 0;
+    private int charismaSavingThrowBonus = 0;
+
     @Enumerated(EnumType.STRING)
     private CharacterStatus status;
 

@@ -48,6 +48,13 @@ public class CharacterSheetApiDto extends BaseApiDto {
     private int wisdom;
     private int charisma;
 
+    private int strengthSavingThrowBonus;
+    private int dexteritySavingThrowBonus;
+    private int constitutionSavingThrowBonus;
+    private int intelligenceSavingThrowBonus;
+    private int wisdomSavingThrowBonus;
+    private int charismaSavingThrowBonus;
+
     @Enumerated(EnumType.STRING)
     private CharacterStatus status;
 

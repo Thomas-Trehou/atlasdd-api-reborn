@@ -9,7 +9,9 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -20,13 +22,25 @@ public class UserController {
 
     private final UserService userService;
 
+    @Operation(summary = "Get the current authenticated user")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Current user found, returns the user"),
+            @ApiResponse(responseCode = "401", description = "Not authenticated", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error retrieving current user", content = @Content)
+    })
+    @GetMapping("/me")
+    public UserLightApiDto getCurrentUser(@RequestHeader("Authorization") String token) {
+        return userService.getCurrentUser(token);
+    }
+
+
     @Operation(summary = "Get one user by ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "User found, returns the user"),
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Error at user retrieval", content = @Content)
     })
-    @GetMapping("/{id}")
+    @GetMapping("/{id:\\\\d+}\n")
     public UserLightApiDto getUserById(
             @Parameter(description = "ID of the user", required = true)
             @PathVariable Long id
@@ -40,11 +54,15 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Error at user retrieval", content = @Content)
     })
-    @GetMapping("/{slug}")
+    @GetMapping("/{slug:[a-zA-Z0-9-]+}\n")
     public UserLightApiDto getUserBySlug(
             @Parameter(description = "Slug of the user", required = true)
             @PathVariable String slug
     ) {
+
+        if (slug.matches("\\d+")) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Invalid Slug format");
+        }
         return userService.getUserBySlug(slug);
     }
 

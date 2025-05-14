@@ -12,6 +12,8 @@ import java.util.List;
 @Service
 public interface UserService {
 
+    UserLightApiDto getCurrentUser(String token);
+
     UserLightApiDto getUserById(Long id);
 
     UserLightApiDto getUserBySlug(String slug);
