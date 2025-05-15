@@ -6,6 +6,7 @@ import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
 import fr.ttl.atlasdd.utils.character.Alignment;
 import fr.ttl.atlasdd.utils.character.CharacterStatus;
 import fr.ttl.atlasdd.utils.character.ShieldType;
+import fr.ttl.atlasdd.utils.character.SpellSlots;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
@@ -54,6 +55,8 @@ public class CharacterSheetApiDto extends BaseApiDto {
     private int intelligenceSavingThrowBonus;
     private int wisdomSavingThrowBonus;
     private int charismaSavingThrowBonus;
+
+    private SpellSlots spellSlots;
 
     @Enumerated(EnumType.STRING)
     private CharacterStatus status;

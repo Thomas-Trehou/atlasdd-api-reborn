@@ -7,6 +7,7 @@ import fr.ttl.atlasdd.apidto.character.WeaponApiDto;
 import fr.ttl.atlasdd.utils.character.Alignment;
 import fr.ttl.atlasdd.utils.character.CharacterStatus;
 import fr.ttl.atlasdd.utils.character.ShieldType;
+import fr.ttl.atlasdd.utils.character.SpellSlots;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.Valid;
@@ -129,6 +130,8 @@ public class CustomCharacterSheetUpdateRequestApiDto {
     @NotNull
     @Enumerated(EnumType.STRING)
     private CharacterStatus status;
+
+    private SpellSlots spellSlots;
 
     @NotNull
     private Long userId;

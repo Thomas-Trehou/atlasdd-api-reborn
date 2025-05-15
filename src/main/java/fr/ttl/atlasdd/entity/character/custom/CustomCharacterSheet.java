@@ -4,9 +4,7 @@ import fr.ttl.atlasdd.entity.BaseEntity;
 import fr.ttl.atlasdd.entity.campaign.Campaign;
 import fr.ttl.atlasdd.entity.character.CharacterNote;
 import fr.ttl.atlasdd.entity.user.User;
-import fr.ttl.atlasdd.utils.character.Alignment;
-import fr.ttl.atlasdd.utils.character.CharacterStatus;
-import fr.ttl.atlasdd.utils.character.ShieldType;
+import fr.ttl.atlasdd.utils.character.*;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -57,6 +55,9 @@ public class CustomCharacterSheet extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CharacterStatus status;
 
+    @Column(columnDefinition = "jsonb")
+    @Convert(converter = SpellSlotsConverter.class)
+    private SpellSlots spellSlots;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

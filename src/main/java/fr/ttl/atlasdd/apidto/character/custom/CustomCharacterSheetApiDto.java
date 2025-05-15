@@ -6,6 +6,7 @@ import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
 import fr.ttl.atlasdd.utils.character.Alignment;
 import fr.ttl.atlasdd.utils.character.CharacterStatus;
 import fr.ttl.atlasdd.utils.character.ShieldType;
+import fr.ttl.atlasdd.utils.character.SpellSlots;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.AllArgsConstructor;
@@ -47,6 +48,8 @@ public class CustomCharacterSheetApiDto extends BaseApiDto {
     private int intelligence;
     private int wisdom;
     private int charisma;
+
+    private SpellSlots spellSlots;
 
     private int strengthSavingThrowBonus;
     private int dexteritySavingThrowBonus;

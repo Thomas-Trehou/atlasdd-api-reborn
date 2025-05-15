@@ -14,6 +14,7 @@ import fr.ttl.atlasdd.service.character.ogl5.CharacterSheetService;
 import fr.ttl.atlasdd.utils.character.Alignment;
 import fr.ttl.atlasdd.utils.character.CharacterStatus;
 import fr.ttl.atlasdd.utils.character.ShieldType;
+import fr.ttl.atlasdd.utils.character.SpellSlots;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -86,6 +87,7 @@ class CharacterSheetControllerTest {
     private final List<Long> SPELLS = List.of(95L, 104L, 370L, 26L);
     private final List<Long> WEAPONS = List.of(19L, 20L);
     private final Long ARMOR_ID = 12L;
+    private final SpellSlots SPELLSLOTS = new SpellSlots();
 
     private final UserLightApiDto USER_LIGHT_API_DTO = new UserLightApiDto();
     private final RaceApiDto RACE_API_DTO = new RaceApiDto();
@@ -129,6 +131,7 @@ class CharacterSheetControllerTest {
             WISDOM_ST,
             CHARISMA_ST,
             STATUS,
+            SPELLSLOTS,
             USER_ID,
             RACE_ID,
             BACKGROUND_ID,
@@ -168,6 +171,7 @@ class CharacterSheetControllerTest {
             WISDOM_ST,
             CHARISMA_ST,
             STATUS,
+            SPELLSLOTS,
             USER_ID,
             RACE_ID,
             BACKGROUND_ID,
@@ -205,6 +209,7 @@ class CharacterSheetControllerTest {
             INTELLIGENCE_ST,
             WISDOM_ST,
             CHARISMA_ST,
+            SPELLSLOTS,
             STATUS_TYPE,
             USER_LIGHT_API_DTO,
             RACE_API_DTO,

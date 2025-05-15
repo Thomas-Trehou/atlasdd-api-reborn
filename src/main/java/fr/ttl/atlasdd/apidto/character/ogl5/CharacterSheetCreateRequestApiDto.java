@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.ttl.atlasdd.utils.character.Alignment;
 import fr.ttl.atlasdd.utils.character.CharacterStatus;
 import fr.ttl.atlasdd.utils.character.ShieldType;
+import fr.ttl.atlasdd.utils.character.SpellSlots;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.*;
@@ -124,6 +125,8 @@ public class CharacterSheetCreateRequestApiDto {
     @NotNull
     @Enumerated(EnumType.STRING)
     private CharacterStatus status;
+
+    private SpellSlots spellSlots;
 
     @NotNull
     private Long userId;
