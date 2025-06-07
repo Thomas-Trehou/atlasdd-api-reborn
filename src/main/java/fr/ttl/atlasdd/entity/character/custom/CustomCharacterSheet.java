@@ -7,6 +7,8 @@ import fr.ttl.atlasdd.entity.user.User;
 import fr.ttl.atlasdd.utils.character.*;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.util.List;
 
@@ -55,8 +57,8 @@ public class CustomCharacterSheet extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private CharacterStatus status;
 
-    @Column(columnDefinition = "jsonb")
-    @Convert(converter = SpellSlotsConverter.class)
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "spell_slots", columnDefinition = "jsonb")
     private SpellSlots spellSlots;
 
     @ManyToOne
