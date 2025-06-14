@@ -103,6 +103,8 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
                 .orElseThrow(() -> new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
         List<Ogl5Spell> spells = findSpellsByIds(request.getPreparedSpellIds());
+        List<Ogl5Weapon> weapons = findWeaponsByIds(request.getWeaponIds());
+        Ogl5Armor armor = findArmorById(request.getArmorId());
 
         characterSheetUpdateRequestMapper.updateSqlDto(request, characterSheet);
         characterSheet.setShield(request.getShield());
@@ -110,6 +112,8 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         characterSheet.setStatus(request.getStatus());
         characterSheet.setPreparedSpells(spells);
         characterSheet.setUpdatedAt(LocalDateTime.now());
+        characterSheet.setWeapons(weapons);
+        characterSheet.setArmor(armor);
 
         try {
             Ogl5CharacterSheet savedCharacterSheet = characterSheetRepository.save(characterSheet);
