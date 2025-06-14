@@ -102,7 +102,7 @@ class CharacterSheetControllerTest {
     private final ShieldType SHIELD_TYPE = ShieldType.NORMAL;
     private final Alignment ALIGNMENT_TYPE = Alignment.LOYAL_BON;
     private final CharacterStatus STATUS_TYPE = CharacterStatus.VIVANT;
-    private final List<CharacterSkillDto> SKILLS_API_DTO = SKILLS;
+    private final List<CharacterSkillDto> SKILLS_API_DTO = new ArrayList<>();
     private final List<SpellApiDto> SPELLS_API_DTO = new ArrayList<>();
     private final List<WeaponApiDto> WEAPONS_API_DTO = new ArrayList<>();
 
