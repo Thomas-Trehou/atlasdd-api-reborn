@@ -78,7 +78,7 @@ public class Ogl5CharacterSheet extends BaseEntity {
     @JoinColumn(name = "class_id")
     private Ogl5Class classe;
 
-    @OneToMany(mappedBy = "characterSheet")
+    @OneToMany(mappedBy = "characterSheet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Ogl5CharacterSkill> characterSkills;
 
     public List<Ogl5CharacterSheet> getCharacterSheets() {
