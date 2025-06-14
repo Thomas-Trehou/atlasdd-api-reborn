@@ -83,7 +83,12 @@ class CharacterSheetControllerTest {
     private final Long RACE_ID = 1L;
     private final Long BACKGROUND_ID = 1L;
     private final Long CLASS_ID = 1L;
-    private final List<Long> SKILLS = List.of(3L, 7L, 10L, 15L);
+    private final List<CharacterSkillDto> SKILLS = List.of(
+            new CharacterSkillDto(3L, "Athlétisme", false),
+            new CharacterSkillDto(7L, "Histoire", false),
+            new CharacterSkillDto(10L, "Médecine", false),
+            new CharacterSkillDto(15L, "Religion", false)
+    );
     private final List<Long> SPELLS = List.of(95L, 104L, 370L, 26L);
     private final List<Long> WEAPONS = List.of(19L, 20L);
     private final Long ARMOR_ID = 12L;
@@ -97,7 +102,7 @@ class CharacterSheetControllerTest {
     private final ShieldType SHIELD_TYPE = ShieldType.NORMAL;
     private final Alignment ALIGNMENT_TYPE = Alignment.LOYAL_BON;
     private final CharacterStatus STATUS_TYPE = CharacterStatus.VIVANT;
-    private final List<SkillApiDto> SKILLS_API_DTO = new ArrayList<>();
+    private final List<CharacterSkillDto> SKILLS_API_DTO = SKILLS;
     private final List<SpellApiDto> SPELLS_API_DTO = new ArrayList<>();
     private final List<WeaponApiDto> WEAPONS_API_DTO = new ArrayList<>();
 

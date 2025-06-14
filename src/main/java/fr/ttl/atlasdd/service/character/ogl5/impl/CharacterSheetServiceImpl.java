@@ -1,5 +1,6 @@
 package fr.ttl.atlasdd.service.character.ogl5.impl;
 
+import fr.ttl.atlasdd.apidto.character.CharacterSkillDto;
 import fr.ttl.atlasdd.apidto.character.ogl5.CharacterSheetApiDto;
 import fr.ttl.atlasdd.apidto.character.ogl5.CharacterSheetCreateRequestApiDto;
 import fr.ttl.atlasdd.apidto.character.ogl5.CharacterSheetUpdateRequestApiDto;
@@ -19,6 +20,7 @@ import fr.ttl.atlasdd.entity.character.ogl5.*;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,14 +42,15 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
     private final CharacterSheetMapper characterSheetMapper;
     private final CharacterSheetCreateRequestMapper characterSheetCreateRequestMapper;
     private final CharacterSheetUpdateRequestMapper characterSheetUpdateRequestMapper;
+    private final CharacterSkillRepo characterSkillRepository;
 
     @Override
+    @Transactional
     public CharacterSheetApiDto createCharacterSheet(CharacterSheetCreateRequestApiDto request) {
         User user = findUserById(request.getUserId());
         Ogl5Race race = findRaceById(request.getRaceId());
         Ogl5Background background = findBackgroundById(request.getBackgroundId());
         Ogl5Class classe = findClassById(request.getClassId());
-        List<Ogl5Skill> skills = findSkillsByIds(request.getSkillIds());
         List<Ogl5Spell> spells = findSpellsByIds(request.getPreparedSpellIds());
         List<Ogl5Weapon> weapons = findWeaponsByIds(request.getWeaponIds());
         Ogl5Armor armor = findArmorById(request.getArmorId());
@@ -61,27 +64,32 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         characterSheet.setRace(race);
         characterSheet.setBackground(background);
         characterSheet.setClasse(classe);
-        characterSheet.setSkills(skills);
         characterSheet.setPreparedSpells(spells);
         characterSheet.setWeapons(weapons);
         characterSheet.setArmor(armor);
 
         try {
-            return characterSheetMapper.toApiDto(characterSheetRepository.save(characterSheet));
+            Ogl5CharacterSheet savedCharacterSheet = characterSheetRepository.save(characterSheet);
+            updateCharacterSkills(savedCharacterSheet, request.getSkills());
+            return characterSheetMapper.toApiDto(savedCharacterSheet);
+
         } catch (Exception e) {
             throw new Ogl5CharacterSavingErrorException(ExceptionMessage.CHARACTER_SAVE_ERROR.getMessage());
         }
     }
 
     @Override
+    @Transactional(readOnly = true)
     public CharacterSheetApiDto getCharacterSheetById(Long id) {
-        Ogl5CharacterSheet characterSheet = characterSheetRepository.findById(id)
+        Ogl5CharacterSheet characterSheet = characterSheetRepository.findByIdWithSkills(id)
                 .orElseThrow(() -> new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
         return characterSheetMapper.toApiDto(characterSheet);
     }
 
+
     @Override
+    @Transactional(readOnly = true)
     public List<CharacterSheetApiDto> getCharacterSheetsByUserId(Long userId) {
         List<Ogl5CharacterSheet> characterSheets = characterSheetRepository.findAllByOwner_Id(userId);
 
@@ -89,29 +97,32 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
     }
 
     @Override
+    @Transactional
     public CharacterSheetApiDto updateCharacterSheet(Long id, CharacterSheetUpdateRequestApiDto request) {
         Ogl5CharacterSheet characterSheet = characterSheetRepository.findById(id)
                 .orElseThrow(() -> new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
-        List<Ogl5Skill> skills = findSkillsByIds(request.getSkillIds());
         List<Ogl5Spell> spells = findSpellsByIds(request.getPreparedSpellIds());
 
         characterSheetUpdateRequestMapper.updateSqlDto(request, characterSheet);
         characterSheet.setShield(request.getShield());
         characterSheet.setAlignment(request.getAlignment());
         characterSheet.setStatus(request.getStatus());
-        characterSheet.setSkills(skills);
         characterSheet.setPreparedSpells(spells);
         characterSheet.setUpdatedAt(LocalDateTime.now());
 
         try {
-            return characterSheetMapper.toApiDto(characterSheetRepository.save(characterSheet));
+            Ogl5CharacterSheet savedCharacterSheet = characterSheetRepository.save(characterSheet);
+            updateCharacterSkills(savedCharacterSheet, request.getSkills());
+            return characterSheetMapper.toApiDto(savedCharacterSheet);
+
         } catch (Exception e) {
             throw new Ogl5CharacterSavingErrorException(ExceptionMessage.CHARACTER_UPDATE_ERROR.getMessage());
         }
     }
 
     @Override
+    @Transactional
     public void deleteCharacterSheet(Long id) {
         Ogl5CharacterSheet characterSheet = characterSheetRepository.findById(id)
                 .orElseThrow(() -> new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
@@ -144,14 +155,6 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
                 .orElseThrow(() -> new Ogl5ClassNotFoundException(ExceptionMessage.CLASS_NOT_FOUND.getMessage()));
     }
 
-    private List<Ogl5Skill> findSkillsByIds(List<Long> skillIds) {
-        try {
-            return skillRepository.findAllById(skillIds);
-        } catch (Exception e) {
-            throw new CharacterSkillNotFoundException(ExceptionMessage.SKILL_RETRIEVE_ERROR.getMessage());
-        }
-    }
-
     private List<Ogl5Spell> findSpellsByIds(List<Long> spellIds) {
         try {
             return spellRepository.findAllById(spellIds);
@@ -172,4 +175,28 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
         return armorRepository.findById(armorId)
                 .orElseThrow(() -> new Ogl5ArmorNotFoundException(ExceptionMessage.ARMOR_NOT_FOUND.getMessage()));
     }
+
+    private void updateCharacterSkills(Ogl5CharacterSheet characterSheet, List<CharacterSkillDto> skillDtos) {
+        characterSkillRepository.deleteByCharacterSheetId(characterSheet.getId());
+
+        List<Ogl5CharacterSkill> characterSkills = skillDtos.stream()
+                .map(skillDto -> {
+                    Ogl5Skill skill = findSkillById(skillDto.getId());
+                    Ogl5CharacterSkill characterSkill = new Ogl5CharacterSkill();
+                    characterSkill.setCharacterSheet(characterSheet);
+                    characterSkill.setSkill(skill);
+                    characterSkill.setExpert(skillDto.isExpert());
+                    return characterSkill;
+                })
+                .collect(Collectors.toList());
+
+        characterSkillRepository.saveAll(characterSkills);
+        characterSheet.setCharacterSkills(characterSkills);
+    }
+
+    private Ogl5Skill findSkillById(Long skillId) {
+        return skillRepository.findById(skillId)
+                .orElseThrow(() -> new CharacterSkillNotFoundException(ExceptionMessage.SKILL_RETRIEVE_ERROR.getMessage()));
+    }
+
 }
