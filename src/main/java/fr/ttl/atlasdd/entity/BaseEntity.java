@@ -23,7 +23,7 @@ public abstract class BaseEntity {
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    @Column(name = "updated_at", updatable = false)
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
 }
