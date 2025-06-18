@@ -18,7 +18,7 @@ public interface CharacterSheetCreateRequestMapper {
     @Mapping(target = "race", ignore = true)
     @Mapping(target = "background", ignore = true)
     @Mapping(target = "classe", ignore = true)
-    @Mapping(target = "skills", ignore = true)
+    @Mapping(target = "characterSkills", ignore = true)
     @Mapping(target = "preparedSpells", ignore = true)
     @Mapping(target = "weapons", ignore = true)
     @Mapping(target = "armor", ignore = true)

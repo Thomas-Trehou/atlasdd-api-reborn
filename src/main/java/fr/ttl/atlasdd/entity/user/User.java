@@ -22,6 +22,7 @@ public class User extends BaseEntity {
     private String slug;
     private String email;
     private String password;
+    private String verificationToken;
 
     @Enumerated(EnumType.STRING)
     private UserState state = UserState.ACTIVE;

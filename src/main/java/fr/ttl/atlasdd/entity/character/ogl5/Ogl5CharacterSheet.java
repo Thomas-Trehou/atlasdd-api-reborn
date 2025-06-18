@@ -78,13 +78,15 @@ public class Ogl5CharacterSheet extends BaseEntity {
     @JoinColumn(name = "class_id")
     private Ogl5Class classe;
 
-    @ManyToMany
-    @JoinTable(
-            name = "ogl5_character_sheets_has_skills",
-            joinColumns = @JoinColumn(name = "character_id"),
-            inverseJoinColumns = @JoinColumn(name = "skill_id")
-    )
-    private List<Ogl5Skill> skills;
+    @OneToMany(mappedBy = "characterSheet", cascade = CascadeType.ALL)
+    private List<Ogl5CharacterSkill> characterSkills;
+
+    public List<Ogl5CharacterSheet> getCharacterSheets() {
+        return characterSkills != null ?
+                characterSkills.stream().map(Ogl5CharacterSkill::getCharacterSheet).toList() :
+                List.of();
+    }
+
 
     @ManyToMany
     @JoinTable(

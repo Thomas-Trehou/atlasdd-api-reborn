@@ -11,9 +11,9 @@ public interface SkillMapper {
 
     SkillApiDto toApiDto(Ogl5Skill ogl5Skill);
 
-    @Mapping(target = "characterSheets", ignore = true)
+    @Mapping(target = "characterSkills", ignore = true)
     Ogl5Skill toEntity(SkillApiDto skillApiDto);
 
-    @Mapping(target = "characterSheets", ignore = true)
+    @Mapping(target = "characterSkills", ignore = true)
     void updateFromApiDto(SkillApiDto skillApiDto, @MappingTarget Ogl5Skill ogl5Skill);
 }

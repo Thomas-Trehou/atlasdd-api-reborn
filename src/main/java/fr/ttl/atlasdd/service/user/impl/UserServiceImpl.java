@@ -50,6 +50,9 @@ public class UserServiceImpl implements UserService {
     @Value("${MAIL_ADDRESS}")
     private String mailAddress;
 
+    @Value("${FRONT_URL}")
+    private String frontUrl;
+
     @Override
     public UserLightApiDto getCurrentUser(String token) {
         String userMail = jwtTokenProvider.getMailFromToken(token.replace("Bearer ", ""));
@@ -107,31 +110,22 @@ public class UserServiceImpl implements UserService {
 
         user.setState(UserState.INACTIVE);
 
+        String token = UUID.randomUUID().toString();
+        user.setVerificationToken(token);
+
         try {
             userRepository.save(user);
         } catch (Exception e) {
             throw new UserSavingErrorException(ExceptionMessage.USER_SAVE_ERROR.getMessage());
         }
 
-        String token = UUID.randomUUID().toString();
-        storeTokenInSession(token, user);
         sendVerificationEmail(user, token);
 
         return userLightMapper.toApiDto(user);
     }
 
-    private void storeTokenInSession(String token, User user) {
-        ServletRequestAttributes attr = (ServletRequestAttributes) RequestContextHolder.currentRequestAttributes();
-        HttpSession session = attr.getRequest().getSession(true);
-        session.setAttribute("verificationToken", token);
-        session.setAttribute("user", user);
-    }
-
     private void sendVerificationEmail(User user, String token) {
-        String url = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path("/utilisateurs/verify")
-                .queryParam("token", token)
-                .toUriString();
+        String url = frontUrl + "/user/verify-mail?token=" + token;
 
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(user.getEmail());
@@ -143,14 +137,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String verifyToken(String token, HttpSession session) {
-        String sessionToken = (String) session.getAttribute("verificationToken");
-        User user = (User) session.getAttribute("user");
+        Optional<User> userOptional = userRepository.findByVerificationToken(token);
 
-        if (sessionToken == null || !sessionToken.equals(token)) {
+        if (userOptional.isEmpty()) {
             return "Token invalide";
         }
 
+        User user = userOptional.get();
         user.setState(UserState.ACTIVE);
+        user.setVerificationToken(null);
 
         try {
             userRepository.save(user);

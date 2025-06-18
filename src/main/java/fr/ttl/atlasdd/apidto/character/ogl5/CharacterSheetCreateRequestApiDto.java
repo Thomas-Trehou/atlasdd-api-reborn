@@ -1,6 +1,7 @@
 package fr.ttl.atlasdd.apidto.character.ogl5;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import fr.ttl.atlasdd.apidto.character.CharacterSkillDto;
 import fr.ttl.atlasdd.utils.character.Alignment;
 import fr.ttl.atlasdd.utils.character.CharacterStatus;
 import fr.ttl.atlasdd.utils.character.ShieldType;
@@ -142,8 +143,8 @@ public class CharacterSheetCreateRequestApiDto {
 
     @NotNull
     @NotEmpty(message = "Au moins une compétence doit être sélectionnée")
-    @JsonProperty("skillIds")
-    private List<Long> skillIds;
+    @JsonProperty("skills")
+    private List<CharacterSkillDto> skills;
 
     @JsonProperty("preparedSpellIds")
     private List<Long> preparedSpellIds;
