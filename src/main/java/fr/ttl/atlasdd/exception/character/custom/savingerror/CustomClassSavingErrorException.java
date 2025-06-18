@@ -1,0 +1,14 @@
+package fr.ttl.atlasdd.exception.character.custom.savingerror;
+
+import lombok.Getter;
+
+@Getter
+public class CustomClassSavingErrorException extends RuntimeException{
+
+    private final int statusCode;
+
+    public CustomClassSavingErrorException(String message) {
+        super(message);
+        this.statusCode = 500;
+    }
+}

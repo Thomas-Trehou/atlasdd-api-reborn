@@ -1,0 +1,14 @@
+INSERT INTO "ogl5_backgrounds" ("name", "mastered_tools","starting_equipment", "background_feature")
+VALUES
+    ('Acolyte', ' ', 'un symbole sacré (cadeau reçu lorsque vous êtes entré en sacerdoce), un livre de prières, 5 bâtons d''encens, des habits de cérémonie, des vêtements communs et une bourse contenant 15 po.', 'Abri du fidèle' ),
+    ('Artisan de Guilde', 'Un type d''outil d''artisan', 'un jeu d''outil d''artisan (de votre choix), une lettre de recommandation de votre guilde, des vêtements de voyage et une bourse contenant 15 po.', 'Membre de guilde'),
+    ('Artiste', 'kit de déguisement, un type d''instument de musique', 'un instrument de musique (de votre choix), un cadeau d''un admirateur (une lettre d''amour, une mèche de cheveux, une babiole), un costume et une bourse contenant 15 po.', 'À la demande du public'),
+    ('Charlatan', 'kit de contrefaçon, kit de déguisement', 'des vêtements fins, un kit de déguisement, des outils d''escroquerie de votre choix (10 bouteilles bouchonnées remplies d''un liquide coloré, dés truqués, cartes marquées, fausse chevalière de duc, ...) et une bourse contenant 15 po.', 'Fausse identité'),
+    ('Criminel', 'un type de jeu, outils de voleur', 'un pied-de-biche, des vêtements communs sombres avec une capuche et une bourse contenant 15 po.', 'Accointances avec la pègre'),
+    ('Enfant des rues', 'kit de déguisement, outils de voleur', 'un petit couteau, une carte de la ville dans laquelle vous avez grandi, une souris domestiquée, un souvenir de vos parents, des vêtements communs et une bourse contenant 10 po.', 'Secrets de la ville'),
+    ('Ermite', 'kit d''herboriste', 'un étui à parchemin remplis de notes sur vos études ou vos prières, une couverture pour l''hiver, des vêtements communs, un kit d''herboriste et 5 po.', 'Découverte'),
+    ('Héros du peuple', 'un type d''outil d''artisan, véhicules (terrestres)', 'un jeu d''outil d''artisan (de votre choix), une pelle, un pot en fer, des vêtements communs et une bourse contenant 10 po.', 'Hospitalité rustique'),
+    ('Noble', 'un type de jeu', 'des vêtements fins, une chevalière, une lettre de noblesse et une bourse contenant 25 po.', 'Apanage de la noblesse'),
+    ('Sage', ' ', 'une bouteille d''encre noire, une plume, un petit couteau, une lettre d''un collègue mort posant une question à laquelle vous n''avez pas encore été en mesure de répondre, des vêtements communs et une bourse contenant 10 po.', 'Chercheur'),
+    ('Sauvageon', 'un type d''instrument de musique', 'un bâton, un piège à mâchoires, un trophée d''animal que vous avez tué, des vêtements de voyage et une bourse contenant 10 po.', 'Éternel vagabond'),
+    ('Soldat', 'un type de jeu, véhicules (terrestre)', 'un insigne de grade, un trophée pris sur un ennemi mort (une dague, une lame brisée, un morceau de bannière), un jeu de dés en os ou un jeu de cartes, des vêtements communs et une bourse contenant 10 po.', 'Grade militaire');

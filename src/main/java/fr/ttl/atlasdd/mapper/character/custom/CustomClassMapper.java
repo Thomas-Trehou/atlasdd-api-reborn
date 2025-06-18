@@ -1,0 +1,19 @@
+package fr.ttl.atlasdd.mapper.character.custom;
+
+import fr.ttl.atlasdd.apidto.character.custom.CustomClassApiDto;
+import fr.ttl.atlasdd.entity.character.custom.CustomClass;
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.MappingTarget;
+
+@Mapper(componentModel = "spring")
+public interface CustomClassMapper {
+
+    CustomClassApiDto toApiDto(CustomClass classSqlDto);
+
+    @Mapping(target = "characterSheets", ignore = true)
+    CustomClass toEntity(CustomClassApiDto classApiDto);
+
+    @Mapping(target = "characterSheets", ignore = true)
+    void updateSqlDto(CustomClassApiDto classApiDto, @MappingTarget CustomClass classSqlDto);
+}
