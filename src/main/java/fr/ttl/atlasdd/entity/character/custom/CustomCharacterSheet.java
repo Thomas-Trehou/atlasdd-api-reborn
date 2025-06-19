@@ -79,14 +79,6 @@ public class CustomCharacterSheet extends BaseEntity {
     @JoinColumn(name = "class_id")
     private CustomClass classe;
 
-    @ManyToMany
-    @JoinTable(
-            name = "custom_character_sheets_has_skills",
-            joinColumns = @JoinColumn(name = "character_id"),
-            inverseJoinColumns = @JoinColumn(name = "skill_id")
-    )
-    private List<CustomSkill> skills;
-
     @OneToMany(mappedBy = "characterSheet", cascade = CascadeType.ALL)
     private List<CustomCharacterSkill> characterSkills;
 
