@@ -7,9 +7,6 @@ import fr.ttl.atlasdd.apidto.character.custom.CustomCharacterSheetUpdateRequestA
 import fr.ttl.atlasdd.entity.character.custom.CustomCharacterSheet;
 import fr.ttl.atlasdd.entity.character.custom.CustomCharacterSkill;
 import fr.ttl.atlasdd.entity.character.custom.CustomSpell;
-import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSheet;
-import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSkill;
-import fr.ttl.atlasdd.entity.character.ogl5.Ogl5Skill;
 import fr.ttl.atlasdd.exception.character.CharacterPreparedSpellNotFoundException;
 import fr.ttl.atlasdd.exception.character.CharacterSkillNotFoundException;
 import fr.ttl.atlasdd.exception.character.custom.notfound.CustomCharacterNotFoundException;

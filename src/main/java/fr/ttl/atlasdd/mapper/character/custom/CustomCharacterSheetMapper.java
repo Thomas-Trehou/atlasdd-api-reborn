@@ -23,5 +23,6 @@ public interface CustomCharacterSheetMapper {
     @Mapping(target = "characterNotes", ignore = true)
     @Mapping(target = "campaigns", ignore = true)
     @Mapping(target = "characterSkills", ignore = true)
+    @Mapping(target = "owner", ignore = true)
     void updateSqlDto(CustomCharacterSheetApiDto characterSheetApiDto, @MappingTarget CustomCharacterSheet characterSheetSqlDto);
 }
