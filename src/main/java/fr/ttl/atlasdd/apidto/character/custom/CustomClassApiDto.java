@@ -21,6 +21,12 @@ public class CustomClassApiDto extends BaseApiDto {
     private String name;
 
     @NotNull
+    private String spellcasterType;
+
+    @NotNull
+    private String spellcastingAbility;
+
+    @NotNull
     private String hitDice;
 
     @NotNull
