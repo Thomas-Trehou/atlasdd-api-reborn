@@ -3,6 +3,8 @@ package fr.ttl.atlasdd.entity.character.custom;
 import fr.ttl.atlasdd.entity.BaseEntity;
 import fr.ttl.atlasdd.entity.campaign.Campaign;
 import fr.ttl.atlasdd.entity.character.CharacterNote;
+import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSheet;
+import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSkill;
 import fr.ttl.atlasdd.entity.user.User;
 import fr.ttl.atlasdd.utils.character.*;
 import jakarta.persistence.*;
@@ -77,13 +79,14 @@ public class CustomCharacterSheet extends BaseEntity {
     @JoinColumn(name = "class_id")
     private CustomClass classe;
 
-    @ManyToMany
-    @JoinTable(
-            name = "custom_character_sheets_has_skills",
-            joinColumns = @JoinColumn(name = "character_id"),
-            inverseJoinColumns = @JoinColumn(name = "skill_id")
-    )
-    private List<CustomSkill> skills;
+    @OneToMany(mappedBy = "characterSheet", cascade = CascadeType.ALL)
+    private List<CustomCharacterSkill> characterSkills;
+
+    public List<CustomCharacterSheet> getCharacterSheets() {
+        return characterSkills != null ?
+                characterSkills.stream().map(CustomCharacterSkill::getCharacterSheet).toList() :
+                List.of();
+    }
 
     @ManyToMany
     @JoinTable(
