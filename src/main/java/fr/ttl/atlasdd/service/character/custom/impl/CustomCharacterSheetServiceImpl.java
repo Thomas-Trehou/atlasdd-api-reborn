@@ -25,6 +25,8 @@ import fr.ttl.atlasdd.entity.character.custom.CustomSkill;
 import fr.ttl.atlasdd.entity.user.User;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +36,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetService {
+
+    private static final Logger log = LoggerFactory.getLogger(CustomCharacterSheetServiceImpl.class);
 
     private final UserRepo userRepository;
     private final CustomRaceService customRaceService;
@@ -72,6 +76,7 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
            updateCharacterSkills(savedCharacterSheet, request.getSkills());
            return customCharacterSheetMapper.toApiDto(savedCharacterSheet);
         } catch (Exception e) {
+            log.error("Erreur lors de la sauvegarde de la fiche de personnage custom. User ID: {}", request.getUserId(), e);
             throw new CustomCharacterSavingErrorException(ExceptionMessage.CHARACTER_SAVE_ERROR.getMessage());
         }
     }
@@ -121,6 +126,7 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
             return customCharacterSheetMapper.toApiDto(savedCharacterSheet);
 
         } catch (Exception e) {
+            log.error("Erreur lors de l'update' de la fiche de personnage custom. User ID: {}", request.getUserId(), e);
             throw new CustomCharacterSavingErrorException(ExceptionMessage.CHARACTER_UPDATE_ERROR.getMessage());
         }
     }
@@ -134,6 +140,7 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
         try {
             customCharacterSheetRepository.delete(characterSheet);
         } catch (Exception e) {
+            log.error("Erreur lors du delete de la fiche de personnage custom. User ID: {}", id, e);
             throw new CustomCharacterSavingErrorException(ExceptionMessage.CHARACTER_DELETE_ERROR.getMessage());
         }
     }
