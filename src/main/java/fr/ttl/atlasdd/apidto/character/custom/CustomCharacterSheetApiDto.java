@@ -65,7 +65,7 @@ public class CustomCharacterSheetApiDto extends BaseApiDto {
     private CustomRaceApiDto race;
     private BackgroundApiDto background;
     private CustomClassApiDto classe;
-    private List<CharacterSkillDto> skills;
+    private List<SkillApiDto> skills;
     private List<SpellApiDto> preparedSpells;
     private List<WeaponApiDto> weapons;
     private ArmorApiDto armor;

@@ -80,13 +80,8 @@ class CustomCharacterSheetControllerTest {
     private final Long USER_ID = 1L;
     private final CustomRaceApiDto RACE = new CustomRaceApiDto("Human", "30ft", "Common", "None");
     private final BackgroundApiDto BACKGROUND = new BackgroundApiDto("Noble", "None", "None", "None");
-    private final CustomClassApiDto CLASS = new CustomClassApiDto("Barbarian", "DEMI.CASTER", "CHARISME", "d12", 12, "None");
-    private final List<CharacterSkillDto> SKILLS = List.of(
-            new CharacterSkillDto(3L, "Athlétisme", false),
-            new CharacterSkillDto(7L, "Histoire", false),
-            new CharacterSkillDto(10L, "Médecine", false),
-            new CharacterSkillDto(15L, "Religion", false)
-    );
+    private final CustomClassApiDto CLASS = new CustomClassApiDto("Barbarian", "d12", 12, "None");
+    private final List<Long> SKILLS = List.of(3L, 7L, 10L, 15L);
     private final List<Long> SPELLS = List.of(95L, 104L, 370L, 26L);
     private final List<WeaponApiDto> WEAPONS = List.of(
             new WeaponApiDto("Sword", "Epée", "CaC", "2PA", "1d8","Slashing", new BigDecimal("1.5"), "None"),
@@ -98,7 +93,7 @@ class CustomCharacterSheetControllerTest {
     private final ShieldType SHIELD_TYPE = ShieldType.NORMAL;
     private final Alignment ALIGNMENT_TYPE = Alignment.LOYAL_BON;
     private final CharacterStatus STATUS_TYPE = CharacterStatus.VIVANT;
-    private final List<CharacterSkillDto> SKILLS_API_DTO = new ArrayList<>();
+    private final List<SkillApiDto> SKILLS_API_DTO = new ArrayList<>();
     private final List<SpellApiDto> SPELLS_API_DTO = new ArrayList<>();
     private final SpellSlots SPELLSLOTS = new SpellSlots();
 

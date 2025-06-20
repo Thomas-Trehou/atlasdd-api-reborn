@@ -14,8 +14,6 @@ import java.util.List;
 @Table(name = "custom_classes")
 public class CustomClass extends BaseEntity {
 
-    private String spellcasterType;
-    private String spellcastingAbility;
     private String name;
     private String hitDice;
     private int startingHitPoints;

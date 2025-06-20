@@ -11,9 +11,9 @@ public interface CustomSkillMapper {
 
     SkillApiDto toApiDto(CustomSkill skillSqlDto);
 
-    @Mapping(target = "characterSkills", ignore = true)
+    @Mapping(target = "characterSheets", ignore = true)
     CustomSkill toEntity(SkillApiDto skillApiDto);
 
-    @Mapping(target = "characterSkills", ignore = true)
+    @Mapping(target = "characterSheets", ignore = true)
     void updateFromApiDto(SkillApiDto skillApiDto, @MappingTarget CustomSkill skillSqlDto);
 }
