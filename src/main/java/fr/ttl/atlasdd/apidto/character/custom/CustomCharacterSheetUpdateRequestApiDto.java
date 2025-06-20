@@ -3,6 +3,7 @@ package fr.ttl.atlasdd.apidto.character.custom;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import fr.ttl.atlasdd.apidto.character.ArmorApiDto;
 import fr.ttl.atlasdd.apidto.character.BackgroundApiDto;
+import fr.ttl.atlasdd.apidto.character.CharacterSkillDto;
 import fr.ttl.atlasdd.apidto.character.WeaponApiDto;
 import fr.ttl.atlasdd.utils.character.Alignment;
 import fr.ttl.atlasdd.utils.character.CharacterStatus;
@@ -150,8 +151,8 @@ public class CustomCharacterSheetUpdateRequestApiDto {
 
     @NotNull
     @NotEmpty(message = "Au moins une compétence doit être sélectionnée")
-    @JsonProperty("skillIds")
-    private List<Long> skillIds;
+    @JsonProperty("skills")
+    private List<CharacterSkillDto> skills;
 
     @JsonProperty("preparedSpellIds")
     private List<Long> preparedSpellIds;
