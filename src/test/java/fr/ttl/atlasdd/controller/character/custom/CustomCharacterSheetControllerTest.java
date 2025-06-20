@@ -80,7 +80,7 @@ class CustomCharacterSheetControllerTest {
     private final Long USER_ID = 1L;
     private final CustomRaceApiDto RACE = new CustomRaceApiDto("Human", "30ft", "Common", "None");
     private final BackgroundApiDto BACKGROUND = new BackgroundApiDto("Noble", "None", "None", "None");
-    private final CustomClassApiDto CLASS = new CustomClassApiDto("Barbarian", "d12", 12, "None");
+    private final CustomClassApiDto CLASS = new CustomClassApiDto("Barbarian", "DEMI.CASTER", "CHARISME", "d12", 12, "None");
     private final List<CharacterSkillDto> SKILLS = List.of(
             new CharacterSkillDto(3L, "Athlétisme", false),
             new CharacterSkillDto(7L, "Histoire", false),
