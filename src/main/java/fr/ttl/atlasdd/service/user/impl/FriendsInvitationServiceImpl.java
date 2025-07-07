@@ -1,10 +1,12 @@
 package fr.ttl.atlasdd.service.user.impl;
 
+import fr.ttl.atlasdd.apidto.user.FriendInvitationApiDto;
 import fr.ttl.atlasdd.entity.user.User;
 import fr.ttl.atlasdd.exception.user.FriendsInvitationNotFoundException;
 import fr.ttl.atlasdd.exception.user.FriendsInvitationSavingErrorException;
 import fr.ttl.atlasdd.exception.user.UserNotFoundException;
 import fr.ttl.atlasdd.exception.user.UserSavingErrorException;
+import fr.ttl.atlasdd.mapper.user.FriendInvitationMapper;
 import fr.ttl.atlasdd.repository.user.FriendsInvitationRepo;
 import fr.ttl.atlasdd.repository.user.UserRepo;
 import fr.ttl.atlasdd.service.user.FriendsInvitationService;
@@ -14,12 +16,15 @@ import fr.ttl.atlasdd.utils.user.InvitationStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class FriendsInvitationServiceImpl implements FriendsInvitationService {
 
     private final FriendsInvitationRepo friendsInvitationRepo;
     private final UserRepo userRepo;
+    private final FriendInvitationMapper friendInvitationMapper;
 
     @Override
      public void sendInvitation(Long senderId, Long receiverId) {
@@ -108,5 +113,15 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
         } catch (Exception e) {
             throw new FriendsInvitationSavingErrorException(ExceptionMessage.FRIENDS_INVITATION_CANCEL_ERROR.getMessage());
         }
+    }
+
+    @Override
+    public List<FriendInvitationApiDto> getInvitations(Long userId) {
+        userRepo.findById(userId)
+                .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
+
+        List<FriendInvitation> invitations = friendsInvitationRepo.findByReceiverUserIdOrRequestUserIdAndStatus(userId, userId, InvitationStatus.PENDING);
+
+        return invitations.stream().map(friendInvitationMapper::toApiDto).toList();
     }
 }

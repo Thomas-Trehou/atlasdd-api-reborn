@@ -24,9 +24,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.List;
 import java.util.Optional;
@@ -72,7 +69,7 @@ public class UserServiceImpl implements UserService {
     public UserLightApiDto getUserBySlug(String slug) {
         return userRepository.findBySlug(slug)
                 .map(userLightMapper::toApiDto)
-                .orElse(null);
+                .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
     }
 
     @Override

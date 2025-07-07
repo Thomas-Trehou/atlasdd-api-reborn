@@ -54,7 +54,7 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Error at user retrieval", content = @Content)
     })
-    @GetMapping("/{slug:[a-zA-Z0-9-]+}\n")
+    @GetMapping("/search/{slug:[a-zA-Z0-9-_]+}")
     public UserLightApiDto getUserBySlug(
             @Parameter(description = "Slug of the user", required = true)
             @PathVariable String slug
