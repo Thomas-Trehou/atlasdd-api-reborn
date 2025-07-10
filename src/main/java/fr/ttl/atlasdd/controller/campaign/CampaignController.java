@@ -98,7 +98,7 @@ public class CampaignController {
             @ApiResponse(responseCode = "404", description = "User not found / " + "Campaign not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = @Content)
     })
-    @PatchMapping("/{id}/remove-player/{playerId}")
+    @DeleteMapping("/{id}/remove-player/{playerId}")
     public CampaignApiDto removePlayerFromCampaign(
             @Parameter(description = "ID of the campaign", required = true)
             @PathVariable Long id,
@@ -114,7 +114,7 @@ public class CampaignController {
             @ApiResponse(responseCode = "404", description = "Personnage non trouvé / " + "Campaign not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = @Content)
     })
-    @PatchMapping("/{id}/add-ogl5-character/{characterId}")
+    @PostMapping("/{id}/add-ogl5-character/{characterId}")
     public CampaignApiDto addOgl5CharacterToCampaign(
             @Parameter(description = "ID of the campaign", required = true)
             @PathVariable Long id,
@@ -130,7 +130,7 @@ public class CampaignController {
             @ApiResponse(responseCode = "404", description = "Character non trouvé / " + "Campaign not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = @Content)
     })
-    @PatchMapping("/{id}/remove-ogl5-character/{characterId}")
+    @DeleteMapping("/{id}/remove-ogl5-character/{characterId}")
     public CampaignApiDto removeOgl5CharacterFromCampaign(
             @Parameter(description = "ID of the campaign", required = true)
             @PathVariable Long id,
@@ -146,7 +146,7 @@ public class CampaignController {
             @ApiResponse(responseCode = "404", description = "Personnage non trouvé / " + "Campaign not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = @Content)
     })
-    @PatchMapping("/{id}/add-custom-character/{characterId}")
+    @PostMapping("/{id}/add-custom-character/{characterId}")
     public CampaignApiDto addCustomCharacterToCampaign(
             @Parameter(description = "ID of the campaign", required = true)
             @PathVariable Long id,
@@ -162,7 +162,7 @@ public class CampaignController {
             @ApiResponse(responseCode = "404", description = "Character non trouvé / " + "Campaign not found", content = @Content),
             @ApiResponse(responseCode = "500", description = "Error at campaign saving", content = @Content)
     })
-    @PatchMapping("/{id}/remove-custom-character/{characterId}")
+    @DeleteMapping("/{id}/remove-custom-character/{characterId}")
     public CampaignApiDto removeCustomCharacterFromCampaign(
             @Parameter(description = "ID of the campaign", required = true)
             @PathVariable Long id,
