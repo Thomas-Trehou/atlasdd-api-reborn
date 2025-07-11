@@ -141,4 +141,23 @@ public class UserController {
     ) {
         userService.deleteUser(id);
     }
+
+    @Operation(summary = "Update user profile")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "User updated, returns the updated user"),
+            @ApiResponse(responseCode = "400", description =
+                    "Email already used / " +
+                            "Pseudo already used" +
+                            "Invalid password", content = @Content),
+            @ApiResponse(responseCode = "500", description = "Error at user update", content = @Content)
+    })
+    @PatchMapping("/{id}/profile")
+    public UserLightApiDto updateProfile(
+            @Parameter(description = "ID of the user", required = true)
+            @PathVariable Long id,
+            @Parameter(description = "Profile update data", required = true)
+            @RequestBody ProfileUpdateApiDto profileUpdateApiDto
+    ) {
+        return userService.updateProfile(id, profileUpdateApiDto);
+    }
 }

@@ -31,6 +31,9 @@ public enum ExceptionMessage {
     USER_PSEUDO_ALREADY_USED("Pseudo déjà utilisé"),
     USER_EMAIL_OR_PASSWORD_INVALID("Email ou mot de passe incorrect"),
     USER_EMAIL_NOT_VERIFIED("Vous devez vérifier votre adresse email"),
+    USER_NEW_PASSWORD_CANT_BE_ACTUAL("Votre nouveau mot de passe ne peut pas être identique aux 3 derniers mots de passe"),
+    USER_PASSWORD_AND_CONFIRM_MUST_MATCH("Le mot de passe et la confirmation doivent être identiques"),
+
 
     // Friends Invitation
     FRIENDS_INVITATION_NOT_FOUND("Invitation d'amis non trouvée"),

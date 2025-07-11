@@ -1,10 +1,7 @@
 package fr.ttl.atlasdd.service.user.impl;
 
 import fr.ttl.atlasdd.apidto.campaign.CampaignApiDto;
-import fr.ttl.atlasdd.apidto.user.SignInDto;
-import fr.ttl.atlasdd.apidto.user.UserApiDto;
-import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
-import fr.ttl.atlasdd.apidto.user.UserLightAuthApiDto;
+import fr.ttl.atlasdd.apidto.user.*;
 import fr.ttl.atlasdd.entity.user.User;
 import fr.ttl.atlasdd.exception.user.*;
 import fr.ttl.atlasdd.mapper.user.UserLightAuthMapper;
@@ -26,6 +23,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -195,6 +193,42 @@ public class UserServiceImpl implements UserService {
             userRepository.delete(user);
         } catch (Exception e) {
             throw new UserSavingErrorException(ExceptionMessage.USER_DELETE_ERROR.getMessage());
+        }
+    }
+
+    @Override
+    public UserLightApiDto updateProfile(Long id, ProfileUpdateApiDto profileUpdateApiDto) {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
+
+        if (profileUpdateApiDto.getPseudo() != null) {
+            String slug = profileUpdateApiDto.getPseudo().toLowerCase().replace(" ", "-");
+
+            if (!slug.equals(user.getSlug())) {
+                User userWithSameSlug = userRepository.findBySlug(slug).orElse(null);
+
+                if (userWithSameSlug != null) {
+                    throw new PseudoAlreadyUsedException(ExceptionMessage.USER_PSEUDO_ALREADY_USED.getMessage());
+                    }
+                user.setSlug(slug);
+            }
+            user.setPseudo(profileUpdateApiDto.getPseudo());
+        }
+
+        if (profileUpdateApiDto.getPassword() != null) {
+
+            if (bCryptPasswordEncoder.matches(profileUpdateApiDto.getPassword(), user.getPassword())) {
+                throw new IncorrectEmailOrPasswordException(ExceptionMessage.USER_NEW_PASSWORD_CANT_BE_ACTUAL.getMessage());
+            }
+
+            user.setPassword(bCryptPasswordEncoder.encode(profileUpdateApiDto.getPassword()));
+        }
+
+        try {
+            userRepository.save(user);
+            return userLightMapper.toApiDto(user);
+        } catch (Exception e) {
+            throw new UserSavingErrorException(ExceptionMessage.USER_UPDATE_ERROR.getMessage());
         }
     }
 
