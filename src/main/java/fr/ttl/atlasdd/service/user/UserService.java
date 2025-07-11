@@ -26,4 +26,8 @@ public interface UserService {
     void deleteUser(Long id);
 
     UserLightApiDto updateProfile(Long id, ProfileUpdateApiDto profileUpdateApiDto);
+
+    void handleForgotPasswordRequest(ForgotPasswordRequestApiDto request);
+
+    void resetPassword(ResetPasswordApiDto request);
 }

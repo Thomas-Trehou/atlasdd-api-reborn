@@ -32,7 +32,7 @@ public enum ExceptionMessage {
     USER_EMAIL_OR_PASSWORD_INVALID("Email ou mot de passe incorrect"),
     USER_EMAIL_NOT_VERIFIED("Vous devez vérifier votre adresse email"),
     USER_NEW_PASSWORD_CANT_BE_ACTUAL("Votre nouveau mot de passe ne peut pas être identique aux 3 derniers mots de passe"),
-    USER_PASSWORD_AND_CONFIRM_MUST_MATCH("Le mot de passe et la confirmation doivent être identiques"),
+    USER_PASSWORD_RESET_TOKEN_INVALID("Token invalide, veuillez réessayer"),
 
 
     // Friends Invitation

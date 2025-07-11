@@ -37,6 +37,25 @@ public class JwtTokenProvider {
         return token;
     }
 
+    public String generatePasswordResetToken(String email) {
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + jwtExpiration);
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("email", email);
+        claims.put("type", "password-reset");
+
+        String token = Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(expiryDate)
+                .signWith(io.jsonwebtoken.security.Keys.hmacShaKeyFor(jwtSecret.getBytes()))
+                .compact();
+
+        return token;
+
+    }
+
     public String getMailFromToken(String token) {
         try {
             var claims = Jwts.parserBuilder()
@@ -48,6 +67,22 @@ public class JwtTokenProvider {
             String email = claims.get("email", String.class);
 
             return email;
+        } catch (Exception e) {
+            throw new RuntimeException("JWT Token parsing failed");
+        }
+    }
+
+    public String getType(String token) {
+        try {
+            var claims = Jwts.parserBuilder()
+                    .setSigningKey(jwtSecret.getBytes())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+
+            String type = claims.get("type", String.class);
+
+            return type;
         } catch (Exception e) {
             throw new RuntimeException("JWT Token parsing failed");
         }
