@@ -49,6 +49,8 @@ public class SecurityConfig {
                                 "/users/signup",
                                 "/users/verify",
                                 "/users/signin",
+                                "/users/forgot-password",
+                                "/users/reset-password",
                                 "/character-creation-options/**",
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**").permitAll() // Public routes

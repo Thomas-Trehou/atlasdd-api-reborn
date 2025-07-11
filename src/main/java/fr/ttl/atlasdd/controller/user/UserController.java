@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -160,4 +161,33 @@ public class UserController {
     ) {
         return userService.updateProfile(id, profileUpdateApiDto);
     }
+
+    @Operation(summary = "Request a password reset")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "If a user with this email exists, a reset link has been sent"),
+            @ApiResponse(responseCode = "400", description = "Invalid email format", content = @Content)
+    })
+    @PostMapping("/forgot-password")
+    public ResponseEntity<String> forgotPassword(
+            @Parameter(description = "Email of the user", required = true)
+            @RequestBody ForgotPasswordRequestApiDto forgotPasswordRequestApiDto
+    ) {
+        userService.handleForgotPasswordRequest(forgotPasswordRequestApiDto);
+        return ResponseEntity.ok("Si un utilisateur avec cet e-mail existe, un lien de réinitialisation a été envoyé.");
+    }
+
+    @Operation(summary = "Reset a password")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Password has been reset successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid token or password format", content = @Content)
+    })
+    @PostMapping("/reset-password")
+    public ResponseEntity<String> resetPassword(
+            @Parameter(description = "Reset password data", required = true)
+            @RequestBody ResetPasswordApiDto resetPasswordApiDto
+    ) {
+        userService.resetPassword(resetPasswordApiDto);
+        return ResponseEntity.ok("Votre mot de passe a été réinitialisé avec succès.");
+    }
+
 }
