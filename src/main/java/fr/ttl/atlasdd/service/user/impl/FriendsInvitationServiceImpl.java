@@ -15,6 +15,7 @@ import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import fr.ttl.atlasdd.utils.user.InvitationStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,6 +28,7 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
     private final FriendInvitationMapper friendInvitationMapper;
 
     @Override
+    @Transactional
      public void sendInvitation(Long senderId, Long receiverId) {
 
         User sender = userRepo.findById(senderId)
@@ -55,6 +57,7 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
     }
 
     @Override
+    @Transactional
     public void acceptInvitation(Long invitationId, Long receiverId) {
         FriendInvitation friendInvitation = friendsInvitationRepo.findByIdAndReceiverUser_Id(invitationId, receiverId);
 
@@ -85,6 +88,7 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
     }
 
     @Override
+    @Transactional
     public void declineInvitation(Long invitationId, Long receiverId) {
         FriendInvitation friendInvitation = friendsInvitationRepo.findByIdAndReceiverUser_Id(invitationId, receiverId);
 
@@ -101,6 +105,7 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
     }
 
     @Override
+    @Transactional
     public void cancelInvitation(Long invitationId, Long senderId) {
         FriendInvitation friendInvitation = friendsInvitationRepo.findByIdAndRequestUser_Id(invitationId, senderId);
 
@@ -116,11 +121,12 @@ public class FriendsInvitationServiceImpl implements FriendsInvitationService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<FriendInvitationApiDto> getInvitations(Long userId) {
         userRepo.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
 
-        List<FriendInvitation> invitations = friendsInvitationRepo.findByReceiverUserIdOrRequestUserIdAndStatus(userId, userId, InvitationStatus.PENDING);
+        List<FriendInvitation> invitations = friendsInvitationRepo.findByUserAndStatus(userId, InvitationStatus.PENDING);
 
         return invitations.stream().map(friendInvitationMapper::toApiDto).toList();
     }

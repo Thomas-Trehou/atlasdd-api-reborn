@@ -1,6 +1,8 @@
 package fr.ttl.atlasdd.apidto.campaign;
 
 import fr.ttl.atlasdd.apidto.BaseApiDto;
+import fr.ttl.atlasdd.apidto.character.custom.CustomCharacterSheetApiDto;
+import fr.ttl.atlasdd.apidto.character.ogl5.CharacterSheetApiDto;
 import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
@@ -30,4 +32,8 @@ public class CampaignApiDto extends BaseApiDto {
     private UserLightApiDto gameMaster;
 
     private List<UserLightApiDto> campaignPlayers;
+
+    private List<CharacterSheetApiDto> campaignOgl5CharacterSheets;
+
+    private List<CustomCharacterSheetApiDto> campaignCustomCharacterSheets;
 }
