@@ -21,6 +21,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Objects;
@@ -230,6 +231,57 @@ public class UserServiceImpl implements UserService {
         } catch (Exception e) {
             throw new UserSavingErrorException(ExceptionMessage.USER_UPDATE_ERROR.getMessage());
         }
+    }
+
+    @Override
+    @Transactional
+    public void handleForgotPasswordRequest(ForgotPasswordRequestApiDto request) {
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
+
+        String token = jwtTokenProvider.generatePasswordResetToken(user.getEmail());
+        user.setVerificationToken(token);
+        try {
+            userRepository.save(user);
+        } catch (Exception e) {
+            throw new UserSavingErrorException(ExceptionMessage.USER_UPDATE_ERROR.getMessage());
+        }
+        sendPasswordResetEmail(user, token);
+    }
+
+    @Override
+    @Transactional
+    public void resetPassword(ResetPasswordApiDto request) {
+        if (!jwtTokenProvider.validateToken(request.getToken())) {
+            throw new UserSavingErrorException(ExceptionMessage.USER_PASSWORD_RESET_TOKEN_INVALID.getMessage());
+        }
+
+        String email = jwtTokenProvider.getMailFromToken(request.getToken());
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
+
+        if (!Objects.equals(request.getToken(), user.getVerificationToken())) {
+            throw new UserSavingErrorException(ExceptionMessage.USER_PASSWORD_RESET_TOKEN_INVALID.getMessage());
+        }
+
+        user.setPassword(bCryptPasswordEncoder.encode(request.getNewPassword()));
+        user.setVerificationToken(null);
+        try {
+            userRepository.save(user);
+        } catch (Exception e) {
+            throw new UserSavingErrorException(ExceptionMessage.USER_UPDATE_ERROR.getMessage());
+        }
+    }
+
+    private void sendPasswordResetEmail(User user, String token) {
+        String url = frontUrl + "/user/reset-password?token=" + token;
+
+        SimpleMailMessage email = new SimpleMailMessage();
+        email.setTo(user.getEmail());
+        email.setFrom(mailAddress);
+        email.setSubject("Réinitialisation du mot de passe");
+        email.setText("Cliquez sur le lien pour réinitialiser votre mot de passe : " + url);
+        javaMailSender.send(email);
     }
 
 }
