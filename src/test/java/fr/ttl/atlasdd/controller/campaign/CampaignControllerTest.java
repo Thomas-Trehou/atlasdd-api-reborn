@@ -301,7 +301,7 @@ class CampaignControllerTest {
         when(campaignService.removePlayerFromCampaign(campaignId, playerId))
                 .thenReturn(expectedResponse);
 
-        mockMvc.perform(patch("/campaigns/{id}/remove-player/{playerId}", campaignId, playerId)
+        mockMvc.perform(delete("/campaigns/{id}/remove-player/{playerId}", campaignId, playerId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(campaignId))
@@ -318,7 +318,7 @@ class CampaignControllerTest {
         when(campaignService.removePlayerFromCampaign(nonExistentCampaignId, playerId))
                 .thenThrow(new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
 
-        mockMvc.perform(patch("/campaigns/{id}/remove-player/{playerId}", nonExistentCampaignId, playerId)
+        mockMvc.perform(delete("/campaigns/{id}/remove-player/{playerId}", nonExistentCampaignId, playerId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
@@ -332,7 +332,7 @@ class CampaignControllerTest {
         when(campaignService.removePlayerFromCampaign(campaignId, nonExistentPlayerId))
                 .thenThrow(new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
 
-        mockMvc.perform(patch("/campaigns/{id}/remove-player/{playerId}", campaignId, nonExistentPlayerId)
+        mockMvc.perform(delete("/campaigns/{id}/remove-player/{playerId}", campaignId, nonExistentPlayerId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.USER_NOT_FOUND.getMessage()));
@@ -350,7 +350,7 @@ class CampaignControllerTest {
         when(campaignService.removePlayerFromCampaign(campaignId, playerId))
                 .thenReturn(expectedResponse);
 
-        mockMvc.perform(patch("/campaigns/{id}/remove-player/{playerId}", campaignId, playerId)
+        mockMvc.perform(delete("/campaigns/{id}/remove-player/{playerId}", campaignId, playerId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.campaignPlayers").isEmpty());
@@ -364,7 +364,7 @@ class CampaignControllerTest {
         when(campaignService.removePlayerFromCampaign(campaignId, playerId))
                 .thenThrow(new CampaignSavingErrorException(ExceptionMessage.CAMPAIGN_SAVE_ERROR.getMessage()));
 
-        mockMvc.perform(patch("/campaigns/{id}/remove-player/{playerId}", campaignId, playerId)
+        mockMvc.perform(delete("/campaigns/{id}/remove-player/{playerId}", campaignId, playerId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.CAMPAIGN_SAVE_ERROR.getMessage()));
@@ -382,7 +382,7 @@ class CampaignControllerTest {
         when(campaignService.addOgl5CharacterToCampaign(campaignId, characterId))
                 .thenReturn(expectedResponse);
 
-        mockMvc.perform(patch("/campaigns/{id}/add-ogl5-character/{characterId}", campaignId, characterId)
+        mockMvc.perform(post("/campaigns/{id}/add-ogl5-character/{characterId}", campaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(campaignId))
@@ -397,7 +397,7 @@ class CampaignControllerTest {
         when(campaignService.addOgl5CharacterToCampaign(nonExistentCampaignId, characterId))
                 .thenThrow(new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
 
-        mockMvc.perform(patch("/campaigns/{id}/add-ogl5-character/{characterId}", nonExistentCampaignId, characterId)
+        mockMvc.perform(post("/campaigns/{id}/add-ogl5-character/{characterId}", nonExistentCampaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
@@ -411,7 +411,7 @@ class CampaignControllerTest {
         when(campaignService.addOgl5CharacterToCampaign(campaignId, nonExistentCharacterId))
                 .thenThrow(new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
-        mockMvc.perform(patch("/campaigns/{id}/add-ogl5-character/{characterId}", campaignId, nonExistentCharacterId)
+        mockMvc.perform(post("/campaigns/{id}/add-ogl5-character/{characterId}", campaignId, nonExistentCharacterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
@@ -425,7 +425,7 @@ class CampaignControllerTest {
         when(campaignService.addOgl5CharacterToCampaign(campaignId, characterId))
                 .thenThrow(new CampaignSavingErrorException(ExceptionMessage.ADD_CHARACTER_TO_CAMPAIGN_ERROR.getMessage()));
 
-        mockMvc.perform(patch("/campaigns/{id}/add-ogl5-character/{characterId}", campaignId, characterId)
+        mockMvc.perform(post("/campaigns/{id}/add-ogl5-character/{characterId}", campaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.ADD_CHARACTER_TO_CAMPAIGN_ERROR.getMessage()));
@@ -442,7 +442,7 @@ class CampaignControllerTest {
         when(campaignService.addOgl5CharacterToCampaign(campaignId, characterId))
                 .thenReturn(existingCampaign);
 
-        mockMvc.perform(patch("/campaigns/{id}/add-ogl5-character/{characterId}", campaignId, characterId)
+        mockMvc.perform(post("/campaigns/{id}/add-ogl5-character/{characterId}", campaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id" ).value(campaignId));
@@ -460,7 +460,7 @@ class CampaignControllerTest {
         when(campaignService.removeOgl5CharacterFromCampaign(campaignId, characterId))
                 .thenReturn(expectedResponse);
 
-        mockMvc.perform(patch("/campaigns/{id}/remove-ogl5-character/{characterId}", campaignId, characterId)
+        mockMvc.perform(delete("/campaigns/{id}/remove-ogl5-character/{characterId}", campaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(campaignId))
@@ -475,7 +475,7 @@ class CampaignControllerTest {
         when(campaignService.removeOgl5CharacterFromCampaign(nonExistentCampaignId, characterId))
                 .thenThrow(new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
 
-        mockMvc.perform(patch("/campaigns/{id}/remove-ogl5-character/{characterId}", nonExistentCampaignId, characterId)
+        mockMvc.perform(delete("/campaigns/{id}/remove-ogl5-character/{characterId}", nonExistentCampaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
@@ -489,7 +489,7 @@ class CampaignControllerTest {
         when(campaignService.removeOgl5CharacterFromCampaign(campaignId, nonExistentCharacterId))
                 .thenThrow(new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
-        mockMvc.perform(patch("/campaigns/{id}/remove-ogl5-character/{characterId}", campaignId, nonExistentCharacterId)
+        mockMvc.perform(delete("/campaigns/{id}/remove-ogl5-character/{characterId}", campaignId, nonExistentCharacterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
@@ -503,7 +503,7 @@ class CampaignControllerTest {
         when(campaignService.removeOgl5CharacterFromCampaign(campaignId, characterId))
                 .thenThrow(new CampaignSavingErrorException(ExceptionMessage.REMOVE_CHARACTER_FROM_CAMPAIGN_ERROR.getMessage()));
 
-        mockMvc.perform(patch("/campaigns/{id}/remove-ogl5-character/{characterId}", campaignId, characterId)
+        mockMvc.perform(delete("/campaigns/{id}/remove-ogl5-character/{characterId}", campaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.REMOVE_CHARACTER_FROM_CAMPAIGN_ERROR.getMessage()));
@@ -521,7 +521,7 @@ class CampaignControllerTest {
         when(campaignService.removeOgl5CharacterFromCampaign(campaignId, characterId))
                 .thenReturn(campaignResponse);
 
-        mockMvc.perform(patch("/campaigns/{id}/remove-ogl5-character/{characterId}", campaignId, characterId)
+        mockMvc.perform(delete("/campaigns/{id}/remove-ogl5-character/{characterId}", campaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(campaignId))
@@ -540,7 +540,7 @@ class CampaignControllerTest {
         when(campaignService.addCustomCharacterToCampaign(campaignId, characterId))
                 .thenReturn(expectedResponse);
 
-        mockMvc.perform(patch("/campaigns/{id}/add-custom-character/{characterId}", campaignId, characterId)
+        mockMvc.perform(post("/campaigns/{id}/add-custom-character/{characterId}", campaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(campaignId))
@@ -555,7 +555,7 @@ class CampaignControllerTest {
         when(campaignService.addCustomCharacterToCampaign(nonExistentCampaignId, characterId))
                 .thenThrow(new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
 
-        mockMvc.perform(patch("/campaigns/{id}/add-custom-character/{characterId}", nonExistentCampaignId, characterId)
+        mockMvc.perform(post("/campaigns/{id}/add-custom-character/{characterId}", nonExistentCampaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
@@ -569,7 +569,7 @@ class CampaignControllerTest {
         when(campaignService.addCustomCharacterToCampaign(campaignId, nonExistentCharacterId))
                 .thenThrow(new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
-        mockMvc.perform(patch("/campaigns/{id}/add-custom-character/{characterId}", campaignId, nonExistentCharacterId)
+        mockMvc.perform(post("/campaigns/{id}/add-custom-character/{characterId}", campaignId, nonExistentCharacterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
@@ -583,7 +583,7 @@ class CampaignControllerTest {
         when(campaignService.addCustomCharacterToCampaign(campaignId, characterId))
                 .thenThrow(new CampaignSavingErrorException(ExceptionMessage.ADD_CHARACTER_TO_CAMPAIGN_ERROR.getMessage()));
 
-        mockMvc.perform(patch("/campaigns/{id}/add-custom-character/{characterId}", campaignId, characterId)
+        mockMvc.perform(post("/campaigns/{id}/add-custom-character/{characterId}", campaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.ADD_CHARACTER_TO_CAMPAIGN_ERROR.getMessage()));
@@ -600,7 +600,7 @@ class CampaignControllerTest {
         when(campaignService.addCustomCharacterToCampaign(campaignId, characterId))
                 .thenReturn(existingCampaign);
 
-        mockMvc.perform(patch("/campaigns/{id}/add-custom-character/{characterId}", campaignId, characterId)
+        mockMvc.perform(post("/campaigns/{id}/add-custom-character/{characterId}", campaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id" ).value(campaignId));
@@ -618,7 +618,7 @@ class CampaignControllerTest {
         when(campaignService.removeCustomCharacterFromCampaign(campaignId, characterId))
                 .thenReturn(expectedResponse);
 
-        mockMvc.perform(patch("/campaigns/{id}/remove-custom-character/{characterId}", campaignId, characterId)
+        mockMvc.perform(delete("/campaigns/{id}/remove-custom-character/{characterId}", campaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(campaignId))
@@ -633,7 +633,7 @@ class CampaignControllerTest {
         when(campaignService.removeCustomCharacterFromCampaign(nonExistentCampaignId, characterId))
                 .thenThrow(new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
 
-        mockMvc.perform(patch("/campaigns/{id}/remove-custom-character/{characterId}", nonExistentCampaignId, characterId)
+        mockMvc.perform(delete("/campaigns/{id}/remove-custom-character/{characterId}", nonExistentCampaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
@@ -647,7 +647,7 @@ class CampaignControllerTest {
         when(campaignService.removeCustomCharacterFromCampaign(campaignId, nonExistentCharacterId))
                 .thenThrow(new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
 
-        mockMvc.perform(patch("/campaigns/{id}/remove-custom-character/{characterId}", campaignId, nonExistentCharacterId)
+        mockMvc.perform(delete("/campaigns/{id}/remove-custom-character/{characterId}", campaignId, nonExistentCharacterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
@@ -661,7 +661,7 @@ class CampaignControllerTest {
         when(campaignService.removeCustomCharacterFromCampaign(campaignId, characterId))
                 .thenThrow(new CampaignSavingErrorException(ExceptionMessage.REMOVE_CHARACTER_FROM_CAMPAIGN_ERROR.getMessage()));
 
-        mockMvc.perform(patch("/campaigns/{id}/remove-custom-character/{characterId}", campaignId, characterId)
+        mockMvc.perform(delete("/campaigns/{id}/remove-custom-character/{characterId}", campaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isInternalServerError())
                 .andExpect(jsonPath("$.message").value(ExceptionMessage.REMOVE_CHARACTER_FROM_CAMPAIGN_ERROR.getMessage()));
@@ -679,7 +679,7 @@ class CampaignControllerTest {
         when(campaignService.removeCustomCharacterFromCampaign(campaignId, characterId))
                 .thenReturn(campaignResponse);
 
-        mockMvc.perform(patch("/campaigns/{id}/remove-custom-character/{characterId}", campaignId, characterId)
+        mockMvc.perform(delete("/campaigns/{id}/remove-custom-character/{characterId}", campaignId, characterId)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(campaignId))

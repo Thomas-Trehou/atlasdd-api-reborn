@@ -1,5 +1,6 @@
 package fr.ttl.atlasdd.controller.user;
 
+import fr.ttl.atlasdd.apidto.user.FriendInvitationApiDto;
 import fr.ttl.atlasdd.service.user.FriendsInvitationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -8,6 +9,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/friends-invitations")
@@ -87,5 +90,18 @@ public class FriendsInvitationController {
             @PathVariable Long senderId
     ) {
         friendsInvitationService.cancelInvitation(invitationId, senderId);
+    }
+
+    @Operation(summary = "Get list of friends pending invitations")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Invitations retrieved"),
+            @ApiResponse(responseCode = "404", description = "User not found", content = @Content)
+    })
+    @GetMapping("/{userId}/pending")
+    public List<FriendInvitationApiDto> getInvitations(
+            @Parameter(description = "ID of the user", required = true)
+            @PathVariable Long userId
+    ) {
+        return friendsInvitationService.getInvitations(userId);
     }
 }
