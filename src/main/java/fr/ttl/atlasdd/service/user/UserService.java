@@ -1,9 +1,6 @@
 package fr.ttl.atlasdd.service.user;
 
-import fr.ttl.atlasdd.apidto.user.SignInDto;
-import fr.ttl.atlasdd.apidto.user.UserApiDto;
-import fr.ttl.atlasdd.apidto.user.UserLightApiDto;
-import fr.ttl.atlasdd.apidto.user.UserLightAuthApiDto;
+import fr.ttl.atlasdd.apidto.user.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
@@ -27,4 +24,6 @@ public interface UserService {
     UserLightAuthApiDto signIn(SignInDto signInDto);
 
     void deleteUser(Long id);
+
+    UserLightApiDto updateProfile(Long id, ProfileUpdateApiDto profileUpdateApiDto);
 }
