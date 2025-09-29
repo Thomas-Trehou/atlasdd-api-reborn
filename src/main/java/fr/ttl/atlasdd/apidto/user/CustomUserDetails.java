@@ -18,7 +18,6 @@ public class CustomUserDetails implements UserDetails {
 
     public CustomUserDetails(User user) {
         this.username = user.getEmail();
-
         this.password = user.getPassword();
 
         this.accountNonExpired = true;
