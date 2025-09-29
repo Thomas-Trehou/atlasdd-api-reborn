@@ -20,8 +20,7 @@ public class CustomUserDetails implements UserDetails {
         this.username = user.getEmail();
 
         this.password = user.getPassword();
-
-        // Initialiser les autres états (souvent on les met à 'true' par défaut)
+        
         this.accountNonExpired = true;
         this.accountNonLocked = true;
         this.credentialsNonExpired = true;
