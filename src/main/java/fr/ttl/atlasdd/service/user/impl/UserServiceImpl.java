@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -72,6 +73,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @PreAuthorize("@userSecurityService.isCurrentUser(authentication, #id)")
     public List<UserLightApiDto> getFriends(Long userId) {
 
         Optional<User> userToFind = userRepository.findById(userId);
@@ -172,6 +174,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @PreAuthorize("@userSecurityService.isCurrentUser(authentication, #id)")
     public void deleteUser(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
@@ -198,6 +201,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @PreAuthorize("@userSecurityService.isCurrentUser(authentication, #id)")
     public UserLightApiDto updateProfile(Long id, ProfileUpdateApiDto profileUpdateApiDto) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
