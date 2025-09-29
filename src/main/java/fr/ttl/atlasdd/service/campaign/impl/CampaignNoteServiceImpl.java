@@ -15,6 +15,7 @@ import fr.ttl.atlasdd.entity.user.User;
 import fr.ttl.atlasdd.entity.campaign.CampaignNote;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +30,7 @@ public class CampaignNoteServiceImpl implements CampaignNoteService {
     private final CampaignNoteMapper campaignNoteMapper;
 
     @Override
+    @PreAuthorize("@campaignSecurityService.isMember(authentication, #campaignId)")
     public CampaignNoteApiDto createCampaignNote(Long campaignId, Long userId, CampaignNoteApiDto campaignNoteApiDto) {
         Campaign campaign =  campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
@@ -55,6 +57,7 @@ public class CampaignNoteServiceImpl implements CampaignNoteService {
     }
 
     @Override
+    @PreAuthorize("@campaignSecurityService.isMember(authentication, #campaignId)")
     public List<CampaignNoteApiDto> getCampaignNotesByCampaignIdAndUserId(Long campaignId, Long userId) {
 
         if (!campaignRepository.existsById(campaignId)) {
@@ -84,6 +87,7 @@ public class CampaignNoteServiceImpl implements CampaignNoteService {
     }
 
     @Override
+    @PreAuthorize("@userSecurityService.isCurrentUser(authentication, #id)")
     public void deleteCampaignNotesByUserId(Long id) {
         try {
             campaignNoteRepository.deleteAllByOwnerId(id);
