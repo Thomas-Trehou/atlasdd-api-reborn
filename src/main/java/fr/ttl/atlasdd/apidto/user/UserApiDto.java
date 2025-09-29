@@ -37,4 +37,15 @@ public class UserApiDto extends BaseApiDto {
             message = "Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial."
     )
     private String password;
+
+    @Override
+    public String toString() {
+        return "UserApiDto{" +
+                "id=" + getId() +
+                ", pseudo='" + pseudo + '\'' +
+                ", slug='" + slug + '\'' +
+                ", email='" + email + '\'' +
+                ", password='[PROTECTED]'" +
+                '}';
+    }
 }
