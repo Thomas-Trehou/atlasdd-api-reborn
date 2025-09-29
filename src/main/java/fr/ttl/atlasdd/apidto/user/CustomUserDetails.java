@@ -20,7 +20,7 @@ public class CustomUserDetails implements UserDetails {
         this.username = user.getEmail();
 
         this.password = user.getPassword();
-        
+
         this.accountNonExpired = true;
         this.accountNonLocked = true;
         this.credentialsNonExpired = true;
