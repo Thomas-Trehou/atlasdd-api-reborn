@@ -1,5 +1,6 @@
 package fr.ttl.atlasdd.apidto.user;
 
+import fr.ttl.atlasdd.entity.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,6 +15,19 @@ public class CustomUserDetails implements UserDetails {
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enabled;
+
+    public CustomUserDetails(User user) {
+        // C'est la ligne qui résout votre problème principal
+        this.username = user.getEmail();
+
+        this.password = user.getPassword();
+
+        // Initialiser les autres états (souvent on les met à 'true' par défaut)
+        this.accountNonExpired = true;
+        this.accountNonLocked = true;
+        this.credentialsNonExpired = true;
+        this.enabled = true; // Ou user.isEnabled() si vous avez ce champ
+    }
 
     // Getters and setters for all fields
 
