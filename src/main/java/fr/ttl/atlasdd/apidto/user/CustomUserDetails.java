@@ -17,7 +17,6 @@ public class CustomUserDetails implements UserDetails {
     private boolean enabled;
 
     public CustomUserDetails(User user) {
-        // C'est la ligne qui résout votre problème principal
         this.username = user.getEmail();
 
         this.password = user.getPassword();
@@ -26,7 +25,7 @@ public class CustomUserDetails implements UserDetails {
         this.accountNonExpired = true;
         this.accountNonLocked = true;
         this.credentialsNonExpired = true;
-        this.enabled = true; // Ou user.isEnabled() si vous avez ce champ
+        this.enabled = true;
     }
 
     // Getters and setters for all fields
