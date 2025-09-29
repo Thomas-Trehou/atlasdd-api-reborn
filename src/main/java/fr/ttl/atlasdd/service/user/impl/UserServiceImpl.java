@@ -73,7 +73,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    @PreAuthorize("@userSecurityService.isCurrentUser(authentication, #id)")
+    @PreAuthorize("@userSecurityService.isCurrentUser(authentication, #userId)")
     public List<UserLightApiDto> getFriends(Long userId) {
 
         Optional<User> userToFind = userRepository.findById(userId);
