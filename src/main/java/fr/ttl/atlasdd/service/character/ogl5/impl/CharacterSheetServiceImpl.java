@@ -47,7 +47,7 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
 
     @Override
     @Transactional
-    @PreAuthorize("@ogl5CharacterSecurityService.isOwner(authentication, #id)")
+    @PreAuthorize("@ogl5CharacterSecurityService.isCurrentUser(authentication, #request.userId)")
     public CharacterSheetApiDto createCharacterSheet(CharacterSheetCreateRequestApiDto request) {
         User user = findUserById(request.getUserId());
         Ogl5Race race = findRaceById(request.getRaceId());
@@ -93,6 +93,7 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
 
     @Override
     @Transactional(readOnly = true)
+    @PreAuthorize("@ogl5CharacterSecurityService.isCurrentUser(authentication, #userId)")
     public List<CharacterSheetApiDto> getCharacterSheetsByUserId(Long userId) {
         List<Ogl5CharacterSheet> characterSheets = characterSheetRepository.findAllByOwner_Id(userId);
 
