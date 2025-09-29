@@ -18,4 +18,12 @@ public class ResetPasswordApiDto {
             message = "Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial."
     )
     private String newPassword;
+
+    @Override
+    public String toString() {
+        return "ResetPasswordApiDto{" +
+                "token='[PROTECTED]'" +
+                ", newPassword='[PROTECTED]'" +
+                '}';
+    }
 }

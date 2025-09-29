@@ -16,4 +16,12 @@ public class SignInDto {
     @Size(min = 8, max = 50, message = "Le mot de passe doit contenir entre 8 et 50 caractères"
     )
     private String password;
+
+    @Override
+    public String toString() {
+        return "SignInDto{" +
+                "email='" + email + '\'' +
+                ", password='[PROTECTED]'" +
+                '}';
+    }
 }
