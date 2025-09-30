@@ -1,5 +1,6 @@
 package fr.ttl.atlasdd.apidto.user;
 
+import fr.ttl.atlasdd.entity.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -14,6 +15,16 @@ public class CustomUserDetails implements UserDetails {
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enabled;
+
+    public CustomUserDetails(User user) {
+        this.username = user.getEmail();
+        this.password = user.getPassword();
+
+        this.accountNonExpired = true;
+        this.accountNonLocked = true;
+        this.credentialsNonExpired = true;
+        this.enabled = true;
+    }
 
     // Getters and setters for all fields
 
@@ -50,5 +61,15 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    @Override
+    public String toString() {
+        return "CustomUserDetails{" +
+                "username='" + username + '\'' +
+                ", password='[PROTECTED]'" +
+                ", authorities=" + authorities +
+                ", enabled=" + enabled +
+                '}';
     }
 }

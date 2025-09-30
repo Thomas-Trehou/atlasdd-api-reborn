@@ -21,4 +21,12 @@ public class ProfileUpdateApiDto {
             message = "Le mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre et un caractère spécial."
     )
     private String password;
+
+    @Override
+    public String toString() {
+        return "ProfileUpdateApiDto{" +
+                "pseudo='" + pseudo + '\'' +
+                ", password='[PROTECTED]'" +
+                '}';
+    }
 }

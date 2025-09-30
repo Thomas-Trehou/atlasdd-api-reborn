@@ -17,6 +17,7 @@ import fr.ttl.atlasdd.entity.character.custom.CustomCharacterSheet;
 import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSheet;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
     private final NoteCharacterMapper noteCharacterMapper;
 
     @Override
+    @PreAuthorize("@ogl5CharacterSecurityService.isOwner(authentication, #characterSheetId)")
     public NoteCharacterApiDto createOgl5CharacterNote(Long characterSheetId, NoteCharacterApiDto noteCharacterApiDto) {
 
         Ogl5CharacterSheet ogl5CharacterSheet = ogl5CharacterSheetRepository.findById(characterSheetId)
@@ -60,6 +62,7 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
     }
 
     @Override
+    @PreAuthorize("@customCharacterSecurityService.isOwner(authentication, #characterSheetId)")
     public NoteCharacterApiDto createCustomCharacterNote(Long characterSheetId, NoteCharacterApiDto noteCharacterApiDto) {
 
         CustomCharacterSheet characterSheetSqlDto = customCharacterSheetRepository.findById(characterSheetId)
@@ -88,6 +91,7 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
     }
 
     @Override
+    @PreAuthorize("@characterNoteSecurityService.isNoteOwner(authentication, #noteId)")
     public NoteCharacterApiDto updateNote(Long noteId, NoteCharacterApiDto noteCharacterApiDto) {
 
         CharacterNote characterNote = noteCharacterRepository.findById(noteId)
@@ -104,6 +108,7 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
     }
 
     @Override
+    @PreAuthorize("@ogl5CharacterSecurityService.isOwner(authentication, #characterId)")
     public List<NoteCharacterApiDto> getNotesByOgl5CharacterId(Long characterId) {
         if (!ogl5CharacterSheetRepository.existsById(characterId)) {
             throw new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage());
@@ -115,6 +120,7 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
     }
 
     @Override
+    @PreAuthorize("@customCharacterSecurityService.isOwner(authentication, #characterId)")
     public List<NoteCharacterApiDto> getNotesByCustomCharacterId(Long characterId) {
         if (!customCharacterSheetRepository.existsById(characterId)) {
             throw new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage());
@@ -126,6 +132,7 @@ public class NoteCharacterServiceImpl implements NoteCharacterService {
     }
 
     @Override
+    @PreAuthorize("@characterNoteSecurityService.isNoteOwner(authentication, #noteId)")
     public void deleteNote(Long noteId) {
         try {
             noteCharacterRepository.deleteById(noteId);

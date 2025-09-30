@@ -19,6 +19,7 @@ import fr.ttl.atlasdd.entity.campaign.Campaign;
 import fr.ttl.atlasdd.entity.character.ogl5.Ogl5CharacterSheet;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -34,6 +35,7 @@ public class CampaignServiceImpl implements CampaignService {
     private final CampaignMapper campaignMapper;
 
     @Override
+    @PreAuthorize("@userSecurityService.isCurrentUser(authentication, #campaignCreateRequestApiDto.gameMasterId)")
     public CampaignApiDto createCampaign(CampaignCreateRequestApiDto campaignCreateRequestApiDto) {
         Campaign newCampaign = new Campaign();
         User gameMaster = userRepository.findById(campaignCreateRequestApiDto.getGameMasterId())
@@ -51,6 +53,7 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Override
+    @PreAuthorize("@campaignSecurityService.isMember(authentication, #id)")
     public CampaignApiDto getCampaignById(Long id) {
         return campaignMapper.toApiDto(
                 campaignRepository.findById(id)
@@ -58,6 +61,7 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Override
+    @PreAuthorize("@userSecurityService.isCurrentUser(authentication, #userId)")
     public List<CampaignApiDto> getAllByUserId(Long userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
@@ -71,6 +75,7 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Override
+    @PreAuthorize("@campaignSecurityService.isGameMaster(authentication, #id)")
     public CampaignApiDto updateCampaign(Long id, CampaignCreateRequestApiDto campaignCreateRequestApiDto) {
         Campaign campaign = campaignRepository.findById(id)
                 .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
@@ -90,6 +95,7 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Override
+    @PreAuthorize("@campaignSecurityService.isGameMaster(authentication, #campaignId)")
     public CampaignApiDto addPlayerToCampaign(Long campaignId, Long playerId) {
         Campaign campaign = campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
@@ -111,6 +117,7 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Override
+    @PreAuthorize("@campaignSecurityService.isGameMaster(authentication, #campaignId)")
     public CampaignApiDto removePlayerFromCampaign(Long campaignId, Long playerId) {
         Campaign campaign = campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
@@ -128,6 +135,7 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Override
+    @PreAuthorize("@campaignSecurityService.isMember(authentication, #campaignId)")
     public CampaignApiDto addOgl5CharacterToCampaign(Long campaignId, Long characterId) {
         Campaign campaign = campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
@@ -148,6 +156,7 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Override
+    @PreAuthorize("@campaignSecurityService.isMember(authentication, #campaignId)")
     public CampaignApiDto removeOgl5CharacterFromCampaign(Long campaignId, Long characterId) {
         Campaign campaign = campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
@@ -169,6 +178,7 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Override
+    @PreAuthorize("@campaignSecurityService.isMember(authentication, #campaignId)")
     public CampaignApiDto addCustomCharacterToCampaign(Long campaignId, Long characterId) {
         Campaign campaign = campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
@@ -190,6 +200,7 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Override
+    @PreAuthorize("@campaignSecurityService.isMember(authentication, #campaignId)")
     public CampaignApiDto removeCustomCharacterFromCampaign(Long campaignId, Long characterId) {
         Campaign campaign = campaignRepository.findById(campaignId)
                 .orElseThrow(() -> new CampaignNotFoundException(ExceptionMessage.CAMPAIGN_NOT_FOUND.getMessage()));
@@ -211,6 +222,7 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Override
+    @PreAuthorize("@userSecurityService.isCurrentUser(authentication, #playerId)")
     public List<CampaignApiDto> getCampaignsAsPlayer(Long playerId) {
         User player = userRepository.findById(playerId)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
@@ -224,6 +236,7 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Override
+    @PreAuthorize("@userSecurityService.isCurrentUser(authentication, #playerId)")
     public void deletePlayerFromCampaigns(List<CampaignApiDto> campaigns, Long playerId) {
         User player = userRepository.findById(playerId)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
@@ -243,6 +256,7 @@ public class CampaignServiceImpl implements CampaignService {
     }
 
     @Override
+    @PreAuthorize("@campaignSecurityService.isGameMaster(authentication, #dungeonMasterId)")
     public void deleteCampaignsAsDungeonMaster(Long dungeonMasterId) {
         User dungeonMaster = userRepository.findById(dungeonMasterId)
                 .orElseThrow(() -> new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage()));
