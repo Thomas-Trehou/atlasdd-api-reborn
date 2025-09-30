@@ -19,6 +19,7 @@ import fr.ttl.atlasdd.service.character.ogl5.CharacterSheetService;
 import fr.ttl.atlasdd.entity.character.ogl5.*;
 import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,6 +47,7 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
 
     @Override
     @Transactional
+    @PreAuthorize("@ogl5CharacterSecurityService.isCurrentUser(authentication, #request.userId)")
     public CharacterSheetApiDto createCharacterSheet(CharacterSheetCreateRequestApiDto request) {
         User user = findUserById(request.getUserId());
         Ogl5Race race = findRaceById(request.getRaceId());
@@ -80,6 +82,7 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
 
     @Override
     @Transactional(readOnly = true)
+    @PreAuthorize("@ogl5CharacterSecurityService.isOwner(authentication, #id)")
     public CharacterSheetApiDto getCharacterSheetById(Long id) {
         Ogl5CharacterSheet characterSheet = characterSheetRepository.findByIdWithSkills(id)
                 .orElseThrow(() -> new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
@@ -90,6 +93,7 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
 
     @Override
     @Transactional(readOnly = true)
+    @PreAuthorize("@ogl5CharacterSecurityService.isCurrentUser(authentication, #userId)")
     public List<CharacterSheetApiDto> getCharacterSheetsByUserId(Long userId) {
         List<Ogl5CharacterSheet> characterSheets = characterSheetRepository.findAllByOwner_Id(userId);
 
@@ -98,6 +102,7 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
 
     @Override
     @Transactional
+    @PreAuthorize("@ogl5CharacterSecurityService.isOwner(authentication, #id)")
     public CharacterSheetApiDto updateCharacterSheet(Long id, CharacterSheetUpdateRequestApiDto request) {
         Ogl5CharacterSheet characterSheet = characterSheetRepository.findById(id)
                 .orElseThrow(() -> new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
@@ -127,6 +132,7 @@ public class CharacterSheetServiceImpl implements CharacterSheetService {
 
     @Override
     @Transactional
+    @PreAuthorize("@ogl5CharacterSecurityService.isOwner(authentication, #id)")
     public void deleteCharacterSheet(Long id) {
         Ogl5CharacterSheet characterSheet = characterSheetRepository.findById(id)
                 .orElseThrow(() -> new Ogl5CharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));

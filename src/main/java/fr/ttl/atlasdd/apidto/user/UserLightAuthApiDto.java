@@ -16,4 +16,15 @@ public class UserLightAuthApiDto extends BaseApiDto {
     private String slug;
     private String email;
     private String token;
+
+    @Override
+    public String toString() {
+        return "UserLightAuthApiDto{" +
+                "id=" + getId() +
+                ", pseudo='" + pseudo + '\'' +
+                ", slug='" + slug + '\'' +
+                ", email='" + email + '\'' +
+                ", token='[PROTECTED]'" +
+                '}';
+    }
 }

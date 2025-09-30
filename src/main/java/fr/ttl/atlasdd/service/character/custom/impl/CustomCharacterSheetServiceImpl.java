@@ -27,6 +27,7 @@ import fr.ttl.atlasdd.utils.exception.ExceptionMessage;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,6 +56,7 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
 
     @Override
     @Transactional
+    @PreAuthorize("@customCharacterSecurityService.isCurrentUser(authentication, #request.userId)")
     public CustomCharacterSheetApiDto createCharacterSheet(CustomCharacterSheetCreateRequestApiDto request) {
         User user = findUserById(request.getUserId());
 
@@ -83,6 +85,7 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
 
     @Override
     @Transactional(readOnly = true)
+    @PreAuthorize("@customCharacterSecurityService.isOwner(authentication, #id)")
     public CustomCharacterSheetApiDto getCharacterSheetById(Long id) {
         CustomCharacterSheet characterSheet = customCharacterSheetRepository.findByIdWithSkills(id)
                 .orElseThrow(() -> new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
@@ -92,6 +95,7 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
 
     @Override
     @Transactional(readOnly = true)
+    @PreAuthorize("@customCharacterSecurityService.isCurrentUser(authentication, #userId)")
     public List<CustomCharacterSheetApiDto> getCharacterSheetsByUserId(Long userId) {
         if (!userRepository.existsById(userId)) {
             throw new UserNotFoundException(ExceptionMessage.USER_NOT_FOUND.getMessage());
@@ -104,6 +108,7 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
 
     @Override
     @Transactional
+    @PreAuthorize("@customCharacterSecurityService.isOwner(authentication, #id)")
     public CustomCharacterSheetApiDto updateCharacterSheet(Long id, CustomCharacterSheetUpdateRequestApiDto request) {
         CustomCharacterSheet characterSheet = customCharacterSheetRepository.findById(id)
                 .orElseThrow(() -> new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
@@ -133,6 +138,7 @@ public class CustomCharacterSheetServiceImpl implements CustomCharacterSheetServ
 
     @Override
     @Transactional
+    @PreAuthorize("@customCharacterSecurityService.isOwner(authentication, #id)")
     public void deleteCharacterSheet(Long id) {
         CustomCharacterSheet characterSheet = customCharacterSheetRepository.findById(id)
                 .orElseThrow(() -> new CustomCharacterNotFoundException(ExceptionMessage.CHARACTER_NOT_FOUND.getMessage()));
